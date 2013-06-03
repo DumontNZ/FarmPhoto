@@ -122,6 +122,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\Header.jpg" />
+    <Content Include="Content\Images\Image1.jpg" />
+    <Content Include="Content\Images\Image2.jpg" />
+    <Content Include="Content\Images\Image3.jpg" />
+    <Content Include="Content\Images\Image4.jpg" />
+    <Content Include="Content\Images\Image5.jpg" />
+    <Content Include="Content\Images\Image6.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />

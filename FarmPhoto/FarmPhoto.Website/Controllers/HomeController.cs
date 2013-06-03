@@ -38,7 +38,7 @@ namespace FarmPhoto.Website.Controllers
 
             FilePathResult holder =
                 File(
-                    @"D:\Users\Joel\Documents\GitHub\FarmPhoto\FarmPhoto\FarmPhoto.Website\App_Data\Uploads\117699.jpg",
+                    @"D:\Users\Joel\Documents\GitHub\FarmPhoto\FarmPhoto\FarmPhoto.Website\App_Data\Uploads\117700.jpg",
                     "image/jpg");
             return holder; 
 

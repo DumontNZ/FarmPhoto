@@ -17,7 +17,12 @@
         <img src="../../Content/Images/Image4.jpg" alt="">
     </div>
     <div id="LeftColumn">
-        <p>Left Hand Column</p>
+        <ul id="menu">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
+            <li>@Html.ActionLink("Login", "Login", "Account")</li>
+            <li>@Html.ActionLink("Sign Up", "Create", "Account")</li>
+        </ul>
     </div>
 
     <div id="MostRecentPicture">

@@ -5,7 +5,7 @@
 }
 
 <h2>CreateAccount</h2>
-
+<div id="container">
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -46,6 +46,6 @@
     </div>
     
     <input type="submit" value="Create"/>
-
 }
+</div>
 

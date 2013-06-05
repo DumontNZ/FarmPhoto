@@ -55,12 +55,6 @@
   <ItemGroup>
     <Content Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FarmPhoto.Website\FarmPhoto.Website.csproj">
-      <Project>{F594CD65-8BB2-4433-9187-556C1C34C9C9}</Project>
-      <Name>FarmPhoto.Website</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

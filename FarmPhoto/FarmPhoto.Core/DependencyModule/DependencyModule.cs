@@ -1,4 +1,5 @@
-﻿using FarmPhoto.Repository;
+﻿using FarmPhoto.Common.Cryptography;
+using FarmPhoto.Repository;
 using Ninject.Modules;
 
 namespace FarmPhoto.Core.DependencyModule
@@ -8,6 +9,9 @@ namespace FarmPhoto.Core.DependencyModule
         public override void Load()
         {
             Bind<IPhotoRepository>().To<PhotoRepository>();
+            Bind<IUserRepository>().To<UserRepository>();
+            Bind<ICryptography>().To<Cryptography>();
+            Bind<IUserManager>().To<UserManager>();
         }
     }
 }

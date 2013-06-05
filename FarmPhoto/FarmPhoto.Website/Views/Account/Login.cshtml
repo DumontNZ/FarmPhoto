@@ -1,0 +1,30 @@
+﻿@model FarmPhoto.Website.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.LabelFor(m => m.Username)
+    @Html.TextBoxFor(m => m.Username)
+    @Html.ValidationMessageFor(m => m.Username)
+
+    @Html.LabelFor(m => m.Password)
+    @Html.PasswordFor(m => m.Password)
+    @Html.ValidationMessageFor(m => m.Password)
+
+    @Html.LabelFor(m => m.RememberMe)
+    @Html.CheckBoxFor(m => m.RememberMe)
+
+    <input type="submit" value="Login"/>
+}
+
+
+
+@Html.ActionLink("Account", "Create")

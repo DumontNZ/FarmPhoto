@@ -9,5 +9,13 @@
         /// The SQL connection string.
         /// </value>
         string SqlConnectionString { get; }
+
+        /// <summary>
+        /// Gets the year in minutes.
+        /// </summary>
+        /// <value>
+        /// The year in minutes.
+        /// </value>
+        double YearInMinutes { get; }
     }
 }

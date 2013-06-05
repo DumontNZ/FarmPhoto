@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,15 +52,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\FormsAuthenticationManager.cs" />
+    <Compile Include="Authentication\IFormsAuthenticationManager.cs" />
     <Compile Include="DependencyModule\DependencyModule.cs" />
     <Compile Include="IPhotoManager.cs" />
+    <Compile Include="IUserManager.cs" />
     <Compile Include="PhotoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FarmPhoto.Common\FarmPhoto.Common.csproj">
+      <Project>{055042C2-0D01-499D-8D51-69B0481667DC}</Project>
+      <Name>FarmPhoto.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FarmPhoto.Domain\FarmPhoto.Domain.csproj">
       <Project>{925AB0A3-C6F6-4445-973F-5826391E905B}</Project>
       <Name>FarmPhoto.Domain</Name>

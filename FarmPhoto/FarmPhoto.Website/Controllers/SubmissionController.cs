@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,9 +6,6 @@ namespace FarmPhoto.Website.Controllers
 {
     public class SubmissionController : Controller
     {
-        //
-        // GET: /Submission/
-
         public ActionResult Index()
         {
             return View();
@@ -32,6 +26,5 @@ namespace FarmPhoto.Website.Controllers
             // redirect back to the index action to show the form once again
             return RedirectToAction("Index");
         }
-
     }
 }

@@ -27,6 +27,17 @@ namespace FarmPhoto.Common.Configuration
             get { return GetConfigurationValues(ConfigKeys.SqlConnection); }
         }
 
+        /// <summary>
+        /// Gets the year in minutes.
+        /// </summary>
+        /// <value>
+        /// The year in minutes.
+        /// </value>
+        public double YearInMinutes
+        {
+            get { return ConvertToDouble(ConfigKeys.YearInMinutes); }
+        }
+
         private static double ConvertToDouble(string key)
         {
             string value = GetConfigurationValues(key);

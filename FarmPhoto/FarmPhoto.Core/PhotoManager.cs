@@ -14,7 +14,7 @@ namespace FarmPhoto.Core
 
         public int CreatePhoto(Photo photo)
         {
-           return _photoRepository.CreatePhoto(photo); 
+           return _photoRepository.Create(photo); 
         }
     }
 }

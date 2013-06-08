@@ -4,6 +4,6 @@ namespace FarmPhoto.Repository
 {
     public interface IPhotoRepository
     {
-        int CreatePhoto(Photo photo);
+        int Create(Photo photo);
     }
 }

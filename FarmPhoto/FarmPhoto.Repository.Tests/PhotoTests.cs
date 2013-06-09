@@ -8,8 +8,17 @@ namespace FarmPhoto.Repository.Tests
     [TestFixture]
     public class PhotoTests
     {
+        private PhotoRepository _photoRepository;
+
+        public PhotoTests()
+        {
+
+            _photoRepository = new PhotoRepository(); 
+
+        }
+
         [Test]
-        public void CreatePhtoTest()
+        public void CreatePhotoTest()
         {
 
             byte[] rawData = File.ReadAllBytes(@"D:\Users\Joel\Documents\GitHub\FarmPhoto\FarmPhoto\FarmPhoto.Website\App_Data\117700.jpg");
@@ -18,12 +27,18 @@ namespace FarmPhoto.Repository.Tests
 
             int fileSize = Convert.ToInt32(info.Length);
 
-            
-            
-            var photoRepository = new PhotoRepository();
-            int successfull = photoRepository.Create(new Photo { Title = "New Photo", ImageType = ImageType.Jpeg, PhotoData = rawData, FileSize = fileSize });
+            int successfull = _photoRepository.Create(new Photo { Title = "New Photo", ImageType = ImageType.Jpeg, PhotoData = rawData, FileSize = fileSize });
 
             Assert.IsTrue(successfull == 1); 
+        }
+
+        [Test]
+        public void GetPhotoTest()
+        {
+
+            Photo photo = _photoRepository.Get(1); 
+
+            Assert.IsNotNull(photo);
         }
 
     }

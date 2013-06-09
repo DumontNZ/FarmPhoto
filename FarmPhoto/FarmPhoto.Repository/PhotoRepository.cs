@@ -1,4 +1,8 @@
-﻿using FarmPhoto.Domain;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Dapper;
+using FarmPhoto.Domain;
 using MySql.Data.MySqlClient;
 
 namespace FarmPhoto.Repository
@@ -10,47 +14,74 @@ namespace FarmPhoto.Repository
         public PhotoRepository()
         {
             // _logger = logger;
-            _connectionString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            _connectionString =
+                System.Web.Configuration.WebConfigurationManager.ConnectionStrings["MySqlConnectionString"]
+                    .ConnectionString;
         }
 
+        /// <summary>
+        /// Creates the specified photo.
+        /// </summary>
+        /// <param name="photo">The photo.</param>
+        /// <returns></returns>
         public int Create(Photo photo)
         {
-            var conn = new MySqlConnection();
-            var cmd = new MySqlCommand();
+            var mySqlCommand = new MySqlCommand();
 
-            conn.ConnectionString = _connectionString;
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
 
-            conn.Open();
-            string sql = "Insert into photo(title, photodata, filesize) values(@Title, @PhotoData, @FileSize)";
+                string sql = "Insert into photo(title, photodata, filesize) values(@Title, @PhotoData, @FileSize)";
 
-            cmd.Connection = conn;
-            cmd.CommandText = sql;
-            cmd.Parameters.AddWithValue("@Title", photo.Title);
-            cmd.Parameters.AddWithValue("@PhotoData", photo.PhotoData);
-            cmd.Parameters.AddWithValue("@FileSize", photo.FileSize);
+                mySqlCommand.Connection = sqlConnection;
+                mySqlCommand.CommandText = sql;
+                mySqlCommand.Parameters.AddWithValue("@Title", photo.Title);
+                mySqlCommand.Parameters.AddWithValue("@PhotoData", photo.PhotoData);
+                mySqlCommand.Parameters.AddWithValue("@FileSize", photo.FileSize);
 
-            var holder = cmd.ExecuteNonQuery();
+                var holder = mySqlCommand.ExecuteNonQuery();
 
-            conn.Close();
+                return holder;
+            }
+        }
 
-            return holder;
+        /// <summary>
+        /// Gets all photos that have been approved.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public IList<Photo> Get()
+        {
+            throw new NotImplementedException();
+        }
 
-            //var mySqlCommand = new MySqlCommand();
+        /// <summary>
+        /// Gets the specified photo by id.
+        /// </summary>
+        /// <param name="photoId">The photo id.</param>
+        /// <returns></returns>
+        public Photo Get(int photoId)
+        {
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+                Photo photo = sqlConnection.Query<Photo>
+                    ("Select photoid, title, photodata, filesize from Photo where photoid = @PhotoId", new Photo { PhotoId = photoId }).FirstOrDefault();
 
+                return photo;
+            }
+        }
 
-            //using (var sqlConnection = new MySqlConnection(_connectionString))
-            //{
-            //    sqlConnection.Open();
-            //    mySqlCommand.Connection = sqlConnection;
-            //    mySqlCommand.CommandText = "Insert into photo(title, photodata, filesize) values(@Title, @PhotoData, @FileSize)";
-            //    mySqlCommand.Parameters.AddWithValue("@Title", photo.Title);
-            //    mySqlCommand.Parameters.AddWithValue("@FileSize", photo.FileSize);
-            //    mySqlCommand.Parameters.AddWithValue("@PhotoData", photo.PhotoData);
-
-            //    int somthing =  mySqlCommand.ExecuteNonQuery();
-
-            //    return somthing;
-            //}
+        /// <summary>
+        /// Gets all the users photos.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public IList<Photo> Get(User user)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

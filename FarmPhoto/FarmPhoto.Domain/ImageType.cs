@@ -3,6 +3,8 @@
     public enum ImageType
     {
         Jpeg,
-        Png
+        Png,
+        Bmp
+
     }
 }

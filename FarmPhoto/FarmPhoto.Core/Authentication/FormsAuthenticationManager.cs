@@ -54,7 +54,7 @@ namespace FarmPhoto.Core.Authentication
             
             var ticket = new FormsAuthenticationTicket(1, user.UserName, issued, expiration,
                                                        true, string.Join(",", data));
-
+           
             HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket)){Expires = expiration});
 
         }

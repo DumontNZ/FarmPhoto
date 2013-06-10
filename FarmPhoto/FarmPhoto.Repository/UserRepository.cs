@@ -79,7 +79,7 @@ namespace FarmPhoto.Repository
             using (var sqlConnection = new MySqlConnection(_connectionString))
             {
                 sqlConnection.Open();
-                User user = sqlConnection.Query<User>("Select UserName, FirstName, Surname, Email, Password, PasswordSalt, Country from User where Username = @UserName", userToGet).FirstOrDefault();
+                User user = sqlConnection.Query<User>("Select UserId, UserName, FirstName, Surname, Email, Password, PasswordSalt, Country from User where Username = @UserName", userToGet).FirstOrDefault();
 
                 return user;
             }

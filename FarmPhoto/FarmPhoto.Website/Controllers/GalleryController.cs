@@ -32,7 +32,7 @@ namespace FarmPhoto.Website.Controllers
         {
 
             //current user
-            IList<Photo> photos = _photoManager.Get(new User());  
+            IList<Photo> photos = _photoManager.Get(new User{UserId = CurrentUser.Id});  
             return View(); 
         }
 

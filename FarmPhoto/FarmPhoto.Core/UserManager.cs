@@ -29,7 +29,7 @@ namespace FarmPhoto.Core
         {
             _logger.Debug("Inside Manager");
 
-            return _userRepository.CreateUser(user);
+            return _userRepository.Create(user);
         }
 
         /// <summary>

@@ -70,6 +70,15 @@ namespace FarmPhoto.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email Address.
         /// </summary>
         public static string EmailAddress {
@@ -120,6 +129,24 @@ namespace FarmPhoto.Common.Resources {
         public static string Surname {
             get {
                 return ResourceManager.GetString("Surname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

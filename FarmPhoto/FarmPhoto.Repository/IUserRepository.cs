@@ -10,7 +10,7 @@ namespace FarmPhoto.Repository
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        int CreateUser(User user);
+        int Create(User user);
 
         /// <summary>
         /// Gets all users.
@@ -29,10 +29,10 @@ namespace FarmPhoto.Repository
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="userToGet">The user to get.</param>
+        /// <param name="user">The user to get.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        User GetUser(User userToGet);
+        User GetUser(User user);
 
         /// <summary>
         /// Updates the user.

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using FarmPhoto.Core;
@@ -16,34 +17,42 @@ namespace FarmPhoto.Website.Controllers
             _photoManager = photoManager;
         }
 
-        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
         }
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult Index(HttpPostedFileBase file)
-        {
 
-            if (file != null && file.ContentLength > 0)
+        [HttpPost]
+        public ActionResult Index(SubmissionModel model)
+        {
+            if (ModelState.IsValid)
             {
                 var memoryStream = new MemoryStream();
 
-                file.InputStream.CopyTo(memoryStream);
+                model.File.InputStream.CopyTo(memoryStream);
 
                 byte[] imageAsByte = memoryStream.ToArray();
 
-                _photoManager.CreatePhoto(new Photo {PhotoData = imageAsByte});
+                var photo = new Photo
+                    {
+                        Title = model.Title,
+                        Description = model.Description,
+                        PhotoData = imageAsByte,
+                        ImageType = model.File.ContentType,
+                        FileSize = model.File.ContentLength,
+                        UserId = CurrentUser.Id
+                    };
+
+                var photoId = _photoManager.CreatePhoto(photo);
             }
-            // redirect back to the index action to show the form once again
-            return RedirectToAction("Index");
+
+            return RedirectToAction("MyImages", "Gallery");
         }
 
         public ActionResult TheImage(SubmissionModel model)
         {
 
-            return View(model); 
+            return View(model);
         }
     }
 }

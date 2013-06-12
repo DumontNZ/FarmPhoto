@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Dapper;
 using FarmPhoto.Domain;
 using MySql.Data.MySqlClient;
 
@@ -32,17 +30,20 @@ namespace FarmPhoto.Repository
             {
                 sqlConnection.Open();
 
-                string sql = "Insert into photo(title, photodata, filesize) values(@Title, @PhotoData, @FileSize)";
+                const string sql = "Insert into photo(title, description, photodata, filesize, imagetype, userid) values(@Title, @Description, @PhotoData, @FileSize, @ImageType,  @UserId)";
 
                 mySqlCommand.Connection = sqlConnection;
                 mySqlCommand.CommandText = sql;
                 mySqlCommand.Parameters.AddWithValue("@Title", photo.Title);
+                mySqlCommand.Parameters.AddWithValue("@Description", photo.Description);
                 mySqlCommand.Parameters.AddWithValue("@PhotoData", photo.PhotoData);
                 mySqlCommand.Parameters.AddWithValue("@FileSize", photo.FileSize);
+                mySqlCommand.Parameters.AddWithValue("@ImageType", photo.ImageType);
+                mySqlCommand.Parameters.AddWithValue("@UserId", photo.UserId);
 
-                var holder = mySqlCommand.ExecuteNonQuery();
-
-                return holder;
+                mySqlCommand.ExecuteNonQuery();
+                //@string returnNewUser = "Select from photo "
+                return (int)mySqlCommand.LastInsertedId;
             }
         }
 
@@ -57,6 +58,16 @@ namespace FarmPhoto.Repository
         }
 
         /// <summary>
+        /// Gets the specified photo.
+        /// </summary>
+        /// <param name="photo">The photo.</param>
+        /// <returns></returns>
+        public Photo Get(Photo photo)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Gets the specified photo by id.
         /// </summary>
         /// <param name="photoId">The photo id.</param>
@@ -66,10 +77,21 @@ namespace FarmPhoto.Repository
             using (var sqlConnection = new MySqlConnection(_connectionString))
             {
                 sqlConnection.Open();
-                Photo photo = sqlConnection.Query<Photo>
-                    ("Select photoid, title, photodata, filesize from Photo where photoid = @PhotoId", new Photo { PhotoId = photoId }).FirstOrDefault();
 
-                return photo;
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select * from photo where photoid = @PhotoId" };
+
+                mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
+
+                MySqlDataReader dataReader = mySqlCommand.ExecuteReader();
+
+                var returnedPhoto = new Photo();
+
+                while (dataReader.Read())
+                {
+                    returnedPhoto.Title = dataReader.GetString("title");
+                }
+
+                return returnedPhoto;
             }
         }
 

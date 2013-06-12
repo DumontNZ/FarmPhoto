@@ -33,5 +33,12 @@ namespace FarmPhoto.Repository
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         IList<Photo> Get(User user);
+
+        /// <summary>
+        /// Gets the specified photo.
+        /// </summary>
+        /// <param name="photo">The photo.</param>
+        /// <returns></returns>
+        Photo Get(Photo photo);
     }
 }

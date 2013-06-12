@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Dapper;
 using FarmPhoto.Domain;
+using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 
 namespace FarmPhoto.Repository
@@ -22,24 +20,10 @@ namespace FarmPhoto.Repository
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        public int CreateUser(User user)
+        public int Create(User user)
         {
-            using (var sqlConnection = new MySqlConnection(_connectionString))
-            {
-                sqlConnection.Open();
-                try
-                {
-                    var succcessful = sqlConnection.Execute
-                   ("Insert into user(UserName, FirstName, Surname, Email, PasswordSalt, Password, Country) values(@UserName, @FirstName, @Surname, @Email, @PasswordSalt, @Password, @Country)", user);
 
-                    return succcessful;
-                }
-                catch (MySqlException exception)
-                {
-                    // _logger.Info(exception.Message, "Unable to create user as user name is already in use");
-                    return 0;
-                }
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -48,13 +32,7 @@ namespace FarmPhoto.Repository
         /// <returns></returns>
         public IEnumerable<User> GetAllUsers()
         {
-            using (var sqlConnection = new MySqlConnection(_connectionString))
-            {
-                sqlConnection.Open();
-                IEnumerable<User> users = sqlConnection.Query<User>("Select * from User").ToList();
-
-                return users;
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -71,17 +49,34 @@ namespace FarmPhoto.Repository
         /// <summary>
         /// Gets the user.
         /// </summary>
-        /// <param name="userToGet">The user to get.</param>
+        /// <param name="user">The user to get.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public User GetUser(User userToGet)
+        public User GetUser(User user)
         {
             using (var sqlConnection = new MySqlConnection(_connectionString))
             {
                 sqlConnection.Open();
-                User user = sqlConnection.Query<User>("Select UserId, UserName, FirstName, Surname, Email, Password, PasswordSalt, Country from User where Username = @UserName", userToGet).FirstOrDefault();
 
-                return user;
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select * from user where username = @UserName" };
+
+                mySqlCommand.Parameters.AddWithValue("UserName", user.UserName);
+
+                MySqlDataReader dataReader = mySqlCommand.ExecuteReader();
+
+                var returnedUser = new User();
+
+                while (dataReader.Read())
+                {
+                    returnedUser.Password = dataReader.GetString("password");
+                    returnedUser.PasswordSalt = dataReader.GetString("passwordsalt");
+                    returnedUser.UserId = dataReader.GetInt32("userid");
+                    returnedUser.FirstName = dataReader.GetString("firstname");
+                    returnedUser.Surname = dataReader.GetString("surname"); 
+                    returnedUser.UserName = dataReader.GetString("username");
+                }
+
+                return returnedUser;
             }
         }
 

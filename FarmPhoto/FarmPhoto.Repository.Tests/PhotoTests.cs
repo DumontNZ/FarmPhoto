@@ -8,7 +8,7 @@ namespace FarmPhoto.Repository.Tests
     [TestFixture]
     public class PhotoTests
     {
-        private PhotoRepository _photoRepository;
+        private readonly PhotoRepository _photoRepository;
 
         public PhotoTests()
         {
@@ -27,9 +27,9 @@ namespace FarmPhoto.Repository.Tests
 
             int fileSize = Convert.ToInt32(info.Length);
 
-            int successfull = _photoRepository.Create(new Photo { Title = "New Photo", ImageType = ImageType.Jpeg, PhotoData = rawData, FileSize = fileSize });
+            int successfull = _photoRepository.Create(new Photo { Title = "New Photo", Description = "Blah", ImageType = "image/jpeg", PhotoData = rawData, FileSize = fileSize, UserId = 1});
 
-            Assert.IsTrue(successfull == 1); 
+            Assert.IsTrue(successfull > 0); 
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace FarmPhoto.Repository.Tests
 
             Photo photo = _photoRepository.Get(1); 
 
-            Assert.IsNotNull(photo);
+            Assert.IsNotNull(photo.Title);
         }
 
     }

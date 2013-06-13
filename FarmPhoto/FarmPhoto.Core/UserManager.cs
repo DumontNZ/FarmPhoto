@@ -38,7 +38,7 @@ namespace FarmPhoto.Core
         /// <returns></returns>
         public IEnumerable<User> GetAllUsers()
         {
-            return _userRepository.GetAllUsers();
+            return _userRepository.Get();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace FarmPhoto.Core
         /// <exception cref="System.NotImplementedException"></exception>
         public User GetUser(User user)
         {
-            return _userRepository.GetUser(user);
+            return _userRepository.Get(user);
         }
     }
 }

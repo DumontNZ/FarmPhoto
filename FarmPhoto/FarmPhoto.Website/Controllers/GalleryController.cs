@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
+using FarmPhoto.Website.Models;
 
 namespace FarmPhoto.Website.Controllers
 {
@@ -30,10 +31,22 @@ namespace FarmPhoto.Website.Controllers
         /// <returns></returns>
         public ActionResult MyImages()
         {
+            IList<Photo> photos = _photoManager.Get(new User{UserId = CurrentUser.Id});
 
-            //current user
-            IList<Photo> photos = _photoManager.Get(new User{UserId = CurrentUser.Id});  
-            return View(); 
+            var galleryModel = new GalleryModel();
+
+            foreach (var photo in photos)
+            {
+                galleryModel.PhotoModels.Add(new PhotoModel
+                    {
+                        Title = photo.Title,
+                        Description = photo.Description,
+                        PhotoId = photo.PhotoId
+                    });
+            }
+
+
+            return View(galleryModel); 
         }
 
         /// <summary>
@@ -57,7 +70,7 @@ namespace FarmPhoto.Website.Controllers
         {
             Photo photo = _photoManager.Get(id);
 
-            return File(photo.PhotoData, "image/jpg");
+            return File(photo.PhotoData, photo.ImageType);
         }
 
     }

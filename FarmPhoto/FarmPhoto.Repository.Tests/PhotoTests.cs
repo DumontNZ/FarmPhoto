@@ -41,5 +41,14 @@ namespace FarmPhoto.Repository.Tests
             Assert.IsNotNull(photo.Title);
         }
 
+        [Test]
+        public void GetUsersPhotos()
+        {
+
+            var photos = _photoRepository.Get(new User{UserId = 1});
+
+            Assert.IsNotNull(photos.Count > 0);
+        }
+
     }
 }

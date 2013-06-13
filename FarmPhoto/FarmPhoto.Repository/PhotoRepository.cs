@@ -78,7 +78,7 @@ namespace FarmPhoto.Repository
             {
                 sqlConnection.Open();
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select * from photo where photoid = @PhotoId" };
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select photoid, title, description, photodata, imagetype, filesize, userid from photo where photoid = @PhotoId" };
 
                 mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
 
@@ -88,7 +88,17 @@ namespace FarmPhoto.Repository
 
                 while (dataReader.Read())
                 {
+                    var fileSize = dataReader.GetInt32("filesize");
+                    var bytearray = new byte[fileSize];
+                    dataReader.GetBytes(3, 0, bytearray, 0, fileSize);
+
+                    returnedPhoto.PhotoId = dataReader.GetInt32("photoid");
                     returnedPhoto.Title = dataReader.GetString("title");
+                    returnedPhoto.PhotoData = bytearray;
+                    returnedPhoto.FileSize = fileSize;
+                    returnedPhoto.Description = dataReader.GetString("description");
+                    returnedPhoto.ImageType = dataReader.GetString("imagetype");
+                    returnedPhoto.UserId = dataReader.GetInt32("userid");
                 }
 
                 return returnedPhoto;
@@ -103,7 +113,34 @@ namespace FarmPhoto.Repository
         /// <exception cref="System.NotImplementedException"></exception>
         public IList<Photo> Get(User user)
         {
-            throw new System.NotImplementedException();
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select photoid, title, description, userid from photo where userid = @UserId" };
+
+                mySqlCommand.Parameters.AddWithValue("UserId", user.UserId);
+
+                var usersPhotos = new List<Photo>();
+
+                using  (MySqlDataReader dataReader = mySqlCommand.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        var photo = new Photo
+                        {
+                            PhotoId = dataReader.GetInt32("photoid"),
+                            Title = dataReader.GetString("title"),
+                            Description = dataReader.GetString("description"),
+                            UserId = dataReader.GetInt32("userid")
+                        };
+
+                        usersPhotos.Add(photo);
+                    }
+                }
+
+                return usersPhotos;
+            }
         }
     }
 }

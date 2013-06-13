@@ -36,7 +36,7 @@ namespace FarmPhoto.Repository.Tests
         {
             var user = new User { UserName = "DumontNZ" };
 
-            var username = _userRepository.GetUser(user).UserName;
+            var username = _userRepository.Get(user).UserName;
 
             Assert.IsNotNull(username);
         }

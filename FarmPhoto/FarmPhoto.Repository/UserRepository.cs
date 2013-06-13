@@ -30,7 +30,7 @@ namespace FarmPhoto.Repository
         /// Gets all users.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<User> Get()
         {
             throw new NotImplementedException();
         }
@@ -41,7 +41,7 @@ namespace FarmPhoto.Repository
         /// <param name="userId">The user id.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public User GetUser(int userId)
+        public User Get(int userId)
         {
             throw new NotImplementedException();
         }
@@ -52,7 +52,7 @@ namespace FarmPhoto.Repository
         /// <param name="user">The user to get.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public User GetUser(User user)
+        public User Get(User user)
         {
             using (var sqlConnection = new MySqlConnection(_connectionString))
             {
@@ -86,7 +86,7 @@ namespace FarmPhoto.Repository
         /// <param name="userId">The user id.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public User UpdateUser(int userId)
+        public User Update(int userId)
         {
             throw new NotImplementedException();
         }
@@ -97,7 +97,7 @@ namespace FarmPhoto.Repository
         /// <param name="user">The user.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public User UpdateUser(User user)
+        public User Update(User user)
         {
             throw new NotImplementedException();
         }
@@ -107,7 +107,7 @@ namespace FarmPhoto.Repository
         /// </summary>
         /// <param name="userId">The user id.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void DeleteUser(int userId)
+        public void Delete(int userId)
         {
             throw new NotImplementedException();
         }
@@ -117,7 +117,7 @@ namespace FarmPhoto.Repository
         /// </summary>
         /// <param name="user">The user.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public void Deleteuser(User user)
+        public void Delete(User user)
         {
             throw new NotImplementedException();
         }

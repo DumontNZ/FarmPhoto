@@ -16,7 +16,7 @@ namespace FarmPhoto.Repository
         /// Gets all users.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<User> GetAllUsers();
+        IEnumerable<User> Get();
 
         /// <summary>
         /// Gets the user.
@@ -24,7 +24,7 @@ namespace FarmPhoto.Repository
         /// <param name="userId">The user id.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        User GetUser(int userId);
+        User Get(int userId);
 
         /// <summary>
         /// Gets the user.
@@ -32,7 +32,7 @@ namespace FarmPhoto.Repository
         /// <param name="user">The user to get.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        User GetUser(User user);
+        User Get(User user);
 
         /// <summary>
         /// Updates the user.
@@ -40,7 +40,7 @@ namespace FarmPhoto.Repository
         /// <param name="userId">The user id.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        User UpdateUser(int userId);
+        User Update(int userId);
 
         /// <summary>
         /// Updates the user.
@@ -48,20 +48,20 @@ namespace FarmPhoto.Repository
         /// <param name="user">The user.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        User UpdateUser(User user);
+        User Update(User user);
 
         /// <summary>
         /// Deletes the user.
         /// </summary>
         /// <param name="userId">The user id.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        void DeleteUser(int userId);
+        void Delete(int userId);
 
         /// <summary>
         /// Deleteusers the specified user.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        void Deleteuser(User user);
+        void Delete(User user);
     }
 }

@@ -1,24 +1,24 @@
-﻿@model FarmPhoto.Website.Models.GalleryModel 
+﻿@model FarmPhoto.Website.Models.GalleryModel
 
 @{
     ViewBag.Title = "MyImages";
 }
 
-<h2>MyImages</h2>
-
-@foreach (var photo in Model.PhotoModels)
+<div id="ContentContainer">
+    @foreach (var photo in Model.PhotoModels)
 {
     
-    <div>
-        @photo.Title
-    </div>
+        <div>
+            @photo.Title
+        </div>
     
-    <div>
-        @photo.Description
-    </div>
+        <div>
+            @photo.Description
+        </div>
     
-    <div>
-        <img src="@Url.Action("Image", "Gallery", new{id = photo.PhotoId})" alt="" />
-    </div>
+        <div>
+            <img src="@Url.Action("Image", "Gallery", new{id = photo.PhotoId})" alt="" />
+        </div>
     
 }
+</div>

@@ -1,17 +1,18 @@
 ﻿using System;
 using FarmPhoto.Domain;
 using NUnit.Framework;
+using FarmPhoto.Common.Configuration;
 
 namespace FarmPhoto.Repository.Tests
 {
     [TestFixture]
-    public class UserTests
+    public class UserTests : TestBase
     {
         private readonly UserRepository _userRepository;
 
         public UserTests()
         {
-            _userRepository = new UserRepository();
+            _userRepository = new UserRepository(new Config());
         }
 
         [Test]

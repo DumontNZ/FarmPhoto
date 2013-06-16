@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Web;
+﻿using System.IO;
 using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
@@ -10,11 +8,13 @@ namespace FarmPhoto.Website.Controllers
 {
     public class SubmissionController : Controller
     {
-        private readonly PhotoManager _photoManager;
+        private readonly ITagManager _tagManager;
+        private readonly IPhotoManager _photoManager;
 
-        public SubmissionController(PhotoManager photoManager)
+        public SubmissionController(IPhotoManager photoManager, ITagManager tagManager)
         {
             _photoManager = photoManager;
+            _tagManager = tagManager;
         }
 
         public ActionResult Index()
@@ -44,6 +44,7 @@ namespace FarmPhoto.Website.Controllers
                     };
 
                 var photoId = _photoManager.CreatePhoto(photo);
+                _tagManager.CreateTag(model.Tags, photoId);
             }
 
             return RedirectToAction("MyImages", "Gallery");

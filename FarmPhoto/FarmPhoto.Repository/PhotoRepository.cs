@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using FarmPhoto.Domain;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
+using FarmPhoto.Common.Configuration;
 
 namespace FarmPhoto.Repository
 {
     public class PhotoRepository : IPhotoRepository
     {
+        private readonly IConfig _config;
         private readonly string _connectionString;
 
-        public PhotoRepository()
+        public PhotoRepository(IConfig config)
         {
-            // _logger = logger;
-            _connectionString =
-                System.Web.Configuration.WebConfigurationManager.ConnectionStrings["MySqlConnectionString"]
-                    .ConnectionString;
+            _config = config;
+            _connectionString = _config.SqlConnectionString;
         }
 
         /// <summary>
@@ -30,7 +30,8 @@ namespace FarmPhoto.Repository
             {
                 sqlConnection.Open();
 
-                const string sql = "Insert into photo(title, description, photodata, filesize, imagetype, userid) values(@Title, @Description, @PhotoData, @FileSize, @ImageType,  @UserId)";
+                const string sql =
+                    "Insert into photo(title, description, photodata, filesize, imagetype, userid) values(@Title, @Description, @PhotoData, @FileSize, @ImageType,  @UserId)";
 
                 mySqlCommand.Connection = sqlConnection;
                 mySqlCommand.CommandText = sql;
@@ -42,7 +43,7 @@ namespace FarmPhoto.Repository
                 mySqlCommand.Parameters.AddWithValue("@UserId", photo.UserId);
 
                 mySqlCommand.ExecuteNonQuery();
-                //@string returnNewUser = "Select from photo "
+
                 return (int)mySqlCommand.LastInsertedId;
             }
         }
@@ -78,7 +79,12 @@ namespace FarmPhoto.Repository
             {
                 sqlConnection.Open();
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select photoid, title, description, photodata, imagetype, filesize, userid from photo where photoid = @PhotoId" };
+                var mySqlCommand = new MySqlCommand
+                    {
+                        Connection = sqlConnection,
+                        CommandText =
+                            "select photoid, title, description, photodata, imagetype, filesize, userid, createdondateutc from photo where photoid = @PhotoId"
+                    };
 
                 mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
 
@@ -99,6 +105,7 @@ namespace FarmPhoto.Repository
                     returnedPhoto.Description = dataReader.GetString("description");
                     returnedPhoto.ImageType = dataReader.GetString("imagetype");
                     returnedPhoto.UserId = dataReader.GetInt32("userid");
+                    returnedPhoto.CreatedOnDateUtc = (DateTime)dataReader.GetMySqlDateTime("createdondateutc");
                 }
 
                 return returnedPhoto;

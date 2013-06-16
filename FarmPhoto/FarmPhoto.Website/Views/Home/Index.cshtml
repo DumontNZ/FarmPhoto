@@ -1,12 +1,12 @@
 ﻿@{
+    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
     ViewBag.Title = "Home Page";
 }
-
 <h1>
     @ViewBag.User
 </h1>
 
-<div id="container">
+<div id="photoBannerContainer">
     <!-- Each image is 350px by 233px -->
     <div class="photobanner">
         <img class="first" src="../../Content/Images/Image1.jpg" alt="">
@@ -20,23 +20,12 @@
         <img src="../../Content/Images/Image3.jpg" alt="">
         <img src="../../Content/Images/Image4.jpg" alt="">
     </div>
-    <div id="LeftColumn">
-        <ul id="menu">
-            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-            <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
-            <li>@Html.ActionLink("Login", "Login", "Account")</li>
-            <li>@Html.ActionLink("Sign Up", "Create", "Account")</li>
-        </ul>
-    </div>
+</div>
 
+<div id="MainContentContainer">
     <div id="MostRecentPicture">
         <h2>Recently Added Photo</h2>
         <h3>Submitted By: James Walters</h3>
         <img src="@Url.Action("HomeImage", "Gallery")" alt="" />
     </div>
-
-    <div id="RightColumn">
-        <p>Right Column</p>
-    </div>
-
 </div>

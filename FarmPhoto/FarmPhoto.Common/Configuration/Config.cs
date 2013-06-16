@@ -24,7 +24,7 @@ namespace FarmPhoto.Common.Configuration
         /// </value>
         public string SqlConnectionString
         {
-            get { return GetConfigurationValues(ConfigKeys.SqlConnection); }
+            get { return ConfigurationManager.ConnectionStrings[ConfigKeys.SqlConnection].ConnectionString; }
         }
 
         /// <summary>

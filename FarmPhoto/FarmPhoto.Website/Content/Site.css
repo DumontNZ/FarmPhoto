@@ -1,24 +1,27 @@
-﻿/*----------------------------------------------------------
-The base color for this template is #5c87b2. If you'd like
-to use a different color start by replacing all instances of
-#5c87b2 with your new color.
-----------------------------------------------------------*/
-
-
+﻿
 body {
-    background-color: #5c87b2;
+    background: #0091f9; /* Old browsers */
+    background: -moz-linear-gradient(top, #0091f9 17%, #ebf1f6 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(17%,#0091f9), color-stop(100%,#ebf1f6)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #0091f9 17%,#ebf1f6 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #0091f9 17%,#ebf1f6 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #0091f9 17%,#ebf1f6 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #0091f9 17%,#ebf1f6 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0091f9', endColorstr='#ebf1f6',GradientType=0 ); /* IE6-9 */
     font-size: .85em;
     font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
     color: #696969;
 }
+
 h1 {
     -webkit-margin-before: 0px;
     -webkit-margin-after: 0px;
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
 }
+
 #header {
     margin-left: auto;
     margin-right: auto;
@@ -33,11 +36,12 @@ h1 {
     /*height:500px*/
 }
 
-#container {
+#photoBannerContainer {
     width: 1000px;
     overflow: hidden;
     margin: 0px auto;
     background: white;
+    float: left;
 }
 
 header {
@@ -64,84 +68,34 @@ header {
     margin-bottom: 5px;
 }
 
-.photobanner img {
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    -ms-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
- 
-.photobanner img:hover {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1);
-    cursor: pointer;
- 
-    -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
-    -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
-    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
-}
+    .photobanner img {
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        -ms-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
 
-/*keyframe animations*/
-.first {
-    -webkit-animation: bannermove 30s linear infinite;
-       -moz-animation: bannermove 30s linear infinite;
-        -ms-animation: bannermove 30s linear infinite;
-         -o-animation: bannermove 30s linear infinite;
-            animation: bannermove 30s linear infinite;
-}
- 
-@keyframes "bannermove" {
- 0% {
+        .photobanner img:hover {
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -o-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.1);
+            cursor: pointer;
+            -webkit-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+            -moz-box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+            box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+        }
+
+#MainContentContainer {
+    background: white;
+    width: 1000px;
+    height: 268px;
+    margin-top: 5px;
     margin-left: 0px;
- }
- 100% {
-    margin-left: -2125px;
- }
- 
-}
- 
-@-moz-keyframes bannermove {
- 0% {
-   margin-left: 0px;
- }
- 100% {
-   margin-left: -2125px;
- }
- 
-}
- 
-@-webkit-keyframes "bannermove" {
- 0% {
-   margin-left: 0px;
- }
- 100% {
-   margin-left: -2125px;
- }
- 
-}
- 
-@-ms-keyframes "bannermove" {
- 0% {
-   margin-left: 0px;
- }
- 100% {
-   margin-left: -2125px;
- }
- 
-}
- 
-@-o-keyframes "bannermove" {
- 0% {
-   margin-left: 0px;
- }
- 100% {
-   margin-left: -2125px;
- }
- 
+    margin-right: 5px;
+    float: left;
 }
 
 #MostRecentPicture {
@@ -149,12 +103,14 @@ header {
     /*background: pink;*/
     float: left;
 }
+
     #MostRecentPicture h2 {
         margin: auto;
         width: 400px;
     }
+
     #MostRecentPicture h3 {
-         margin: auto;
+        margin: auto;
         width: 400px;
     }
 
@@ -163,18 +119,70 @@ header {
         display: block;
     }
 
-#LeftColumn {
+#MainLeftColumn {
+    background: white;
+    margin-top: 242px;
+    margin-right: 5px;
+    width: 150px;
+    height: 500px;
     float: left;
-    background: red;
-    margin-right: auto;
+}
+
+#MailRightColumn {
+    float: left;
+    background: white;
+    margin-top: 5px;
+    margin-left: auto;
     width: 150px;
     height: 500px;
 }
 
-#RightColumn {
-    float: right;
-    background: grey;
+ul#menu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+    ul#menu li {
+    }
+
+        ul#menu li a {
+            display: block;
+            background-color: #036;
+            padding: 13px;
+            color: #FFF;
+            text-decoration: none;
+        }
+
+            ul#menu li a:hover {
+                background-color: #369;
+                color: #FFF;
+            }
+
+#MainPageContent {
+    width: 1310px;
+    height: 100px;
     margin-left: auto;
-    width: 150px;
-    height: 500px;
+    margin-right: auto;
+  
+}
+
+#MainInnerContent {
+  
+}
+
+#active a {
+    display: block;
+    color: #FFF;
+    background-color: #600;
+    width: 9em;
+    padding: .2em .8em;
+    text-decoration: none;
+}
+
+.formRow {
+   margin: 0 0 10px 0;
+   color: #FFF;
+   min-height: 40px;
+   position: relative;
 }

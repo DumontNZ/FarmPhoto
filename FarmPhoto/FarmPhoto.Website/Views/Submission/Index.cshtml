@@ -4,9 +4,7 @@
     ViewBag.Title = "Submission";
 }
 
-<h2>Index</h2>
-
-<div id="container">
+<div id="ContentContainer">
     @using (Html.BeginForm("Index", "Submission", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div>

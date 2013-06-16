@@ -13,7 +13,8 @@ namespace FarmPhoto.Website.DependencyModule
         public override void Load()
         {
             Bind<IPhotoManager>().To<PhotoManager>();
-            Bind<IConfig>().To<Config>();
+            Bind<ITagManager>().To<TagManager>();
+            Bind<IUserManager>().To<UserManager>();
             Bind<IFormsAuthenticationManager>().To<FormsAuthenticationManager>(); 
 
             this.BindFilter<FarmPhotoAuthorizeAttribute>(FilterScope.Action, 0).InRequestScope();

@@ -1,4 +1,4 @@
-/*!
+﻿/*!
  * jQuery JavaScript Library v1.8.2
  * http://jquery.com/
  *
@@ -1461,7 +1461,7 @@ jQuery.support = (function() {
 			support.boxSizingReliable = ( window.getComputedStyle( div, null ) || { width: "4px" } ).width === "4px";
 
 			// Check if div with explicit width and no margin-right incorrectly
-			// gets computed margin-right based on width of container. For more
+			// gets computed margin-right based on width of photoBannerContainer. For more
 			// info see bug #3333
 			// Fails in WebKit before Feb 2011 nightlies
 			// WebKit Bug 13343 - getComputedStyle returns wrong value for margin-right
@@ -6297,7 +6297,7 @@ jQuery.extend({
 				if ( !rhtml.test( elem ) ) {
 					elem = context.createTextNode( elem );
 				} else {
-					// Ensure a safe container in which to render the html
+					// Ensure a safe photoBannerContainer in which to render the html
 					safe = safe || createSafeFragment( context );
 					div = context.createElement("div");
 					safe.appendChild( div );
@@ -6343,7 +6343,7 @@ jQuery.extend({
 
 					elem = div.childNodes;
 
-					// Take out of fragment container (we need a fresh div each time)
+					// Take out of fragment photoBannerContainer (we need a fresh div each time)
 					div.parentNode.removeChild( div );
 				}
 			}

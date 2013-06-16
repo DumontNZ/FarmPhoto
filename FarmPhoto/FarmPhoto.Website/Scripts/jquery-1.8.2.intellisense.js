@@ -46,7 +46,7 @@ intellisense.annotate(jQuery, {
   'contains': function() {
     /// <signature>
     ///   <summary>Check to see if a DOM element is within another DOM element.</summary>
-    ///   <param name="container" type="Element">The DOM element that may contain the other element.</param>
+    ///   <param name="photoBannerContainer" type="Element">The DOM element that may contain the other element.</param>
     ///   <param name="contained" type="Element">The DOM element that may be contained by the other element.</param>
     ///   <returns type="Boolean" />
     /// </signature>

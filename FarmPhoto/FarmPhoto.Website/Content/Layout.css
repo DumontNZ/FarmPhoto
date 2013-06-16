@@ -1,0 +1,40 @@
+﻿#ContentContainer {
+    background: white;
+    width: 1000px;
+    height: 268px;
+    margin-top: 5px;
+    margin-left: 0px;
+    margin-right: 5px;
+    float: left;
+}
+
+
+#LeftColumn {
+    background: white;
+    margin-top: 5px;
+    margin-right: 5px;
+    width: 150px;
+    height: 500px;
+    float: left;
+}
+
+#RightColumn {
+    float: left;
+    background: white;
+    margin-top: 5px;
+    margin-left: auto;
+    width: 150px;
+    height: 500px;
+}
+
+
+#PageContent {
+    width: 1310px;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#InnerContent {
+    background: orange;
+}

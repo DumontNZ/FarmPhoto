@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FarmPhoto.Website.Models
 {
@@ -10,5 +11,6 @@ namespace FarmPhoto.Website.Models
         public string Description { get; set; }
         public double Rating { get; set; }
         public string SubmittedBy { get; set; }
+        public DateTime SubmittedOn { get; set; }
     }
 }

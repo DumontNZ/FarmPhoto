@@ -1,4 +1,5 @@
 ﻿using System;
+using FarmPhoto.Common.Configuration;
 using FarmPhoto.Domain;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
@@ -7,12 +8,14 @@ namespace FarmPhoto.Repository
 {
     public class UserRepository : IUserRepository
     {
+        private readonly IConfig _config;
         private readonly string _connectionString;
 
-        public UserRepository()
+        public UserRepository(IConfig config)
         {
+            _config = config;
             // _logger = logger;
-            _connectionString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            _connectionString = _config.SqlConnectionString;
         }
 
         /// <summary>
@@ -22,8 +25,29 @@ namespace FarmPhoto.Repository
         /// <returns></returns>
         public int Create(User user)
         {
+            var mySqlCommand = new MySqlCommand();
 
-            throw new NotImplementedException();
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                const string sql =
+                    "Insert into user(firstname, surname, username, email, password, passwordsalt, country) values(@FirstName, @Surname, @Username, @Email, @Password, @PasswordSalt, @Country)";
+
+                mySqlCommand.Connection = sqlConnection;
+                mySqlCommand.CommandText = sql;
+                mySqlCommand.Parameters.AddWithValue("@FirstName", user.FirstName);
+                mySqlCommand.Parameters.AddWithValue("@Surname", user.Surname);
+                mySqlCommand.Parameters.AddWithValue("@Username", user.UserName);
+                mySqlCommand.Parameters.AddWithValue("@Email", user.Email);
+                mySqlCommand.Parameters.AddWithValue("@Password", user.Password);
+                mySqlCommand.Parameters.AddWithValue("@PasswordSalt", user.PasswordSalt);
+                mySqlCommand.Parameters.AddWithValue("@Country", user.Country);
+
+                mySqlCommand.ExecuteNonQuery();
+
+                return (int)mySqlCommand.LastInsertedId;
+            }
         }
 
         /// <summary>

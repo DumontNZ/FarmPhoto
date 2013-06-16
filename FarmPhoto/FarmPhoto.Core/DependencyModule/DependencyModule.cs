@@ -11,7 +11,8 @@ namespace FarmPhoto.Core.DependencyModule
             Bind<IPhotoRepository>().To<PhotoRepository>();
             Bind<IUserRepository>().To<UserRepository>();
             Bind<ICryptography>().To<Cryptography>();
-            Bind<IUserManager>().To<UserManager>();
+        
+            Bind<ITagRepository>().To<TagRepository>();
         }
     }
 }

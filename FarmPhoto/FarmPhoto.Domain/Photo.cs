@@ -1,4 +1,6 @@
-﻿namespace FarmPhoto.Domain
+﻿using System;
+
+namespace FarmPhoto.Domain
 {
     public class Photo
     {
@@ -11,5 +13,7 @@
         public int FileSize { get; set; }
         public int ThumbnailSize { get; set; }
         public int UserId { get; set; }
+        public DateTime CreatedOnDateUtc { get; set; }
+        public DateTime DeletedOnDateUtc { get; set; }
     }
 }

@@ -1265,7 +1265,7 @@ $.ui.plugin.add("draggable", "connectToSortable", {
 					instance: sortable,
 					shouldRevert: sortable.options.revert
 				});
-				sortable.refreshPositions();	// Call the sortable's refreshPositions at drag start to refresh the containerCache since the sortable container cache is used in drag and needs to be up to date (this will ensure it's initialised as well as being kept in step with any changes that might have happened on the page).
+				sortable.refreshPositions();	// Call the sortable's refreshPositions at drag start to refresh the photoBannerContainerCache since the sortable photoBannerContainer cache is used in drag and needs to be up to date (this will ensure it's initialised as well as being kept in step with any changes that might have happened on the page).
 				sortable._trigger("activate", event, uiSortable);
 			}
 		});
@@ -3110,7 +3110,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			this._cacheHelperProportions();
 
 
-		//Post 'activate' events to possible containers
+		//Post 'activate' events to possible photoBannerContainers
 		if(!noActivation) {
 			 for (var i = this.containers.length - 1; i >= 0; i--) { this.containers[i]._trigger("activate", event, self._uiHash(this)); }
 		}
@@ -3188,19 +3188,19 @@ $.widget("ui.sortable", $.ui.mouse, {
 			if (!intersection) continue;
 
 			// Only put the placeholder inside the current Container, skip all
-			// items form other containers. This works because when moving
-			// an item from one container to another the
+			// items form other photoBannerContainers. This works because when moving
+			// an item from one photoBannerContainer to another the
 			// currentContainer is switched before the placeholder is moved.
 			//
 			// Without this moving items in "sub-sortables" can cause the placeholder to jitter
-			// beetween the outer and inner container.
+			// beetween the outer and inner photoBannerContainer.
 			if (item.instance !== this.currentContainer) continue;
 
 			if (itemElement != this.currentItem[0] //cannot intersect with itself
 				&&	this.placeholder[intersection == 1 ? "next" : "prev"]()[0] != itemElement //no useless actions that have been done before
 				&&	!$.ui.contains(this.placeholder[0], itemElement) //no action if the item moved is the parent of the item checked
 				&& (this.options.type == 'semi-dynamic' ? !$.ui.contains(this.element[0], itemElement) : true)
-				//&& itemElement.parentNode == this.placeholder[0].parentNode // only rearrange items within the same container
+				//&& itemElement.parentNode == this.placeholder[0].parentNode // only rearrange items within the same photoBannerContainer
 			) {
 
 				this.direction = intersection == 1 ? "down" : "up";
@@ -3216,7 +3216,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			}
 		}
 
-		//Post events to containers
+		//Post events to photoBannerContainers
 		this._contactContainers(event);
 
 		//Interconnect with droppables
@@ -3271,7 +3271,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			else
 				this.currentItem.show();
 
-			//Post deactivating events to containers
+			//Post deactivating events to photoBannerContainers
 			for (var i = this.containers.length - 1; i >= 0; i--){
 				this.containers[i]._trigger("deactivate", null, self._uiHash(this));
 				if(this.containers[i].containerCache.over) {
@@ -3519,7 +3519,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 		for (var i = this.items.length - 1; i >= 0; i--){
 			var item = this.items[i];
 
-			//We ignore calculating positions of all connected containers when we're not over them
+			//We ignore calculating positions of all connected photoBannerContainers when we're not over them
 			if(item.instance != this.currentContainer && this.currentContainer && item.item[0] != this.currentItem[0])
 				continue;
 
@@ -3594,19 +3594,19 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 	_contactContainers: function(event) {
 		
-		// get innermost container that intersects with item 
+		// get innermost photoBannerContainer that intersects with item 
 		var innermostContainer = null, innermostIndex = null;		
 		
 		
 		for (var i = this.containers.length - 1; i >= 0; i--){
 
-			// never consider a container that's located within the item itself 
+			// never consider a photoBannerContainer that's located within the item itself 
 			if($.ui.contains(this.currentItem[0], this.containers[i].element[0]))
 				continue;
 
 			if(this._intersectsWith(this.containers[i].containerCache)) {
 
-				// if we've already found a container and it's more "inner" than this, then continue 
+				// if we've already found a photoBannerContainer and it's more "inner" than this, then continue 
 				if(innermostContainer && $.ui.contains(this.containers[i].element[0], innermostContainer.element[0]))
 					continue;
 
@@ -3614,7 +3614,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 				innermostIndex = i;
 					
 			} else {
-				// container doesn't intersect. trigger "out" event if necessary 
+				// photoBannerContainer doesn't intersect. trigger "out" event if necessary 
 				if(this.containers[i].containerCache.over) {
 					this.containers[i]._trigger("out", event, this._uiHash(this));
 					this.containers[i].containerCache.over = 0;
@@ -3623,16 +3623,16 @@ $.widget("ui.sortable", $.ui.mouse, {
 
 		}
 		
-		// if no intersecting containers found, return 
+		// if no intersecting photoBannerContainers found, return 
 		if(!innermostContainer) return; 
 
-		// move the item into the container if it's not there already
+		// move the item into the photoBannerContainer if it's not there already
 		if(this.containers.length === 1) {
 			this.containers[innermostIndex]._trigger("over", event, this._uiHash(this));
 			this.containers[innermostIndex].containerCache.over = 1;
 		} else if(this.currentContainer != this.containers[innermostIndex]) {
 
-			//When entering a new container, we will find the item with the least distance and append our item near it
+			//When entering a new photoBannerContainer, we will find the item with the least distance and append our item near it
 			var dist = 10000; var itemWithLeastDistance = null; var base = this.positionAbs[this.containers[innermostIndex].floating ? 'left' : 'top'];
 			for (var j = this.items.length - 1; j >= 0; j--) {
 				if(!$.ui.contains(this.containers[innermostIndex].element[0], this.items[j].item[0])) continue;
@@ -3914,7 +3914,7 @@ $.widget("ui.sortable", $.ui.mouse, {
 			}
 		}
 
-		//Post events to containers
+		//Post events to photoBannerContainers
 		for (var i = this.containers.length - 1; i >= 0; i--){
 			if(!noPropagation) delayedTriggers.push((function(c) { return function(event) { c._trigger("deactivate", event, this._uiHash(this)); };  }).call(this, this.containers[i]));
 			if(this.containers[i].containerCache.over) {

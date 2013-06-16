@@ -1,22 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using FarmPhoto.Website.Models;
+using System.Collections.Generic;
 
 namespace FarmPhoto.Website.Controllers
 {
     public class GalleryController : Controller
     {
+        private readonly ITagManager _tagManager;
         private readonly IPhotoManager _photoManager;
 
-        public GalleryController(IPhotoManager photoManager)
+        public GalleryController(IPhotoManager photoManager, ITagManager tagManager)
         {
             _photoManager = photoManager;
+            _tagManager = tagManager;
         }
 
         /// <summary>
-        /// Returns all approved images as a gallery
+        /// Returns all approved images as a gallery newest to oldest
         /// </summary>
         /// <returns></returns>
         public ActionResult Index()
@@ -39,12 +41,13 @@ namespace FarmPhoto.Website.Controllers
             {
                 galleryModel.PhotoModels.Add(new PhotoModel
                     {
+                        PhotoId = photo.PhotoId,
                         Title = photo.Title,
                         Description = photo.Description,
-                        PhotoId = photo.PhotoId
+                        SubmittedOn = photo.CreatedOnDateUtc,
+                        Tags = _tagManager.Get(photo.PhotoId)
                     });
             }
-
 
             return View(galleryModel); 
         }
@@ -58,7 +61,7 @@ namespace FarmPhoto.Website.Controllers
         {
             Photo photo = _photoManager.Get(1);
 
-            return File(photo.PhotoData, "image/jpg");
+            return File(photo.PhotoData, photo.ImageType);
         }
 
         /// <summary>

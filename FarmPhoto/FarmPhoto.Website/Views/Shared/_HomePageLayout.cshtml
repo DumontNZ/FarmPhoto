@@ -14,8 +14,8 @@
         </header>
     </div>
 
-    <div id="PageContent">
-        <div id="LeftColumn">
+    <div id="MainPageContent">
+        <div id="MainLeftColumn">
             <ul id="menu">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
@@ -24,14 +24,13 @@
             </ul>
         </div>
 
-        <div id="InnerContent">
+        <div id="MainInnerContent">
             @RenderBody()
         </div>
-        
-        <div id="RightColumn">
+
+        <div id="MailRightColumn">
             <p>Right Column</p>
         </div>
-        
     </div>
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)

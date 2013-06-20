@@ -8,19 +8,27 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="page">
-        <header>
-            <h1>Farm Photo</h1>
-        </header>
+    
+    <div id="header">
+        <h1>farm photo</h1>
+        <img src="~/Content/Images/P1030794.JPG"/>
     </div>
 
     <div id="PageContent">
         <div id="LeftColumn">
             <ul id="menu">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
-                <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                <li>@Html.ActionLink("Sign Up", "Create", "Account")</li>
+                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Gallery", "Index", "Gallery")</li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
+                    <li>@Html.ActionLink("My Photos", "MyImages", "Gallery")</li>
+                }
+                else
+                { 
+                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    <li>@Html.ActionLink("Register", "Create", "Account")</li>
+                }
             </ul>
         </div>
 

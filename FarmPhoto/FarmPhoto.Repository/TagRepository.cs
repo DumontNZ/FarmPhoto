@@ -55,7 +55,7 @@ namespace FarmPhoto.Repository
                     {
                         Connection = sqlConnection,
                         CommandText =
-                            "select tagid, desciption, photoid, from tag where photoId = @PhotoId"
+                            "select tagid, description, photoid from tag where photoId = @PhotoId"
                     };
 
                 mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);

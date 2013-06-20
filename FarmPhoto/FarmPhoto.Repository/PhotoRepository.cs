@@ -31,14 +31,16 @@ namespace FarmPhoto.Repository
                 sqlConnection.Open();
 
                 const string sql =
-                    "Insert into photo(title, description, photodata, filesize, imagetype, userid) values(@Title, @Description, @PhotoData, @FileSize, @ImageType,  @UserId)";
+                    "Insert into photo(title, description, photodata, thumbnaildata, filesize, thumbnailsize, imagetype, userid) values(@Title, @Description, @PhotoData, @ThumbnailData, @FileSize, @ThumbnailSize, @ImageType,  @UserId)";
 
                 mySqlCommand.Connection = sqlConnection;
                 mySqlCommand.CommandText = sql;
                 mySqlCommand.Parameters.AddWithValue("@Title", photo.Title);
                 mySqlCommand.Parameters.AddWithValue("@Description", photo.Description);
                 mySqlCommand.Parameters.AddWithValue("@PhotoData", photo.PhotoData);
+                mySqlCommand.Parameters.AddWithValue("@ThumbnailData", photo.ThumbnailData);
                 mySqlCommand.Parameters.AddWithValue("@FileSize", photo.FileSize);
+                mySqlCommand.Parameters.AddWithValue("@ThumbnailSize", photo.ThumbnailSize);
                 mySqlCommand.Parameters.AddWithValue("@ImageType", photo.ImageType);
                 mySqlCommand.Parameters.AddWithValue("@UserId", photo.UserId);
 
@@ -72,8 +74,9 @@ namespace FarmPhoto.Repository
         /// Gets the specified photo by id.
         /// </summary>
         /// <param name="photoId">The photo id.</param>
+        /// <param name="thumbnail">The thumbnail.</param>
         /// <returns></returns>
-        public Photo Get(int photoId)
+        public Photo Get(int photoId, bool thumbnail)
         {
             using (var sqlConnection = new MySqlConnection(_connectionString))
             {
@@ -81,12 +84,28 @@ namespace FarmPhoto.Repository
 
                 var mySqlCommand = new MySqlCommand
                     {
-                        Connection = sqlConnection,
-                        CommandText =
-                            "select photoid, title, description, photodata, imagetype, filesize, userid, createdondateutc from photo where photoid = @PhotoId"
-                    };
+                        Connection = sqlConnection
 
-                mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
+                    };
+                if (photoId == 0)
+                {
+                    mySqlCommand.CommandText = "select photoid, title, description, photodata, imagetype, filesize, userid, createdondateutc from photo order by createdOnDateUTC desc limit 1";
+                }
+                else
+                {
+                    if (thumbnail)
+                    {
+                        mySqlCommand.CommandText =
+                       "select photoid, title, description, thumbnaildata, imagetype, thumbnailsize, userid, createdondateutc from photo where photoid = @PhotoId";
+                    }
+                    else
+                    {
+                        mySqlCommand.CommandText =
+                        "select photoid, title, description, photodata, imagetype, filesize, userid, createdondateutc from photo where photoid = @PhotoId";
+                    }
+
+                    mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
+                }
 
                 MySqlDataReader dataReader = mySqlCommand.ExecuteReader();
 
@@ -94,9 +113,20 @@ namespace FarmPhoto.Repository
 
                 while (dataReader.Read())
                 {
-                    var fileSize = dataReader.GetInt32("filesize");
-                    var bytearray = new byte[fileSize];
-                    dataReader.GetBytes(3, 0, bytearray, 0, fileSize);
+                    byte[] bytearray;
+                    int fileSize;
+                    if (thumbnail)
+                    {
+                        fileSize = dataReader.GetInt32("thumbnailsize");
+                        bytearray = new byte[fileSize];
+                        dataReader.GetBytes(3, 0, bytearray, 0, fileSize);
+                    }
+                    else
+                    {
+                        fileSize = dataReader.GetInt32("filesize");
+                        bytearray = new byte[fileSize];
+                        dataReader.GetBytes(3, 0, bytearray, 0, fileSize);
+                    }
 
                     returnedPhoto.PhotoId = dataReader.GetInt32("photoid");
                     returnedPhoto.Title = dataReader.GetString("title");
@@ -130,7 +160,7 @@ namespace FarmPhoto.Repository
 
                 var usersPhotos = new List<Photo>();
 
-                using  (MySqlDataReader dataReader = mySqlCommand.ExecuteReader())
+                using (MySqlDataReader dataReader = mySqlCommand.ExecuteReader())
                 {
                     while (dataReader.Read())
                     {

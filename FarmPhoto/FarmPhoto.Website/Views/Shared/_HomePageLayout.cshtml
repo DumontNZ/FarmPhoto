@@ -18,9 +18,17 @@
         <div id="MainLeftColumn">
             <ul id="menu">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
-                <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                <li>@Html.ActionLink("Sign Up", "Create", "Account")</li>
+                <li>@Html.ActionLink("Gallery", "Index", "Gallery")</li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
+                    <li>@Html.ActionLink("My Photos", "MyImages", "Gallery")</li>
+                }
+                else
+                { 
+                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    <li>@Html.ActionLink("Register", "Create", "Account")</li>
+                }
             </ul>
         </div>
 

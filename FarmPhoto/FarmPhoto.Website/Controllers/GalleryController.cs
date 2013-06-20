@@ -59,7 +59,7 @@ namespace FarmPhoto.Website.Controllers
         [AllowAnonymous]
         public ActionResult HomeImage()
         {
-            Photo photo = _photoManager.Get(1);
+            Photo photo = _photoManager.Get(0, false);
 
             return File(photo.PhotoData, photo.ImageType);
         }

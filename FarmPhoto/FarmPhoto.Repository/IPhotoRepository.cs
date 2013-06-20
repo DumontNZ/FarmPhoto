@@ -23,8 +23,9 @@ namespace FarmPhoto.Repository
         /// Gets the specified photo by id.
         /// </summary>
         /// <param name="photoId">The photo id.</param>
+        /// <param name="thumbnail">if set to <c>true</c> [thumbnail].</param>
         /// <returns></returns>
-        Photo Get(int photoId);
+        Photo Get(int photoId, bool thumbnail);
 
         /// <summary>
         /// Gets all the users photos.

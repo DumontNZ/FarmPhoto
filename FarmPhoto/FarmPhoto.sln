@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmPhoto.Common.Tests", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmPhoto.Website", "FarmPhoto.Website\FarmPhoto.Website.csproj", "{DBFF99C9-B657-4B54-94D3-ECDF92D66CCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageResizer", "ImageResizer\ImageResizer.csproj", "{7354EF80-2EDE-4A4B-9FE0-F61FEB01F390}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{DBFF99C9-B657-4B54-94D3-ECDF92D66CCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBFF99C9-B657-4B54-94D3-ECDF92D66CCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBFF99C9-B657-4B54-94D3-ECDF92D66CCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7354EF80-2EDE-4A4B-9FE0-F61FEB01F390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7354EF80-2EDE-4A4B-9FE0-F61FEB01F390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7354EF80-2EDE-4A4B-9FE0-F61FEB01F390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7354EF80-2EDE-4A4B-9FE0-F61FEB01F390}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,5 +64,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B9AA2CF1-2516-411C-A451-4E0C697A6BBF} = {AFE711C4-FF2F-4469-A412-416C673EE5A6}
 		{FF3AC6CD-F4BB-4963-878F-7C79D3458002} = {AFE711C4-FF2F-4469-A412-416C673EE5A6}
+		{7354EF80-2EDE-4A4B-9FE0-F61FEB01F390} = {AFE711C4-FF2F-4469-A412-416C673EE5A6}
 	EndGlobalSection
 EndGlobal

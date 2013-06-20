@@ -79,6 +79,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Third Party Dlls\System.Web.Helpers.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -183,11 +185,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\P1030794.JPG" />
     <Content Include="Content\MovingBanner.css" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Images\117700.jpg" />
-    <Content Include="Content\Images\bluwhitegradient.png" />
-    <Content Include="Content\Images\Header.jpg" />
     <Content Include="Content\Images\Image1.jpg" />
     <Content Include="Content\Images\Image2.jpg" />
     <Content Include="Content\Images\Image3.jpg" />

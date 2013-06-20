@@ -35,7 +35,7 @@ namespace FarmPhoto.Repository.Tests
         public void GetPhotoTest()
         {
 
-            Photo photo = _photoRepository.Get(11); 
+            Photo photo = _photoRepository.Get(11, true); 
 
             Assert.IsNotNull(photo.Title);
         }

@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Web;
 using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
@@ -27,33 +28,19 @@ namespace FarmPhoto.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                var memoryStream = new MemoryStream();
-
-                model.File.InputStream.CopyTo(memoryStream);
-
-                byte[] imageAsByte = memoryStream.ToArray();
-
                 var photo = new Photo
                     {
                         Title = model.Title,
                         Description = model.Description,
-                        PhotoData = imageAsByte,
                         ImageType = model.File.ContentType,
-                        FileSize = model.File.ContentLength,
                         UserId = CurrentUser.Id
                     };
+                var photoId = _photoManager.CreatePhoto(photo, model.File);
 
-                var photoId = _photoManager.CreatePhoto(photo);
                 _tagManager.CreateTag(model.Tags, photoId);
             }
 
             return RedirectToAction("MyImages", "Gallery");
-        }
-
-        public ActionResult TheImage(SubmissionModel model)
-        {
-
-            return View(model);
         }
     }
 }

@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.IO;
+using System.Web;
+using System.Drawing;
 using FarmPhoto.Domain;
 using FarmPhoto.Repository;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
 
 namespace FarmPhoto.Core
 {
@@ -21,10 +26,28 @@ namespace FarmPhoto.Core
         /// Creates the photo.
         /// </summary>
         /// <param name="photo">The photo.</param>
+        /// <param name="file">The file.</param>
         /// <returns></returns>
-        public int CreatePhoto(Photo photo)
+        public int CreatePhoto(Photo photo, HttpPostedFileBase file)
         {
-           return _photoRepository.Create(photo); 
+            var memoryStream = new MemoryStream();
+
+            file.InputStream.CopyTo(memoryStream);
+
+            Image image = Image.FromStream(memoryStream);
+
+            memoryStream.Dispose();
+
+            byte[] thumbnailData = ScaleImage(image, 200, 200);
+            byte[] photoData = ScaleImage(image, 800, 800);
+
+            photo.FileSize = photoData.Length;
+            photo.ThumbnailSize = thumbnailData.Length;
+
+            photo.PhotoData = photoData;
+            photo.ThumbnailData = thumbnailData;
+
+            return _photoRepository.Create(photo);
         }
 
         /// <summary>
@@ -33,17 +56,18 @@ namespace FarmPhoto.Core
         /// <returns></returns>
         public IList<Photo> Get()
         {
-            return _photoRepository.Get(); 
+            return _photoRepository.Get();
         }
 
         /// <summary>
         /// Gets the specified photo by id.
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="thumbnail">if set to <c>true</c> [thumbnail].</param>
         /// <returns></returns>
-        public Photo Get(int id)
+        public Photo Get(int id, bool thumbnail = true)
         {
-            return _photoRepository.Get(id); 
+            return _photoRepository.Get(id, thumbnail);
         }
 
         /// <summary>
@@ -54,6 +78,36 @@ namespace FarmPhoto.Core
         public IList<Photo> Get(User user)
         {
             return _photoRepository.Get(user);
+        }
+
+        /// <summary>
+        /// Scales the image.
+        /// </summary>
+        /// <param name="image">The image.</param>
+        /// <param name="maxWidth">Width of the max.</param>
+        /// <param name="maxHeight">Height of the max.</param>
+        /// <returns></returns>
+        private static byte[] ScaleImage(Image image, int maxWidth, int maxHeight)
+        {
+            var ratioX = (double)maxWidth / image.Width;
+            var ratioY = (double)maxHeight / image.Height;
+            var ratio = Math.Min(ratioX, ratioY);
+
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+
+            var newImage = new Bitmap(newWidth, newHeight);
+            Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
+
+            var ms = new MemoryStream();
+
+            newImage.Save(ms, ImageFormat.Jpeg);
+
+            byte[] byteArray = ms.ToArray();
+
+            ms.Dispose();
+
+            return byteArray;
         }
     }
 }

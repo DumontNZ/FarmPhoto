@@ -186,6 +186,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\P1030794.JPG" />
+    <Content Include="Content\Images\Thumbnails\P1030794.JPG" />
+    <Content Include="Content\Images\Thumbnails\P1030795.JPG" />
+    <Content Include="Content\Images\Thumbnails\P1030796.JPG" />
+    <Content Include="Content\Images\Thumbnails\P1030797.JPG" />
+    <Content Include="Content\Images\Thumbnails\P1030798.JPG" />
+    <Content Include="Content\Images\Thumbnails\P1030799.JPG" />
+    <Content Include="Content\Images\Thumbnails\P1030800.JPG" />
     <Content Include="Content\MovingBanner.css" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Images\117700.jpg" />
@@ -289,6 +296,8 @@
     <Content Include="Views\Gallery\MyImages.cshtml" />
     <Content Include="Views\Gallery\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Gallery.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -308,6 +317,10 @@
     <ProjectReference Include="..\FarmPhoto.Domain\FarmPhoto.Domain.csproj">
       <Project>{925ab0a3-c6f6-4445-973f-5826391e905b}</Project>
       <Name>FarmPhoto.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FarmPhoto.Repository\FarmPhoto.Repository.csproj">
+      <Project>{1564BB31-AF95-4E83-B782-EE009BB64F20}</Project>
+      <Name>FarmPhoto.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

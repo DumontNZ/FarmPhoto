@@ -45,7 +45,7 @@ namespace FarmPhoto.Website.Controllers
                 bool successfullyValidated = _formsAuthenticationManager.ValidateUser(new User { UserName = loginModel.Username, Password = loginModel.Password });
                 if (successfullyValidated)
                 {
-                    _formsAuthenticationManager.Login(_userManager.GetUser(new User{UserName = loginModel.Username}), loginModel.RememberMe);
+                    _formsAuthenticationManager.Login(_userManager.Get(new User{UserName = loginModel.Username}), loginModel.RememberMe);
                     return RedirectToAction("Index", "Submission");
                 }
                 ModelState.AddModelError("UserName", ErrorMessages.InvalidUserNameOrPassword);
@@ -69,7 +69,7 @@ namespace FarmPhoto.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userManager.GetUser(new User { UserName = userModel.Username }) != null)
+                if (_userManager.Get(new User { UserName = userModel.Username }) != null)
                 {
                     ModelState.AddModelError("Username", ErrorMessages.UsernameInUse);
                 }
@@ -89,7 +89,7 @@ namespace FarmPhoto.Website.Controllers
                         Password = _cryptography.HashPassword(userModel.Password, passwordSalt)
                     };
 
-                    _userManager.CreateUser(user);
+                    _userManager.Create(user);
 
                    // UserMailer.Welcome(user).Send();
 

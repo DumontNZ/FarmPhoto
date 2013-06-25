@@ -21,10 +21,12 @@ namespace FarmPhoto.Website.Controllers
         /// Returns all approved images as a gallery newest to oldest
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult Index()
         {
             IList<Photo> photos = _photoManager.Get();  
-            return View(); 
+
+            return View(PhotoListToGalleryModel(photos)); 
         }
 
         /// <summary>
@@ -35,21 +37,7 @@ namespace FarmPhoto.Website.Controllers
         {
             IList<Photo> photos = _photoManager.Get(new User{UserId = CurrentUser.Id});
 
-            var galleryModel = new GalleryModel();
-
-            foreach (var photo in photos)
-            {
-                galleryModel.PhotoModels.Add(new PhotoModel
-                    {
-                        PhotoId = photo.PhotoId,
-                        Title = photo.Title,
-                        Description = photo.Description,
-                        SubmittedOn = photo.CreatedOnDateUtc,
-                        Tags = _tagManager.Get(photo.PhotoId)
-                    });
-            }
-
-            return View(galleryModel); 
+            return View(PhotoListToGalleryModel(photos)); 
         }
 
         /// <summary>
@@ -69,12 +57,31 @@ namespace FarmPhoto.Website.Controllers
         /// </summary>
         /// <param name="id">The id.</param>
         /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult Image(int id)
         {
-            Photo photo = _photoManager.Get(id);
+            Photo photo = _photoManager.Get(id, true);
 
             return File(photo.PhotoData, photo.ImageType);
         }
 
+        private GalleryModel PhotoListToGalleryModel(IEnumerable<Photo> photos) 
+        {
+            var galleryModel = new GalleryModel();
+
+            foreach (var photo in photos)
+            {
+                galleryModel.PhotoModels.Add(new PhotoModel
+                {
+                    PhotoId = photo.PhotoId,
+                    Title = photo.Title,
+                    Description = photo.Description,
+                    SubmittedOn = photo.CreatedOnDateUtc,
+                    Tags = _tagManager.Get(photo.PhotoId)
+                });
+            }
+
+            return galleryModel;
+        }
     }
 }

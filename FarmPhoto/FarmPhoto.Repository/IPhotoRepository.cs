@@ -17,7 +17,7 @@ namespace FarmPhoto.Repository
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        IList<Photo> Get();
+        IList<Photo> Get(int numberReturned, int page);
 
         /// <summary>
         /// Gets the specified photo by id.
@@ -34,12 +34,5 @@ namespace FarmPhoto.Repository
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         IList<Photo> Get(User user);
-
-        /// <summary>
-        /// Gets the specified photo.
-        /// </summary>
-        /// <param name="photo">The photo.</param>
-        /// <returns></returns>
-        Photo Get(Photo photo);
     }
 }

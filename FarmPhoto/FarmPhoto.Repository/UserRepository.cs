@@ -67,7 +67,30 @@ namespace FarmPhoto.Repository
         /// <exception cref="System.NotImplementedException"></exception>
         public User Get(int userId)
         {
-            throw new NotImplementedException();
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select password, passwordsalt, userid, firstname, surname, username from user where userid = @UserId" };
+
+                mySqlCommand.Parameters.AddWithValue("UserId", userId);
+
+                MySqlDataReader dataReader = mySqlCommand.ExecuteReader();
+
+                var returnedUser = new User();
+
+                while (dataReader.Read())
+                {
+                    returnedUser.Password = dataReader.GetString("password");
+                    returnedUser.PasswordSalt = dataReader.GetString("passwordsalt");
+                    returnedUser.UserId = dataReader.GetInt32("userid");
+                    returnedUser.FirstName = dataReader.GetString("firstname");
+                    returnedUser.Surname = dataReader.GetString("surname");
+                    returnedUser.UserName = dataReader.GetString("username");
+                }
+
+                return returnedUser;
+            }
         }
 
         /// <summary>
@@ -82,7 +105,7 @@ namespace FarmPhoto.Repository
             {
                 sqlConnection.Open();
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select * from user where username = @UserName" };
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select password, passwordsalt, userid, firstname, surname, username from user where username = @UserName" };
 
                 mySqlCommand.Parameters.AddWithValue("UserName", user.UserName);
 

@@ -20,7 +20,7 @@ namespace FarmPhoto.Core
         /// <param name="id">The id.</param>
         /// <param name="thumbnail">if set to <c>true</c> [thumbnail].</param>
         /// <returns></returns>
-        Photo Get(int id, bool thumbnail = true);
+        Photo Get(int id, bool thumbnail);
 
         /// <summary>
         /// Gets the specified user.
@@ -30,9 +30,9 @@ namespace FarmPhoto.Core
         IList<Photo> Get(User user);
 
         /// <summary>
-        /// Gets all photos that have been approved. 
+        /// Gets all photos that have been approved. 20 Per page 
         /// </summary>
         /// <returns></returns>
-        IList<Photo> Get();
+        IList<Photo> Get(int numberReturned = 20, int page = 1);
     }
 }

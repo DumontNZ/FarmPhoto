@@ -30,7 +30,7 @@ namespace FarmPhoto.Core.Authentication
         /// <returns></returns>
         public bool ValidateUser(User userToValidate)
         {
-            User user = _userManager.GetUser(userToValidate);
+            User user = _userManager.Get(userToValidate);
 
             return _cryptography.ValidatePassword(userToValidate.Password, user.PasswordSalt, user.Password);
         }

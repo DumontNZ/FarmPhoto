@@ -31,7 +31,7 @@ namespace FarmPhoto.Repository
                 sqlConnection.Open();
 
                 const string sql =
-                    "Insert into photo(title, description, photodata, thumbnaildata, filesize, thumbnailsize, imagetype, userid) values(@Title, @Description, @PhotoData, @ThumbnailData, @FileSize, @ThumbnailSize, @ImageType,  @UserId)";
+                    "Insert into photo(title, description, photodata, thumbnaildata, filesize, thumbnailsize, imagetype, approved, userid) values(@Title, @Description, @PhotoData, @ThumbnailData, @FileSize, @ThumbnailSize, @ImageType, @Approved, @UserId)";
 
                 mySqlCommand.Connection = sqlConnection;
                 mySqlCommand.CommandText = sql;
@@ -42,6 +42,7 @@ namespace FarmPhoto.Repository
                 mySqlCommand.Parameters.AddWithValue("@FileSize", photo.FileSize);
                 mySqlCommand.Parameters.AddWithValue("@ThumbnailSize", photo.ThumbnailSize);
                 mySqlCommand.Parameters.AddWithValue("@ImageType", photo.ImageType);
+                mySqlCommand.Parameters.AddWithValue("@Approved", false);
                 mySqlCommand.Parameters.AddWithValue("@UserId", photo.UserId);
 
                 mySqlCommand.ExecuteNonQuery();
@@ -55,19 +56,36 @@ namespace FarmPhoto.Repository
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public IList<Photo> Get()
+        public IList<Photo> Get(int numberReturned, int page)
         {
-            throw new NotImplementedException();
-        }
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
 
-        /// <summary>
-        /// Gets the specified photo.
-        /// </summary>
-        /// <param name="photo">The photo.</param>
-        /// <returns></returns>
-        public Photo Get(Photo photo)
-        {
-            throw new NotImplementedException();
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select photoid, title, description, userid from photo where approved = true order by createdOnDateUTC desc limit @NumberReturned" };
+                mySqlCommand.Parameters.AddWithValue("NumberReturned", numberReturned);
+                
+                var usersPhotos = new List<Photo>();
+
+                using (MySqlDataReader dataReader = mySqlCommand.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        var photo = new Photo
+                        {
+                            PhotoId = dataReader.GetInt32("photoid"),
+                            Title = dataReader.GetString("title"),
+                            Description = dataReader.GetString("description"),
+                            UserId = dataReader.GetInt32("userid")
+                        };
+
+                        usersPhotos.Add(photo);
+                    }
+
+                }
+
+                return usersPhotos;
+            }
         }
 
         /// <summary>
@@ -89,7 +107,7 @@ namespace FarmPhoto.Repository
                     };
                 if (photoId == 0)
                 {
-                    mySqlCommand.CommandText = "select photoid, title, description, photodata, imagetype, filesize, userid, createdondateutc from photo order by createdOnDateUTC desc limit 1";
+                    mySqlCommand.CommandText = "select photoid, title, description, photodata, imagetype, filesize, userid, createdondateutc from photo where approved = true order by createdOnDateUTC desc limit 1";
                 }
                 else
                 {
@@ -154,7 +172,7 @@ namespace FarmPhoto.Repository
             {
                 sqlConnection.Open();
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select photoid, title, description, userid from photo where userid = @UserId" };
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select photoid, title, description, userid from photo where userid = @UserId order by createdOnDateUTC desc" };
 
                 mySqlCommand.Parameters.AddWithValue("UserId", user.UserId);
 

@@ -1,31 +1,47 @@
-﻿@{
-    Layout = "~/Views/Shared/_HomePageLayout.cshtml";
+﻿@model FarmPhoto.Website.Models.GalleryModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home Page";
 }
-<h1>
-    @ViewBag.User
-</h1>
 
-<div id="photoBannerContainer">
-    <!-- Each image is 350px by 233px -->
+@*<div id="photoBannerContainer">
     <div class="photobanner">
-        <img class="first" src="../../Content/Images/Image1.jpg" alt="">
-        <img src="../../Content/Images/Image2.jpg" alt="">
-        <img src="../../Content/Images/Image3.jpg" alt="">
-        <img src="../../Content/Images/Image4.jpg" alt="">
-        <img src="../../Content/Images/Image5.jpg" alt="">
-        <img src="../../Content/Images/Image6.jpg" alt="">
-        <img src="../../Content/Images/Image1.jpg" alt="">
-        <img src="../../Content/Images/Image2.jpg" alt="">
-        <img src="../../Content/Images/Image3.jpg" alt="">
-        <img src="../../Content/Images/Image4.jpg" alt="">
+        <img class="first" src="~/Content/Images/Thumbnails/P1030794.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030795.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030796.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030797.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030798.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030799.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030800.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030794.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030795.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030796.JPG" />
+        <img src="~/Content/Images/Thumbnails/P1030797.JPG" />
     </div>
-</div>
+</div>*@
 
 <div id="MainContentContainer">
     <div id="MostRecentPicture">
-        <h2>Recently Added Photo</h2>
-        <h3>Submitted By: James Walters</h3>
-        <img src="@Url.Action("HomeImage", "Gallery")" alt="" />
+
+        @{
+            var firstOrDefault = Model.PhotoModels.FirstOrDefault();
+        }
+        @if (firstOrDefault != null)
+        {
+            <div class="ContentContainerHeader">
+                <h2>Recently Added Photo</h2>
+                <h3>Submitted By: @Html.Label(firstOrDefault.SubmittedBy)</h3>
+                <h3>Submitted On: @Html.Label(firstOrDefault.SubmittedOn.ToShortDateString())</h3>
+                <h3>@firstOrDefault.Title</h3>
+            </div>
+            <div class="portraitframe">
+                <img src="@Url.Action("HomeImage", "Gallery")" alt="" />
+            </div>
+        }
+        else
+        {
+            <h2>Recently Added Photo</h2>
+            <h3>No Pictures have been added yet</h3>
+        }
     </div>
 </div>

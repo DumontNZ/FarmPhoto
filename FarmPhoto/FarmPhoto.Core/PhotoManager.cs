@@ -51,12 +51,14 @@ namespace FarmPhoto.Core
         }
 
         /// <summary>
-        /// Gets all photos that have been approved. 
+        /// Gets all photos that have been approved.
         /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="numberReturned">The number returned.</param>
         /// <returns></returns>
-        public IList<Photo> Get()
+        public IList<Photo> Get(int page,int numberReturned = 20)
         {
-            return _photoRepository.Get();
+            return _photoRepository.Get(numberReturned, page);
         }
 
         /// <summary>
@@ -65,7 +67,7 @@ namespace FarmPhoto.Core
         /// <param name="id">The id.</param>
         /// <param name="thumbnail">if set to <c>true</c> [thumbnail].</param>
         /// <returns></returns>
-        public Photo Get(int id, bool thumbnail = true)
+        public Photo Get(int id, bool thumbnail)
         {
             return _photoRepository.Get(id, thumbnail);
         }

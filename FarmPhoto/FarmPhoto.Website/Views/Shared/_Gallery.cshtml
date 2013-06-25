@@ -1,0 +1,13 @@
+﻿@model FarmPhoto.Website.Models.GalleryModel
+
+<div class="photoalbum">
+        @foreach (var photo in Model.PhotoModels)
+        {
+            <div class="photoframe">
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="@Url.Action("Image", "Gallery", new { id = photo.PhotoId })" alt="" />
+                </a>
+                
+            </div>
+        }
+    </div>

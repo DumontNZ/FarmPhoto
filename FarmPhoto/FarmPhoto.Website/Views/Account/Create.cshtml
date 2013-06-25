@@ -5,9 +5,9 @@
 }
 
 <div id="ContentContainer">
-    
-    <h2>Create an Account with FarmPhoto</h2>
-
+    <div class="ContentContainerHeader">
+        <h2>Create an Account with FarmPhoto</h2>
+    </div>
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -47,7 +47,7 @@
             @Html.ValidationMessageFor(m => m.Country)
         </div>
     
-        <input type="submit" value="Create"/>
+        <input type="submit" value="Create" />
     }
 </div>
 

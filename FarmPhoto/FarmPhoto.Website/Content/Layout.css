@@ -5,17 +5,21 @@
     margin-left: 0px;
     margin-right: 5px;
     float: left;
-    height: 100%
+    height: 800px
+}
+
+.ContentContainerHeader {
+    margin-left: 10px; 
 }
 
 
 #LeftColumn {
-    background: white;
     margin-top: 5px;
     margin-right: 5px;
     width: 150px;
     height: 100%;
     float: left;
+    background-color: #036;
 }
 
 #RightColumn {
@@ -36,5 +40,5 @@
 }
 
 #InnerContent {
-    background: orange;
+    /*background: orange;*/
 }

@@ -5,19 +5,11 @@
 }
 
 <div id="ContentContainer">
-    <h2>My Photos</h2>
-    <h3>Welcome to My Photos from here you can review any photos you may have submitted</h3>
 
-    <div class="photoalbum">
-        @foreach (var photo in Model.PhotoModels)
-        {
-            <div class="photoframe">
-                <a href="@Url.Action("Index", "Home")">
-                    <img src="@Url.Action("Image", "Gallery", new { id = photo.PhotoId })" alt="" />
-                </a>
-                
-            </div>
-        }
+    <div class="ContentContainerHeader">
+        <h2>My Photos</h2>
+        <h3>Welcome to My Photos from here you can review any photos you may have submitted</h3>
     </div>
 
+    @Html.Partial("_Gallery")
 </div>

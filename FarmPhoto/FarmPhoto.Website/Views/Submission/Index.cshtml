@@ -5,7 +5,9 @@
 }
 
 <div id="ContentContainer">
-    <h3>Submit Photo</h3>
+    <div class="ContentContainerHeader">
+        <h3>Submit Photo</h3>
+    </div>
     @using (Html.BeginForm("Index", "Submission", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="formRow">

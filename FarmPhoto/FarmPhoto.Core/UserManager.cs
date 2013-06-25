@@ -25,7 +25,7 @@ namespace FarmPhoto.Core
         /// Creates the user.
         /// </summary>
         /// <returns></returns>
-        public int CreateUser(User user)
+        public int Create(User user)
         {
             _logger.Debug("Inside Manager");
 
@@ -36,7 +36,7 @@ namespace FarmPhoto.Core
         /// Gets all users.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<User> Get()
         {
             return _userRepository.Get();
         }
@@ -47,9 +47,19 @@ namespace FarmPhoto.Core
         /// <param name="user">The user.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public User GetUser(User user)
+        public User Get(User user)
         {
             return _userRepository.Get(user);
+        }
+
+        /// <summary>
+        /// Gets the specified user id.
+        /// </summary>
+        /// <param name="userId">The user id.</param>
+        /// <returns></returns>
+        public User Get(int userId)
+        {
+            return _userRepository.Get(userId);
         }
     }
 }

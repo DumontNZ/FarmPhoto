@@ -33,6 +33,6 @@ namespace FarmPhoto.Core
         /// Gets all photos that have been approved. 20 Per page 
         /// </summary>
         /// <returns></returns>
-        IList<Photo> Get(int numberReturned = 20, int page = 1);
+        IList<Photo> Get(int page, int numberReturned = 20);
     }
 }

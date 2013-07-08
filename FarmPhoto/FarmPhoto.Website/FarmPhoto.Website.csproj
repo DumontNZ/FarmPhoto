@@ -169,6 +169,7 @@
     <Compile Include="Attributes\PasswordAttribute.cs" />
     <Compile Include="Content\Urls.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubmissionController.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\banner2.jpg" />
     <Content Include="Content\Images\P1030794.JPG" />
     <Content Include="Content\Images\Thumbnails\P1030794.JPG" />
     <Content Include="Content\Images\Thumbnails\P1030795.JPG" />
@@ -298,6 +300,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Gallery.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Gallery\Photo.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

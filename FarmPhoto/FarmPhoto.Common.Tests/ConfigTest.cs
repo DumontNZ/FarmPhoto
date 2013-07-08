@@ -16,5 +16,15 @@ namespace FarmPhoto.Common.Tests
             Assert.IsNotNull(configurationKey);
         }
 
+        [Test]
+        public void ConfigRetrievesAdministratorUsername()
+        {
+            var config = new Config();
+
+            var configurationKey = config.AdministratorUsername;
+
+            Assert.IsNotNull(configurationKey);
+        }
+
     }
 }

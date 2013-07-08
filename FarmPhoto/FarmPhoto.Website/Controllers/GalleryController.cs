@@ -24,7 +24,7 @@ namespace FarmPhoto.Website.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            IList<Photo> photos = _photoManager.Get();  
+            IList<Photo> photos = _photoManager.Get(1);  
 
             return View(PhotoListToGalleryModel(photos)); 
         }
@@ -52,15 +52,32 @@ namespace FarmPhoto.Website.Controllers
             return File(photo.PhotoData, photo.ImageType);
         }
 
+        [AllowAnonymous]
+        public ActionResult Photo(int id)
+        {
+            Photo photo = _photoManager.Get(id, true);
+
+            var photoModel = new PhotoModel
+                {
+                    PhotoId = photo.PhotoId,
+                    Description = photo.Description,
+                    Title = photo.Title,
+                    Tags = _tagManager.Get(photo.PhotoId)
+                };
+
+            return View(photoModel); 
+        }
+
         /// <summary>
         /// Get an image by id.
         /// </summary>
         /// <param name="id">The id.</param>
+        /// <param name="thumbnail">if set to <c>true</c> [thumbnail].</param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Image(int id)
+        public ActionResult Image(int id, bool thumbnail = true)
         {
-            Photo photo = _photoManager.Get(id, true);
+            Photo photo = _photoManager.Get(id, thumbnail);
 
             return File(photo.PhotoData, photo.ImageType);
         }

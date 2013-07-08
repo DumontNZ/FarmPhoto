@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using FarmPhoto.Domain
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,7 +11,8 @@
 <body>
     
     <div id="header">
-        <img src="~/Content/Images/P1030794.JPG"/>
+        <img src="~/Content/Images/banner2.jpg" />
+        @*<img src="~/Content/Images/P1030794.JPG"/>*@
     </div>
 
     <div id="PageContent">
@@ -27,6 +29,10 @@
                 { 
                     <li>@Html.ActionLink("Login", "Login", "Account")</li>
                     <li>@Html.ActionLink("Register", "Create", "Account")</li>
+                }
+                @if (CurrentUser.IsAdministrator)
+                {
+                    <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
                 }
                 <li>@Html.ActionLink("About Us", "AboutUs", "Home")</li>
             </ul>

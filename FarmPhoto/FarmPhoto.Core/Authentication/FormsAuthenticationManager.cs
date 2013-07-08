@@ -43,14 +43,15 @@ namespace FarmPhoto.Core.Authentication
         public void Login(User user, bool remember)
         {
             var data = new List<string>();
-
             DateTime issued = DateTime.UtcNow;
 
             DateTime expiration = remember
                                       ? issued.AddMinutes(_config.YearInMinutes)
                                       : issued.AddMinutes(FormsAuthentication.Timeout.TotalMinutes);
 
-            data.InsertRange(0, new List<string>{user.FirstName, user.Surname, user.UserId.ToString(CultureInfo.InvariantCulture)});                
+            bool isAdministrator = user.UserName == _config.AdministratorUsername;
+
+            data.InsertRange(0, new List<string>{user.FirstName, user.Surname, user.UserId.ToString(CultureInfo.InvariantCulture), isAdministrator.ToString()});                
             
             var ticket = new FormsAuthenticationTicket(1, user.UserName, issued, expiration,
                                                        true, string.Join(",", data));

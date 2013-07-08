@@ -17,5 +17,13 @@
         /// The year in minutes.
         /// </value>
         double YearInMinutes { get; }
+
+        /// <summary>
+        /// Gets the administrator username.
+        /// </summary>
+        /// <value>
+        /// The administrator username.
+        /// </value>
+        string AdministratorUsername { get; }
     }
 }

@@ -16,5 +16,6 @@ namespace FarmPhoto.Domain
         public string PasswordSalt { get; set; }
         public string Token { get; set; }
         public DateTime TokenExpiry { get; set; }
+        public bool Administrator { get; set; }
     }
 }

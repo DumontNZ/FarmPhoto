@@ -42,7 +42,7 @@ namespace FarmPhoto.Repository
                 mySqlCommand.Parameters.AddWithValue("@FileSize", photo.FileSize);
                 mySqlCommand.Parameters.AddWithValue("@ThumbnailSize", photo.ThumbnailSize);
                 mySqlCommand.Parameters.AddWithValue("@ImageType", photo.ImageType);
-                mySqlCommand.Parameters.AddWithValue("@Approved", false);
+                mySqlCommand.Parameters.AddWithValue("@Approved", true);
                 mySqlCommand.Parameters.AddWithValue("@UserId", photo.UserId);
 
                 mySqlCommand.ExecuteNonQuery();

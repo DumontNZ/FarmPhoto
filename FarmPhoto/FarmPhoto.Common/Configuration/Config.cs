@@ -38,6 +38,10 @@ namespace FarmPhoto.Common.Configuration
             get { return ConvertToDouble(ConfigKeys.YearInMinutes); }
         }
 
+        public string AdministratorUsername {
+            get { return GetConfigurationValues(ConfigKeys.AdministratorUsername); }
+        }
+
         private static double ConvertToDouble(string key)
         {
             string value = GetConfigurationValues(key);

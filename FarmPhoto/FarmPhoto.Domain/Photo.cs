@@ -13,6 +13,8 @@ namespace FarmPhoto.Domain
         public int FileSize { get; set; }
         public int ThumbnailSize { get; set; }
         public int UserId { get; set; }
+        public bool Approved { get; set; }
+        public string SubmittedBy { get; set; }
         public DateTime CreatedOnDateUtc { get; set; }
         public DateTime DeletedOnDateUtc { get; set; }
     }

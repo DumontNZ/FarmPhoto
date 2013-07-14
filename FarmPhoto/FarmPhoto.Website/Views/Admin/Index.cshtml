@@ -1,5 +1,89 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model FarmPhoto.Website.Models.GalleryModel
+
+@{
+    ViewBag.Title = "Photo Approval";
 }
 
-<h2>WELCOME MOTHER FUCKER</h2>
+<div id="ContentContainer">
+
+    <div class="ContentContainerHeader">
+        <h2>Photo Approval</h2>
+        <h3>Welcome, from here you can inact your power and decide if a photo is going to be allowed your website</h3>
+    </div>
+
+    @if (Model.PhotoModels.Count > 0)
+    {
+        foreach (var photo in Model.PhotoModels)
+        {
+            <div class="AdminRow" id="Approve@(photo.PhotoId)">
+               
+                <div class="photoframe">
+                    <img src="@Url.Action("Image", "Gallery", new {id = photo.PhotoId})" alt="" />
+                </div>
+                <div class="AdminPhotoInformation">
+                    <div class="Title">
+                        @photo.Title
+                    </div>
+                    <div class="Descriptive">
+                        @photo.SubmittedBy
+                    </div>
+                    <div class="Descriptive">
+                        @photo.Description
+                    </div>
+                </div>
+                <div class="ApproveButton">
+                    <input id="Approve" class="Approve" type="button" value="Approve"/>
+                </div>
+                <div class="DeleteButton">
+                    <input class="Delete" type="button" value="Delete"/>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="NoContentMessage">There are no Photos awaiting approval. </div>
+    }
+
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.Approve').click(function () {
+            var grandParent = this.parentElement.parentElement;
+            var title = $(grandParent).find(".Title")[0].innerText;
+            var photoid = grandParent.id.substring(7);
+            $.ajax({
+                url: "@Url.Action("Approve","Admin")",
+                type: "POST",
+                data: { id: photoid },
+                success: function (data) {
+                    if (data.Success) {
+                        $(grandParent.children).hide('slow', function() {
+                            $(grandParent.innerHTML = "<div class='SuccessMessage'>" + title + " has been Successesfully Approved</div>").fadeIn('slow');
+                        });
+                    } 
+                }
+            }); 
+        });
+        
+        $('.Delete').click(function () {
+            var grandParent = this.parentElement.parentElement;
+            var title = $(grandParent).find(".Title")[0].innerText;
+            var photoid = grandParent.id.substring(7);
+            $.ajax({
+                url: "@Url.Action("Delete","Admin")",
+                type: "POST",
+                data: { id: photoid },
+                success: function (data) {
+                    if (data.Success) {
+                        $(grandParent.children).hide('slow', function () {
+                            $(grandParent.innerHTML = "<div class='SuccessMessage'>" + title + " has been Successesfully Approved</div>").fadeIn('slow');
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>

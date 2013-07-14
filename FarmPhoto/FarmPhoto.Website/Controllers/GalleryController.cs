@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using FarmPhoto.Common.Configuration;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using FarmPhoto.Website.Models;
@@ -9,12 +10,14 @@ namespace FarmPhoto.Website.Controllers
     public class GalleryController : Controller
     {
         private readonly ITagManager _tagManager;
+        private readonly IConfig _config;
         private readonly IPhotoManager _photoManager;
 
-        public GalleryController(IPhotoManager photoManager, ITagManager tagManager)
+        public GalleryController(IPhotoManager photoManager, ITagManager tagManager, IConfig config)
         {
             _photoManager = photoManager;
             _tagManager = tagManager;
+            _config = config;
         }
 
         /// <summary>
@@ -24,7 +27,8 @@ namespace FarmPhoto.Website.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            IList<Photo> photos = _photoManager.Get(1);  
+            int page = 1; 
+            IList<Photo> photos = _photoManager.Get(page, _config.PhotosPerPage);  
 
             return View(PhotoListToGalleryModel(photos)); 
         }
@@ -60,6 +64,7 @@ namespace FarmPhoto.Website.Controllers
             var photoModel = new PhotoModel
                 {
                     PhotoId = photo.PhotoId,
+                    UserId = photo.UserId,
                     Description = photo.Description,
                     Title = photo.Title,
                     Tags = _tagManager.Get(photo.PhotoId)
@@ -91,8 +96,10 @@ namespace FarmPhoto.Website.Controllers
                 galleryModel.PhotoModels.Add(new PhotoModel
                 {
                     PhotoId = photo.PhotoId,
+                    UserId = photo.UserId,
                     Title = photo.Title,
                     Description = photo.Description,
+                    SubmittedBy = photo.SubmittedBy,
                     SubmittedOn = photo.CreatedOnDateUtc,
                     Tags = _tagManager.Get(photo.PhotoId)
                 });

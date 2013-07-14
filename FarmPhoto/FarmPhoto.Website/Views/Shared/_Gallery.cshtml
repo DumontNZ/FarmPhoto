@@ -7,7 +7,7 @@
                 <a href="@Url.Action("Index", "Home")">
                     <img src="@Url.Action("Image", "Gallery", new { id = photo.PhotoId })" alt="" />
                 </a>
-                
+                @*Submitted by: @Html.ActionLink("" + @photo.SubmittedBy, "User", "Gallery", new{Id = @photo.SubmittedBy})*@
             </div>
         }
     </div>

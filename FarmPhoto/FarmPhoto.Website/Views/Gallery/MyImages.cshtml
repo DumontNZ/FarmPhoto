@@ -10,6 +10,13 @@
         <h2>My Photos</h2>
         <h3>Welcome to My Photos from here you can review any photos you may have submitted</h3>
     </div>
+    @if (Model.PhotoModels.Count > 0)
+    {
+        @Html.Partial("_Gallery")
 
-    @Html.Partial("_Gallery")
+    }
+    else
+    {
+        <div class="NoContentMessage">You haven't uploaded any photos yet cruise over to the @Html.ActionLink("Submission Page", "Index", "Submission") page to add one. </div>
+    }
 </div>

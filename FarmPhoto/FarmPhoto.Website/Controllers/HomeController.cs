@@ -30,6 +30,7 @@ namespace FarmPhoto.Website.Controllers
             var mainPhotoModel = new PhotoModel
             {
                 PhotoId = mainPhoto.PhotoId,
+                UserId = mainPhoto.UserId,
                 Description = mainPhoto.Description,
                 Title = mainPhoto.Title,
                 SubmittedBy = user.UserName,
@@ -43,6 +44,7 @@ namespace FarmPhoto.Website.Controllers
                 var photoModel = new PhotoModel
                 {
                     PhotoId = photo.PhotoId,
+                    UserId = photo.UserId,
                     Description = photo.Description,
                     Title = photo.Title,
                     SubmittedOn = photo.CreatedOnDateUtc

@@ -25,5 +25,13 @@
         /// The administrator username.
         /// </value>
         string AdministratorUsername { get; }
+
+        /// <summary>
+        /// Gets the number of photos per page.
+        /// </summary>
+        /// <value>
+        /// The photos per page.
+        /// </value>
+        int PhotosPerPage { get; }
     }
 }

@@ -51,14 +51,37 @@ namespace FarmPhoto.Core
         }
 
         /// <summary>
-        /// Gets all photos that have been approved.
+        /// Gets all photos that have been approved if gallery otherwise unapproved if admin.
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="numberReturned">The number returned.</param>
+        /// <param name="approved">if set to <c>true</c> [approved].</param>
         /// <returns></returns>
-        public IList<Photo> Get(int page,int numberReturned = 20)
+        public IList<Photo> Get(int page, int numberReturned = 20, bool approved = true)
         {
-            return _photoRepository.Get(numberReturned, page);
+            return _photoRepository.Get(page, numberReturned, approved);
+        }
+
+        /// <summary>
+        /// Updates the specified photo to apporved.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="approved">if set to <c>true</c> [approved].</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public int Update(int id, bool approved)
+        {
+            return _photoRepository.Update(id, approved); 
+        }
+
+        /// <summary>
+        /// Deletes the specified photo.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public int Delete(int id)
+        {
+            return _photoRepository.Delete(id); 
         }
 
         /// <summary>

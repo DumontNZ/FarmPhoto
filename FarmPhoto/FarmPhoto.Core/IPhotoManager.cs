@@ -33,6 +33,20 @@ namespace FarmPhoto.Core
         /// Gets all photos that have been approved. 20 Per page 
         /// </summary>
         /// <returns></returns>
-        IList<Photo> Get(int page, int numberReturned = 20);
+        IList<Photo> Get(int page, int numberReturned = 20, bool approved = true);
+
+        /// <summary>
+        /// Updates the specified photo to apporved.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="approved">if set to <c>true</c> [approved].</param>
+        /// <returns></returns>
+        int Update(int id, bool approved);
+
+        /// <summary>
+        /// Deletes the specified photo.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        int Delete(int id);
     }
 }

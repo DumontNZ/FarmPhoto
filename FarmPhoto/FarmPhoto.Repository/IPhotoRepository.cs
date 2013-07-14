@@ -13,11 +13,14 @@ namespace FarmPhoto.Repository
         int Create(Photo photo);
 
         /// <summary>
-        /// Gets all photos that have been approved.
+        /// Gets all photos that have been approved if its for gallery otherwise gets unapproved if adminscreen .
         /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="numberReturned">The number returned.</param>
+        /// <param name="approved">if set to <c>true</c> [approved].</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        IList<Photo> Get(int numberReturned, int page);
+        IList<Photo> Get(int page, int numberReturned, bool approved);
 
         /// <summary>
         /// Gets the specified photo by id.
@@ -34,5 +37,19 @@ namespace FarmPhoto.Repository
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         IList<Photo> Get(User user);
+
+        /// <summary>
+        /// Updates the specified photo to approved.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="approved">if set to <c>true</c> [approved].</param>
+        /// <returns></returns>
+        int Update(int id, bool approved);
+
+        /// <summary>
+        /// Soft Deletes the specified photo.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        int Delete(int id);
     }
 }

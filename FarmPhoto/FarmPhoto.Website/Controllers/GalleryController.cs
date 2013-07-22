@@ -37,11 +37,24 @@ namespace FarmPhoto.Website.Controllers
         /// Get a users images to return as a gallery.
         /// </summary>
         /// <returns></returns>
-        public ActionResult MyImages()
+        public ActionResult MyPhotos()
         {
             IList<Photo> photos = _photoManager.Get(new User{UserId = CurrentUser.Id});
 
             return View(PhotoListToGalleryModel(photos)); 
+        }
+
+        /// <summary>
+        /// Get a users images to return as a gallery.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UsersPhotos(string username)
+        {
+            ViewBag.Username = username; 
+
+            IList<Photo> photos = _photoManager.Get(new User { UserName = username });
+
+            return View(PhotoListToGalleryModel(photos));
         }
 
         /// <summary>
@@ -57,20 +70,48 @@ namespace FarmPhoto.Website.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Photo(int id)
+        public ActionResult Photo(int? id)
         {
-            Photo photo = _photoManager.Get(id, true);
 
-            var photoModel = new PhotoModel
+            if (id.HasValue)
+            {
+                Photo photo = _photoManager.Get(id.Value, true);
+
+                var photoModel = new PhotoModel
                 {
                     PhotoId = photo.PhotoId,
                     UserId = photo.UserId,
                     Description = photo.Description,
                     Title = photo.Title,
-                    Tags = _tagManager.Get(photo.PhotoId)
+                    Tags = _tagManager.Get(photo.PhotoId),
+                    Width = "" + 800 + "px",
+                    Height = "" + 800 + "px"
                 };
 
-            return View(photoModel); 
+                photoModel.TagString = string.Join(", ", photoModel.Tags);
+
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("_Photo", photoModel);
+                }
+
+                return View(photoModel);
+            }
+
+            return View("Error"); 
+        }
+
+        [HttpPost]
+        public ActionResult Photo(PhotoModel photoModel)
+        {
+
+            if (Request.IsAjaxRequest())
+            {
+
+                return PartialView("_Photo", photoModel);
+            }
+
+            return View(photoModel);
         }
 
         /// <summary>

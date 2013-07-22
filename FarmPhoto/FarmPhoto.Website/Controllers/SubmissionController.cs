@@ -40,7 +40,7 @@ namespace FarmPhoto.Website.Controllers
                 _tagManager.CreateTag(model.Tags, photoId);
             }
 
-            return RedirectToAction("MyImages", "Gallery");
+            return RedirectToAction("MyPhotos", "Gallery");
         }
     }
 }

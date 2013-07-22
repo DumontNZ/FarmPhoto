@@ -134,7 +134,7 @@ namespace FarmPhoto.Repository
                        "select p.photoid, p.title, p.description, p.thumbnaildata, p.imagetype, p.thumbnailsize, p.userid, p.createdondateutc, u.username " +
                        "from photo as p " +
                        "inner join user as u on p.userid = u.userid " +
-                       "where photoid = @PhotoId AND deletedondateutc is null";
+                       "where photoid = @PhotoId AND p.deletedondateutc is null";
                     }
                     else
                     {
@@ -142,7 +142,7 @@ namespace FarmPhoto.Repository
                         "select p.photoid, p.title, p.description, p.photodata, p.imagetype, p.filesize, p.userid, p.createdondateutc, u.username " +
                         "from photo as p " +
                         "inner join user as u on p.userid = u.userid " +
-                        "where photoid = @PhotoId AND deletedondateutc is null";
+                        "where photoid = @PhotoId AND p.deletedondateutc is null";
                     }
 
                     mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
@@ -173,9 +173,9 @@ namespace FarmPhoto.Repository
                     returnedPhoto.Title = dataReader.GetString("title");
                     returnedPhoto.PhotoData = bytearray;
                     returnedPhoto.FileSize = fileSize;
+                    returnedPhoto.UserId = dataReader.GetInt32("userid");
                     returnedPhoto.Description = dataReader.GetString("description");
                     returnedPhoto.ImageType = dataReader.GetString("imagetype");
-                    returnedPhoto.UserId = dataReader.GetInt32("userid");
                     returnedPhoto.CreatedOnDateUtc = (DateTime)dataReader.GetMySqlDateTime("createdondateutc");
                 }
 
@@ -195,13 +195,31 @@ namespace FarmPhoto.Repository
             {
                 sqlConnection.Open();
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select p.photoid, p.title, p.description, p.userid, u.username " +
-                                                                                                "from photo as p " +
-                                                                                                "inner join user as u on p.userid = u.userid " +
-                                                                                                "where userid = @UserId and deletedondateutc is null " +
-                                                                                                "order by createdOnDateUTC desc" };
+                var mySqlCommand = new MySqlCommand
+                    {
+                        Connection = sqlConnection
+                    };
 
-                mySqlCommand.Parameters.AddWithValue("UserId", user.UserId);
+                if (user.UserName != null)
+                {
+                    mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.userid, u.username " +
+                                               "from photo as p " +
+                                               "inner join user as u on p.userid = u.userid " +
+                                               "where username = @Username and deletedondateutc is null " +
+                                               "order by p.createdOnDateUTC desc";
+                    
+
+                    mySqlCommand.Parameters.AddWithValue("Username", user.UserName);
+                }else
+                {
+                    mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.userid, u.username " +
+                                               "from photo as p " +
+                                               "inner join user as u on p.userid = u.userid " +
+                                               "where userid = @UserId and deletedondateutc is null " +
+                                               "order by p.createdOnDateUTC desc";
+
+                    mySqlCommand.Parameters.AddWithValue("UserId", user.UserId);
+                }
 
                 var usersPhotos = new List<Photo>();
 
@@ -214,7 +232,8 @@ namespace FarmPhoto.Repository
                             PhotoId = dataReader.GetInt32("photoid"),
                             Title = dataReader.GetString("title"),
                             Description = dataReader.GetString("description"),
-                            UserId = dataReader.GetInt32("userid")
+                            UserId = dataReader.GetInt32("userid"),
+                            SubmittedBy = dataReader.GetString("username")
                         };
 
                         usersPhotos.Add(photo);

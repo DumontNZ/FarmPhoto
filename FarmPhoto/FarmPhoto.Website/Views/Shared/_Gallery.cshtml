@@ -1,13 +1,56 @@
 ﻿@model FarmPhoto.Website.Models.GalleryModel
 
 <div class="photoalbum">
-        @foreach (var photo in Model.PhotoModels)
-        {
-            <div class="photoframe">
-                <a href="@Url.Action("Index", "Home")">
-                    <img src="@Url.Action("Image", "Gallery", new { id = photo.PhotoId })" alt="" />
-                </a>
-                @*Submitted by: @Html.ActionLink("" + @photo.SubmittedBy, "User", "Gallery", new{Id = @photo.SubmittedBy})*@
-            </div>
-        }
-    </div>
+    @foreach (var photo in Model.PhotoModels)
+    {
+        <div class="photoframe">
+            <a href="@Url.Action("Photo", "Gallery", new { id = @photo.PhotoId})" class="openDialog" id= "@photo.PhotoId">
+                <img src="@Url.Action("Image", "Gallery", new { id = photo.PhotoId })" alt="" />
+            </a>
+            
+            Submitted by: @Html.ActionLink("" + @photo.SubmittedBy, "UsersPhotos", "Gallery", new{username = photo.SubmittedBy}, null)
+        </div>
+    }
+</div>
+
+<div id="partial" class="dialog"></div>
+
+<script type="text/javascript">
+
+    $.ajaxSetup({ cache: false });
+
+    $(document).ready(function () {
+        
+        var dialog = $("#partial").dialog({
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            resizable: true,
+            modal: true,
+            open: function(event, ui) {
+                $(".ui.widget-overlay").click(function () {
+                    alert('click');
+                });
+
+                $(".ui.widget-overlay").on('click', function () {
+                    alert("on");
+                    $("#partial").dialog('close');
+                });
+
+                $(".ui.widget-overlay").bind('click', function () {
+                    alert("bind");
+                    $("#partial").dialog('close');
+                });
+            }
+        });
+
+        $(".openDialog").on("click", function (e) {
+            e.preventDefault();
+            
+            $.get(this.href).done(function (results) {
+                dialog.html(results);
+                dialog.dialog("open");
+            });
+        });
+    });
+</script>

@@ -1,0 +1,22 @@
+﻿@model FarmPhoto.Website.Models.GalleryModel 
+
+@{
+    ViewBag.Title = "UsersPhotos";
+}
+
+<div id="ContentContainer">
+
+    <div class="ContentContainerHeader">
+        <h2>@ViewBag.Username's Photos</h2>
+        <h3>Welcome to @ViewBag.Username's photo album</h3>
+    </div>
+    @if (Model.PhotoModels.Count > 0)
+    {
+        @Html.Partial("_Gallery")
+
+    }
+    else
+    {
+        <div class="NoContentMessage">@ViewBag.Username hasn't added any photos yet check back later</div>
+    }
+</div>

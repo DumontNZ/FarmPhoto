@@ -196,7 +196,7 @@ label {
 }
 
 .photoframe {
-    height: 200px;
+    height: 220px;
     width: 200px;
     margin: 10px 10px 10px 10px;
     overflow: hidden;
@@ -238,14 +238,9 @@ label {
     display: none;
 }
 
-.myBox {
-    height: 100px;
-    width: 100px;
-    float: right;
-    background: purple; 
-}
-
 .ui-dialog-titlebar-close {
     position: relative !important;
-    right: -20px !important; 
+    right: 0 !important;
+    float: right;
+    margin: 0 0 0 0 !important; 
 }

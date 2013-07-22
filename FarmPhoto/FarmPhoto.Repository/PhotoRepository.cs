@@ -31,7 +31,7 @@ namespace FarmPhoto.Repository
                 sqlConnection.Open();
 
                 const string sql =
-                    "Insert into photo(title, description, photodata, thumbnaildata, filesize, thumbnailsize, imagetype, approved, userid) values(@Title, @Description, @PhotoData, @ThumbnailData, @FileSize, @ThumbnailSize, @ImageType, @Approved, @UserId)";
+                    "Insert into photo(title, description, photodata, thumbnaildata, filesize, thumbnailsize, imagetype, approved, width, height, userid) values(@Title, @Description, @PhotoData, @ThumbnailData, @FileSize, @ThumbnailSize, @ImageType, @Approved, @Width, @Height, @UserId)";
 
                 mySqlCommand.Connection = sqlConnection;
                 mySqlCommand.CommandText = sql;
@@ -43,6 +43,8 @@ namespace FarmPhoto.Repository
                 mySqlCommand.Parameters.AddWithValue("@ThumbnailSize", photo.ThumbnailSize);
                 mySqlCommand.Parameters.AddWithValue("@ImageType", photo.ImageType);
                 mySqlCommand.Parameters.AddWithValue("@Approved", false);
+                mySqlCommand.Parameters.AddWithValue("@Width", photo.Width);
+                mySqlCommand.Parameters.AddWithValue("@Height", photo.Height); 
                 mySqlCommand.Parameters.AddWithValue("@UserId", photo.UserId);
 
                 mySqlCommand.ExecuteNonQuery();
@@ -65,12 +67,13 @@ namespace FarmPhoto.Repository
             {
                 sqlConnection.Open();
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select p.photoid, p.title, p.description, p.userid, p.approved, p.createdondateutc, u.username " +
-                                                                                                "from photo as p " +
-                                                                                                "inner join user as u on p.userid = u.userid " +
-                                                                                                "where approved = @Approved AND deletedondateutc is null " +
-                                                                                                "order by createdOnDateUTC " +
-                                                                                                "desc limit @NumberReturned"
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, 
+                                                      CommandText = "select p.photoid, p.title, p.description, p.userid, p.approved, p.createdondateutc, u.username, p.width, p.height " +
+                                                                     "from photo as p " +
+                                                                     "inner join user as u on p.userid = u.userid " +
+                                                                     "where approved = @Approved AND deletedondateutc is null " +
+                                                                     "order by createdOnDateUTC " +
+                                                                     "desc limit @NumberReturned"
                                                     };
                 mySqlCommand.Parameters.AddWithValue("NumberReturned", numberReturned);
                 mySqlCommand.Parameters.AddWithValue("Approved", approved); 
@@ -88,6 +91,8 @@ namespace FarmPhoto.Repository
                             Description = dataReader.GetString("description"),
                             UserId = dataReader.GetInt32("userid"),
                             Approved = dataReader.GetBoolean("approved"), 
+                            Width = dataReader.GetInt32("width"),
+                            Height = dataReader.GetInt32("height"),
                             SubmittedBy = dataReader.GetString("username"),
                             CreatedOnDateUtc = (DateTime)dataReader.GetMySqlDateTime("createdondateutc")
                         };
@@ -119,7 +124,7 @@ namespace FarmPhoto.Repository
                     };
                 if (photoId == 0)
                 {
-                    mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.photodata, p.imagetype, p.filesize, p.userid, p.createdondateutc, u.username " +
+                    mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.photodata, p.imagetype, p.filesize, p.userid, p.createdondateutc, u.username, p.width, p.height " +
                                                "from photo as p " +
                                                "inner join user as u on p.userid = u.userid " +
                                                "where approved = true AND deletedondateutc is null " +
@@ -131,7 +136,7 @@ namespace FarmPhoto.Repository
                     if (thumbnail)
                     {
                         mySqlCommand.CommandText =
-                       "select p.photoid, p.title, p.description, p.thumbnaildata, p.imagetype, p.thumbnailsize, p.userid, p.createdondateutc, u.username " +
+                       "select p.photoid, p.title, p.description, p.thumbnaildata, p.imagetype, p.thumbnailsize, p.userid, p.createdondateutc, u.username, p.width, p.height " +
                        "from photo as p " +
                        "inner join user as u on p.userid = u.userid " +
                        "where photoid = @PhotoId AND p.deletedondateutc is null";
@@ -139,7 +144,7 @@ namespace FarmPhoto.Repository
                     else
                     {
                         mySqlCommand.CommandText =
-                        "select p.photoid, p.title, p.description, p.photodata, p.imagetype, p.filesize, p.userid, p.createdondateutc, u.username " +
+                        "select p.photoid, p.title, p.description, p.photodata, p.imagetype, p.filesize, p.userid, p.createdondateutc, u.username, p.width, p.height " +
                         "from photo as p " +
                         "inner join user as u on p.userid = u.userid " +
                         "where photoid = @PhotoId AND p.deletedondateutc is null";
@@ -176,6 +181,8 @@ namespace FarmPhoto.Repository
                     returnedPhoto.UserId = dataReader.GetInt32("userid");
                     returnedPhoto.Description = dataReader.GetString("description");
                     returnedPhoto.ImageType = dataReader.GetString("imagetype");
+                    returnedPhoto.Width = dataReader.GetInt32("width");
+                    returnedPhoto.Height = dataReader.GetInt32("height"); 
                     returnedPhoto.CreatedOnDateUtc = (DateTime)dataReader.GetMySqlDateTime("createdondateutc");
                 }
 
@@ -202,7 +209,7 @@ namespace FarmPhoto.Repository
 
                 if (user.UserName != null)
                 {
-                    mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.userid, u.username " +
+                    mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.userid, u.username, p.width, p.height " +
                                                "from photo as p " +
                                                "inner join user as u on p.userid = u.userid " +
                                                "where username = @Username and deletedondateutc is null " +
@@ -212,10 +219,10 @@ namespace FarmPhoto.Repository
                     mySqlCommand.Parameters.AddWithValue("Username", user.UserName);
                 }else
                 {
-                    mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.userid, u.username " +
+                    mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.userid, u.username, p.width, p.height " +
                                                "from photo as p " +
                                                "inner join user as u on p.userid = u.userid " +
-                                               "where userid = @UserId and deletedondateutc is null " +
+                                               "where p.userid = @UserId and deletedondateutc is null " +
                                                "order by p.createdOnDateUTC desc";
 
                     mySqlCommand.Parameters.AddWithValue("UserId", user.UserId);
@@ -233,6 +240,8 @@ namespace FarmPhoto.Repository
                             Title = dataReader.GetString("title"),
                             Description = dataReader.GetString("description"),
                             UserId = dataReader.GetInt32("userid"),
+                            Width = dataReader.GetInt32("width"),
+                            Height = dataReader.GetInt32("height"),
                             SubmittedBy = dataReader.GetString("username")
                         };
 
@@ -241,6 +250,28 @@ namespace FarmPhoto.Repository
                 }
 
                 return usersPhotos;
+            }
+        }
+
+        /// <summary>
+        /// Updates the specified photos details.
+        /// </summary>
+        /// <param name="photo">The photo.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public int Update(Photo photo)
+        {
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "update photo set title = @Title, description = @Description where photoid = @PhotoId" };
+
+                mySqlCommand.Parameters.AddWithValue("PhotoId", photo.PhotoId);
+                mySqlCommand.Parameters.AddWithValue("Title", photo.Title);
+                mySqlCommand.Parameters.AddWithValue("Description", photo.Description);
+
+                return mySqlCommand.ExecuteNonQuery();
             }
         }
 

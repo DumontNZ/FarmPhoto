@@ -39,6 +39,13 @@ namespace FarmPhoto.Repository
         IList<Photo> Get(User user);
 
         /// <summary>
+        /// Updates the specified photos details.
+        /// </summary>
+        /// <param name="photo">The photo.</param>
+        /// <returns></returns>
+        int Update(Photo photo); 
+
+        /// <summary>
         /// Updates the specified photo to approved.
         /// </summary>
         /// <param name="id">The id.</param>

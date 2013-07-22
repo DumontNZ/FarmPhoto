@@ -15,6 +15,8 @@ namespace FarmPhoto.Domain
         public int UserId { get; set; }
         public bool Approved { get; set; }
         public string SubmittedBy { get; set; }
+        public int Width{ get; set; }
+        public int Height { get; set; }
         public DateTime CreatedOnDateUtc { get; set; }
         public DateTime DeletedOnDateUtc { get; set; }
     }

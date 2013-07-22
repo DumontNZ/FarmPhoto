@@ -84,8 +84,8 @@ namespace FarmPhoto.Website.Controllers
                     Description = photo.Description,
                     Title = photo.Title,
                     Tags = _tagManager.Get(photo.PhotoId),
-                    Width = "" + 800 + "px",
-                    Height = "" + 800 + "px"
+                    Width = "" + photo.Width + "px",
+                    Height = "" + photo.Height + "px"
                 };
 
                 photoModel.TagString = string.Join(", ", photoModel.Tags);
@@ -104,9 +104,14 @@ namespace FarmPhoto.Website.Controllers
         [HttpPost]
         public ActionResult Photo(PhotoModel photoModel)
         {
-
             if (Request.IsAjaxRequest())
             {
+                _photoManager.Update(new Photo
+                    {
+                        PhotoId = photoModel.PhotoId,
+                        Title =  photoModel.Title,
+                        Description = photoModel.Description
+                    }); 
 
                 return PartialView("_Photo", photoModel);
             }

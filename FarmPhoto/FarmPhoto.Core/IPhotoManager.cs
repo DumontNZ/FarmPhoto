@@ -36,6 +36,13 @@ namespace FarmPhoto.Core
         IList<Photo> Get(int page, int numberReturned = 20, bool approved = true);
 
         /// <summary>
+        /// Updates the specified photos details.
+        /// </summary>
+        /// <param name="photo">The photo.</param>
+        /// <returns></returns>
+        int Update(Photo photo);
+
+        /// <summary>
         /// Updates the specified photo to apporved.
         /// </summary>
         /// <param name="id">The id.</param>

@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using FarmPhoto.Website.Models;

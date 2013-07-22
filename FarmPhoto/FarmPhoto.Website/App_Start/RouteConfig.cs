@@ -14,6 +14,12 @@ namespace FarmPhoto.Website.App_Start
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Username",
+                url: "{controller}/{action}/{username}",
+                defaults: new { controller = "Gallery", action = "UsersPhotos", username = UrlParameter.Optional }
+            );
         }
     }
 }

@@ -34,7 +34,23 @@
 }
 else
 {
-    
+    <div class="photofields">
+        <div class="formRow">
+            @Model.Title
+        </div>
+        <div class="formRow">
+            @Model.Description
+        </div>
+        <div class="formRow">
+            @foreach (var tag in Model.Tags)
+            {
+                <div class="tag">
+                    <a href="@Url.Action("Index", "Home")">@tag </a>
+                </div>
+            }
+            
+        </div>
+    </div>
 }
 <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="close">
     <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>

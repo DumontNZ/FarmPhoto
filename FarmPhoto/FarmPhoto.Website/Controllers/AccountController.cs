@@ -69,7 +69,7 @@ namespace FarmPhoto.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userManager.Get(new User { UserName = userModel.Username }) != null)
+                if (_userManager.Get(new User { UserName = userModel.Username }).UserName != null)
                 {
                     ModelState.AddModelError("Username", ErrorMessages.UsernameInUse);
                 }

@@ -8,7 +8,7 @@
 </div>
 
 
-@if (CurrentUser.Id == Model.UserId)
+@*@if (CurrentUser.Id == Model.UserId)
 {
     using (Ajax.BeginForm(new AjaxOptions {HttpMethod = "POST", UpdateTargetId = "partial"}))
     {
@@ -34,7 +34,7 @@
 }
 else
 {
-    <div class="photofields">
+    *@<div class="photofields">
         <div class="formRow">
             @Model.Title
         </div>
@@ -51,7 +51,7 @@ else
             
         </div>
     </div>
-}
+@*}*@
 <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="close">
     <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
     <span class="ui-button-text">close</span>

@@ -1,0 +1,83 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: DumontNZ <joelt@WKS-0905.intergen.org.nz>
+#
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   FarmPhoto/FarmPhoto.Website/Content/Site.css
+#	modified:   FarmPhoto/FarmPhoto.Website/Controllers/AccountController.cs
+#	modified:   FarmPhoto/FarmPhoto.Website/FarmPhoto.Website.csproj
+#	new file:   FarmPhoto/FarmPhoto.Website/Properties/PublishProfiles/farmphoto - FTP (2).pubxml
+#	new file:   FarmPhoto/FarmPhoto.Website/Properties/PublishProfiles/farmphoto - Web Deploy (2).pubxml
+#	modified:   FarmPhoto/FarmPhoto.Website/Views/Home/Index.cshtml
+#	modified:   FarmPhoto/FarmPhoto.Website/Views/Shared/_Photo.cshtml
+#	modified:   FarmPhoto/FarmPhoto.Website/Web.config
+#	modified:   FarmPhoto/FarmPhoto.Website/packages.config
+#	new file:   FarmPhoto/packages/Antlr.3.4.1.9004/Antlr.3.4.1.9004.nupkg
+#	new file:   FarmPhoto/packages/Antlr.3.4.1.9004/Antlr.3.4.1.9004.nuspec
+#	new file:   FarmPhoto/packages/Antlr.3.4.1.9004/lib/Antlr3.Runtime.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Mvc.4.0.30506.0/Microsoft.AspNet.Mvc.4.0.30506.0.nupkg
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Mvc.4.0.30506.0/Microsoft.AspNet.Mvc.4.0.30506.0.nuspec
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Mvc.4.0.30506.0/lib/net40/System.Web.Mvc.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Mvc.4.0.30506.0/lib/net40/System.Web.Mvc.xml
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1/Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1.nupkg
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1/Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1.nuspec
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1/lib/net40/Microsoft.Web.Mvc.FixedDisplayModes.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Providers.1.1/Microsoft.AspNet.Providers.1.1.nupkg
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Providers.1.1/Microsoft.AspNet.Providers.1.1.nuspec
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Providers.1.1/content/web.config.transform
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Providers.1.1/tools/Install.ps1
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Providers.Core.1.0/Microsoft.AspNet.Providers.Core.1.0.nupkg
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Providers.Core.1.0/Microsoft.AspNet.Providers.Core.1.0.nuspec
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Providers.Core.1.0/lib/net40/System.Web.Providers.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Providers.Core.1.0/readme.html
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Razor.2.0.30506.0/Microsoft.AspNet.Razor.2.0.30506.0.nupkg
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Razor.2.0.30506.0/Microsoft.AspNet.Razor.2.0.30506.0.nuspec
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Razor.2.0.30506.0/lib/net40/System.Web.Razor.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Razor.2.0.30506.0/lib/net40/System.Web.Razor.xml
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Web.Optimization.1.1.0/Microsoft.AspNet.Web.Optimization.1.1.0.nupkg
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Web.Optimization.1.1.0/Microsoft.AspNet.Web.Optimization.1.1.0.nuspec
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.Web.Optimization.1.1.0/lib/net40/System.Web.Optimization.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/Microsoft.AspNet.WebPages.2.0.30506.0.nupkg
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/Microsoft.AspNet.WebPages.2.0.30506.0.nuspec
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/lib/net40/System.Web.Helpers.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/lib/net40/System.Web.Helpers.xml
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/lib/net40/System.Web.WebPages.Deployment.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/lib/net40/System.Web.WebPages.Deployment.xml
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/lib/net40/System.Web.WebPages.Razor.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/lib/net40/System.Web.WebPages.Razor.xml
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/lib/net40/System.Web.WebPages.dll
+#	new file:   FarmPhoto/packages/Microsoft.AspNet.WebPages.2.0.30506.0/lib/net40/System.Web.WebPages.xml
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/Newtonsoft.Json.5.0.6.nupkg
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/Newtonsoft.Json.5.0.6.nuspec
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/net20/Newtonsoft.Json.dll
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/net20/Newtonsoft.Json.xml
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/net35/Newtonsoft.Json.dll
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/net35/Newtonsoft.Json.xml
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/net40/Newtonsoft.Json.dll
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/net40/Newtonsoft.Json.xml
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/net45/Newtonsoft.Json.dll
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/net45/Newtonsoft.Json.xml
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/netcore45/Newtonsoft.Json.dll
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/netcore45/Newtonsoft.Json.xml
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/portable-net40+sl4+wp7+win8/Newtonsoft.Json.dll
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/portable-net40+sl4+wp7+win8/Newtonsoft.Json.xml
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/portable-net45+wp80+win8/Newtonsoft.Json.dll
+#	new file:   FarmPhoto/packages/Newtonsoft.Json.5.0.6/lib/portable-net45+wp80+win8/Newtonsoft.Json.xml
+#	new file:   FarmPhoto/packages/SimpleCrypto.0.3.28.24/SimpleCrypto.0.3.28.24.nupkg
+#	new file:   FarmPhoto/packages/SimpleCrypto.0.3.28.24/SimpleCrypto.0.3.28.24.nuspec
+#	new file:   FarmPhoto/packages/SimpleCrypto.0.3.28.24/lib/SimpleCrypto.dll
+#	new file:   FarmPhoto/packages/System.Web.Providers.1.2/System.Web.Providers.1.2.nupkg
+#	new file:   FarmPhoto/packages/System.Web.Providers.1.2/System.Web.Providers.1.2.nuspec
+#	new file:   FarmPhoto/packages/WebGrease.1.5.2/WebGrease.1.5.2.nupkg
+#	new file:   FarmPhoto/packages/WebGrease.1.5.2/WebGrease.1.5.2.nuspec
+#	new file:   FarmPhoto/packages/WebGrease.1.5.2/lib/WebGrease.dll
+#	new file:   FarmPhoto/packages/WebGrease.1.5.2/tools/WG.exe
+#	new file:   FarmPhoto/packages/WebGrease.1.5.2/tools/install.ps1
+#	new file:   FarmPhoto/packages/WebGrease.1.5.2/tools/uninstall.ps1
+#
+

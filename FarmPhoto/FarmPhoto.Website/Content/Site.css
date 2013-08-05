@@ -206,6 +206,11 @@ label {
     float: left;
 }
 
+.AdminRow {
+    height: 220px; 
+    padding: 10px;
+}
+
 #header {
     height: 154px;
     width: 1000px;

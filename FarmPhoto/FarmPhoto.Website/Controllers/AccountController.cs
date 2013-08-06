@@ -46,12 +46,19 @@ namespace FarmPhoto.Website.Controllers
                 if (successfullyValidated)
                 {
                     _formsAuthenticationManager.Login(_userManager.Get(new User{UserName = loginModel.Username}), loginModel.RememberMe);
-                    return RedirectToAction("Index", "Submission");
+                    return RedirectToAction("MyPhotos", "Gallery");
                 }
                 ModelState.AddModelError("UserName", ErrorMessages.InvalidUserNameOrPassword);
             }
 
             return View(new LoginModel());
+        }
+
+        public ActionResult Logout()
+        {
+            _formsAuthenticationManager.Logout();
+
+            return RedirectToAction("Index", "Home"); 
         }
 
         [AllowAnonymous]

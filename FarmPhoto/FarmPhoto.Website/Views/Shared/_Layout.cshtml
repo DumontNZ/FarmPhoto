@@ -39,6 +39,11 @@
                     <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
                 }
                 <li>@Html.ActionLink("About Us", "AboutUs", "Home")</li>
+                
+                 @if (Request.IsAuthenticated)
+                 {
+                     <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                 }
             </ul>
         </div>
 

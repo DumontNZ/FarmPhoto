@@ -17,5 +17,7 @@ namespace FarmPhoto.Core.Authentication
         /// <param name="user">The user.</param>
         /// <param name="remember">if set to <c>true</c> remeber the user the next time they come back.</param>
         void Login(User user, bool remember);
+
+        void Logout();
     }
 }

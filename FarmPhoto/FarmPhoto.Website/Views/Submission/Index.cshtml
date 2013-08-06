@@ -11,6 +11,9 @@
     @using (Html.BeginForm("Index", "Submission", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="formRow">
+            <input type="file" id="File" name="File" />
+        </div>
+        <div class="formRow">
             @Html.LabelFor(m => m.Title)
             @Html.TextBoxFor(m => m.Title)
             @Html.ValidationMessageFor(m => m.Title)
@@ -24,9 +27,6 @@
             @Html.LabelFor(m => m.Tags)
             @Html.TextBoxFor(m => m.Tags)
             @Html.ValidationMessageFor(m => m.Tags)
-        </div>
-        <div class="formRow">
-            <input type="file" id="File" name="File" />
         </div>
         <div class="formRow">
             <input type="submit" value="OK" />

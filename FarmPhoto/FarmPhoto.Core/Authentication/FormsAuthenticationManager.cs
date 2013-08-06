@@ -59,5 +59,10 @@ namespace FarmPhoto.Core.Authentication
             HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket)){Expires = expiration});
 
         }
+
+        public void Logout()
+        {
+            FormsAuthentication.SignOut();
+        }
     }
 }

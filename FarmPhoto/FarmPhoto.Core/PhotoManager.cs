@@ -54,6 +54,30 @@ namespace FarmPhoto.Core
             return _photoRepository.Create(photo);
         }
 
+        public int CreatePhoto(Photo photo)
+        {
+            Image image = Image.FromStream(File.OpenRead(photo.FileName));
+
+            var appdataFolderLocation =
+                photo.FileName.Substring(photo.FileName.IndexOf("App_Data", StringComparison.Ordinal));
+
+            photo.ImageType = "image/" + appdataFolderLocation.Substring(appdataFolderLocation.IndexOf(".", StringComparison.Ordinal) + 1); 
+
+            Photo thumbnailData = ScaleImage(image, 200, 200);
+            Photo photoData = ScaleImage(image, 800, 800);
+
+            photo.FileSize = photoData.PhotoData.Length;
+            photo.ThumbnailSize = thumbnailData.PhotoData.Length;
+
+            photo.PhotoData = photoData.PhotoData;
+            photo.ThumbnailData = thumbnailData.PhotoData;
+
+            photo.Width = photoData.Width;
+            photo.Height = photoData.Height;
+
+            return _photoRepository.Create(photo);
+        }
+
         /// <summary>
         /// Gets all photos that have been approved if gallery otherwise unapproved if admin.
         /// </summary>

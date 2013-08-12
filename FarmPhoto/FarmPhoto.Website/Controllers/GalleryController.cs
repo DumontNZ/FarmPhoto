@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.IO;
+using System.Web.Mvc;
 using FarmPhoto.Common.Configuration;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
@@ -131,6 +132,15 @@ namespace FarmPhoto.Website.Controllers
             Photo photo = _photoManager.Get(id, thumbnail);
 
             return File(photo.PhotoData, photo.ImageType);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Preview(string filename)
+        {
+            var uploadPath = Server.MapPath("~/App_Data/Uploads/Thumbnails");
+            string uploadedFilePath = Path.Combine(uploadPath, filename);
+
+            return File(uploadedFilePath, "image/jpeg");
         }
 
         private GalleryModel PhotoListToGalleryModel(IEnumerable<Photo> photos) 

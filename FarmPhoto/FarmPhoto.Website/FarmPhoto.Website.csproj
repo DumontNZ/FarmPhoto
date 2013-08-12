@@ -319,7 +319,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\Uploads\" />
+    <Folder Include="App_Data\Uploads\Thumbnails\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -18,10 +18,10 @@
         <a id="pickfiles" href="javascript:;">[Select file]</a>
     </div>
 
+    <div id="photoPreview" class="photoframe" style="display:none">
+       
+    </div>
 
-    @*<a id="uploadfiles" href="javascript:;">[Upload]</a>*@
-
-    <div id="test"><b></b></div>
     @using (Html.BeginForm("Index", "Submission", FormMethod.Post, new { enctype = "multipart/form-data", id = "submissionForm", style = "display:none" }))
     {
         
@@ -48,15 +48,6 @@
         </div>
     }
 
-    @*
-        <div class="formRow">
-            <input type="file" id="File" name="File" />
-        </div>
-       
-        <div class="formRow">
-            <input type="submit" value="OK" />
-        </div>
-    }*@
 </div>
 
 <script type="text/javascript">
@@ -72,26 +63,25 @@
             filters: [{ title: "Image files", extensions: "jpg,gif,png" }]
        });
 
-        uploader.bind('Init', function (up, params) {
-        });
-
         uploader.init();
 
         uploader.bind('FilesAdded', function (up, files) {
             $('#pickfiles').text('[Change file]');
             $('#submissionForm').slideDown('slow');
-            $('#FileName').val(files[0].id);
+            
             //This was put in so that only one file can be selected at a time
             //if a second file is selected the first is removed from the list 
+            $('#' + up.files[0].id).remove('div');
+
             if (up.files.length > 1) {
-
-                $('#' + up.files[0].id).hide();
-
                 up.files = $.grep(up.files, function (value) {
                     return value != up.files[0];
                 });
             }
+            
             for (var i in files) {
+                
+                $('#FileName').val(files[i].id + files[i].name.substring(files[i].name.indexOf('.')));
                 $('#filelist').prepend('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b> </div>');
             }
 
@@ -102,6 +92,10 @@
             $('#' + file.id).children('b').html('<span>' + file.percent + "%</span>");
             if (file.percent >= 100) {
                 $('#SubmitButton').removeAttr('disabled');
+                
+                var filename = file.id + file.name.substring(file.name.indexOf('.'));
+                $('#photoPreview').html('<img src="/Gallery/Preview?filename=' + filename + '" alt=""/>');
+                $('#photoPreview').slideDown('slow');
             }
         });
 

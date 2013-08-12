@@ -6,6 +6,7 @@ namespace FarmPhoto.Domain
     {
         public int PhotoId { get; set; }
         public string Title { get; set; }
+        public string FileName { get; set; }
         public string Description { get; set; }
         public byte[] PhotoData { get; set; }
         public byte[] ThumbnailData { get; set; }

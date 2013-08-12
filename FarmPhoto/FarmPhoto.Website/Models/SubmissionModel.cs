@@ -21,5 +21,7 @@ namespace FarmPhoto.Website.Models
         [Required]
         [LocalisedDisplayName("Tags")]
         public string Tags { get; set; }
+
+        public string GalleryDirectory { get; set; }
     }
 }

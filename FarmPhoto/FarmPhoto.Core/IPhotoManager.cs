@@ -15,6 +15,13 @@ namespace FarmPhoto.Core
         int CreatePhoto(Photo photo, HttpPostedFileBase file);
 
         /// <summary>
+        /// Creates the photo.
+        /// </summary>
+        /// <param name="photo">The photo.</param>
+        /// <returns></returns>
+        int CreatePhoto(Photo photo);
+
+        /// <summary>
         /// Gets the specified id.
         /// </summary>
         /// <param name="id">The id.</param>

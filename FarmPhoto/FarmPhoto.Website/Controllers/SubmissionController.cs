@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.IO;
+using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using FarmPhoto.Website.Models;
@@ -36,9 +38,52 @@ namespace FarmPhoto.Website.Controllers
                 var photoId = _photoManager.CreatePhoto(photo, model.File);
 
                 _tagManager.CreateTag(model.Tags, photoId);
+
+                return RedirectToAction("MyPhotos", "Gallery");
             }
 
-            return RedirectToAction("MyPhotos", "Gallery");
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Upload(int? chunk, string name)
+        {
+
+            string filePath = "";
+            var fileUpload = Request.Files[0];
+            var uploadPath = Server.MapPath("~/App_Data/Uploads");
+            chunk = chunk ?? 0;
+            string uploadedFilePath = Path.Combine(uploadPath, name);
+            var fileName = Path.GetFileName(uploadedFilePath);
+
+            using (var fs = new FileStream(uploadedFilePath, chunk == 0 ? FileMode.Create : FileMode.Append))
+            {
+                var buffer = new byte[fileUpload.InputStream.Length];
+                fileUpload.InputStream.Read(buffer, 0, buffer.Length);
+                fs.Write(buffer, 0, buffer.Length);
+            }
+
+            //Log to DB for future processing
+
+
+
+
+            //var fileUpload = Request.Files[0];
+
+            //if (fileUpload != null)
+            //{
+            //    var photo = new Photo
+            //    {
+            //        Title = new Guid().ToString(),
+            //        Description = new Guid().ToString(),
+            //        ImageType = fileUpload.ContentType,
+            //        UserId = CurrentUser.Id
+            //    };
+
+            //    var photoId = _photoManager.CreatePhoto(photo, fileUpload);
+            //}
+
+            return View("Index");
         }
     }
 }

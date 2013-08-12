@@ -1,4 +1,5 @@
-﻿using FarmPhoto.Common.Cryptography;
+﻿using FarmPhoto.Common;
+using FarmPhoto.Common.Cryptography;
 using FarmPhoto.Repository;
 using Ninject.Modules;
 

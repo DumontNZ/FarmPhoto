@@ -3,16 +3,30 @@
 @{
     ViewBag.Title = "Submission";
 }
+<script src="~/Scripts/Plupload/plupload.js"></script>
+<script src="~/Scripts/Plupload/plupload.full.js"></script>
+<script src="~/Scripts/Plupload/jquery.plupload.queue.js"></script>
+<script src="~/Scripts/Plupload/jquery.ui.plupload.js"></script>
 
 <div id="ContentContainer">
     <div class="ContentContainerHeader">
         <h3>Submit Photo</h3>
     </div>
-    @using (Html.BeginForm("Index", "Submission", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+    <div>File:</div>
+    <div id="filelist">
+        <a id="pickfiles" href="javascript:;">[Select file]</a>
+    </div>
+
+
+    @*<a id="uploadfiles" href="javascript:;">[Upload]</a>*@
+
+    <div id="test"><b></b></div>
+    @using (Html.BeginForm("Index", "Submission", FormMethod.Post, new { enctype = "multipart/form-data", id = "submissionForm", style = "display:none" }))
     {
-        <div class="formRow">
-            <input type="file" id="File" name="File" />
-        </div>
+        
+        @Html.HiddenFor(m => m.FileName)
+        
         <div class="formRow">
             @Html.LabelFor(m => m.Title)
             @Html.TextBoxFor(m => m.Title)
@@ -28,8 +42,73 @@
             @Html.TextBoxFor(m => m.Tags)
             @Html.ValidationMessageFor(m => m.Tags)
         </div>
+        
+        <div class="formRow">
+            <input id="SubmitButton" type="submit" value="OK" disabled="disabled" />
+        </div>
+    }
+
+    @*
+        <div class="formRow">
+            <input type="file" id="File" name="File" />
+        </div>
+       
         <div class="formRow">
             <input type="submit" value="OK" />
         </div>
-    }
+    }*@
 </div>
+
+<script type="text/javascript">
+    $(function () {
+
+        var uploader = new plupload.Uploader({
+            runtimes: 'html5,html4',
+            browse_button: 'pickfiles',
+            url: "@Url.Action("Upload", "Submission")",
+            max_file_size: '10mb',
+            multi_selection: false,
+            unique_names: true,
+            filters: [{ title: "Image files", extensions: "jpg,gif,png" }]
+       });
+
+        uploader.bind('Init', function (up, params) {
+        });
+
+        uploader.init();
+
+        uploader.bind('FilesAdded', function (up, files) {
+            $('#pickfiles').text('[Change file]');
+            $('#submissionForm').slideDown('slow');
+            $('#FileName').val(files[0].id);
+            //This was put in so that only one file can be selected at a time
+            //if a second file is selected the first is removed from the list 
+            if (up.files.length > 1) {
+
+                $('#' + up.files[0].id).hide();
+
+                up.files = $.grep(up.files, function (value) {
+                    return value != up.files[0];
+                });
+            }
+            for (var i in files) {
+                $('#filelist').prepend('<div id="' + files[i].id + '">' + files[i].name + ' (' + plupload.formatSize(files[i].size) + ') <b></b> </div>');
+            }
+
+            uploader.start();
+        });
+
+        uploader.bind('UploadProgress', function (up, file) {
+            $('#' + file.id).children('b').html('<span>' + file.percent + "%</span>");
+            if (file.percent >= 100) {
+                $('#SubmitButton').removeAttr('disabled');
+            }
+        });
+
+        $('#uploadfiles').click(function () {
+
+            return false;
+        });
+    });
+
+</script>

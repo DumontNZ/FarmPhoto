@@ -8,6 +8,8 @@ namespace FarmPhoto.Website.Models
     {
         public HttpPostedFileBase File { get; set; }
 
+        public string FileName { get; set; }
+
         [Required]
         [LocalisedDisplayName("Title")]
         public string Title { get; set; }

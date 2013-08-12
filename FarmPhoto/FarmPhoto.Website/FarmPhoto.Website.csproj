@@ -270,15 +270,14 @@
     <None Include="Properties\PublishProfiles\farmphoto - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\farmphoto - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\farmphoto - Web Deploy.pubxml" />
-    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
+    <Content Include="Scripts\Plupload\jquery.ui.plupload.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -286,6 +285,9 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Plupload\jquery.plupload.queue.js" />
+    <Content Include="Scripts\Plupload\plupload.full.js" />
+    <Content Include="Scripts\Plupload\plupload.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -313,9 +315,11 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Gallery\UsersPhotos.cshtml" />
     <Content Include="Views\Shared\_Photo.cshtml" />
+    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -20,6 +20,7 @@ namespace FarmPhoto.Core
         public PhotoManager(IPhotoRepository photoRepository)
         {
             _photoRepository = photoRepository;
+
         }
 
         /// <summary>

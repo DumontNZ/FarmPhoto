@@ -10,6 +10,10 @@ namespace FarmPhoto.Website.Models
 
         public string FileName { get; set; }
 
+        public int PhotoId { get; set; }
+
+        public int UserId { get; set; }
+
         [Required]
         [LocalisedDisplayName("Title")]
         public string Title { get; set; }

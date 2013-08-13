@@ -4,11 +4,11 @@
     @foreach (var photo in Model.PhotoModels)
     {
         <div class="photoframe">
-            <a href="@Url.Action("Photo", "Gallery", new { id = @photo.PhotoId})" class="openDialog" id= "@photo.PhotoId">
+            <a href="@Url.Action("Photo", "Gallery", new { id = @photo.PhotoId })" class="openDialog" id= "@photo.PhotoId">
                 <img src="@Url.Action("Image", "Gallery", new { id = photo.PhotoId })" alt="" />
             </a>
-            
-            Submitted by: @Html.ActionLink("" + @photo.SubmittedBy, "UsersPhotos", "Gallery", new{username = photo.SubmittedBy}, null)
+
+            Submitted by @Html.ActionLink("" + @photo.SubmittedBy, "UsersPhotos", "Gallery", new { username = photo.SubmittedBy }, null)
         </div>
     }
 </div>
@@ -20,14 +20,16 @@
     $.ajaxSetup({ cache: false });
 
     $(document).ready(function () {
-        
+
         var dialog = $("#partial").dialog({
             autoOpen: false,
             height: 'auto',
             width: 'auto',
+            show: 'scale',
+            hide: 'scale',
             resizable: true,
             modal: true,
-            open: function(event, ui) {
+            open: function (event, ui) {
                 $(".ui.widget-overlay").click(function () {
                     alert('click');
                 });
@@ -44,9 +46,63 @@
             }
         });
 
+        var validateForm = function(data) {
+
+            var valid = true; 
+
+            if (data.Title == "") {
+                $('[data-valmsg-for="Title"]').text("Title must not be empty");
+                valid = false;
+            } else {
+                $('[data-valmsg-for="Title"]').text("");
+            }
+
+            if (data.Description == "") {
+                $('[data-valmsg-for="Description"]').text("Description must not be empty");
+                valid = false;
+            } else {
+                $('[data-valmsg-for="Description"]').text("");
+            }
+            if (data.Tags == "") {
+                $('[data-valmsg-for="TagString"]').text("Tags must not be empty");
+                valid = false;
+            } else {
+                $('[data-valmsg-for="TagString"]').text("");
+            }
+
+            return valid; 
+        }; 
+
+        $("body").on('click', '#Update', function () {
+
+            var formData = {
+                Title: $('#Title').val(),
+                Description: $('#Description').val(),
+                Tags: $('#TagString').val(),
+                UserId: $('#UserId').val(),
+                PhotoId: $('#PhotoId').val()
+            };
+
+            var valid = validateForm(formData);
+
+            if (valid) {
+                $.ajax({
+                    url: "@Url.Action("Update", "Submission")",
+                    type: "POST",
+                    data: formData,
+                    success: function (data) {
+                        if (data.Success) {
+                            alert("Successfully Update Photo");
+                            $("#partial").dialog('close');
+                        }
+                    }
+                });
+            }
+        });
+
         $(".openDialog").on("click", function (e) {
             e.preventDefault();
-            
+
             $.get(this.href).done(function (results) {
                 dialog.html(results);
                 dialog.dialog("open");

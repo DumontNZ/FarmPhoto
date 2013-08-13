@@ -212,7 +212,7 @@ namespace FarmPhoto.Repository
                     mySqlCommand.CommandText = "select p.photoid, p.title, p.description, p.userid, u.username, p.width, p.height " +
                                                "from photo as p " +
                                                "inner join user as u on p.userid = u.userid " +
-                                               "where username = @Username and deletedondateutc is null " +
+                                               "where username = @Username and deletedondateutc is null and approved is true " +
                                                "order by p.createdOnDateUTC desc";
                     
 
@@ -250,6 +250,56 @@ namespace FarmPhoto.Repository
                 }
 
                 return usersPhotos;
+            }
+        }
+
+        /// <summary>
+        /// Gets all the photos that have been tagged with tag.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <returns></returns>
+        public IList<Photo> Get(Tag tag)
+        {
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                var mySqlCommand = new MySqlCommand
+                    {
+                        Connection = sqlConnection,
+                        CommandText =
+                            "select p.photoid, p.title, p.description, p.userid, u.username, p.width, p.height " +
+                            "from photo as p " +
+                            "inner join user as u on p.userid = u.userid " +
+                            "inner join tag as t on p.photoid = t.photoid " +
+                            "where t.description = @Description and deletedondateutc is null and approved is true " +
+                            "order by p.createdOnDateUTC desc"
+                    };
+
+                mySqlCommand.Parameters.AddWithValue("Description", tag.Description);
+
+                var tagPhotos = new List<Photo>();
+
+                using (MySqlDataReader dataReader = mySqlCommand.ExecuteReader())
+                {
+                    while (dataReader.Read())
+                    {
+                        var photo = new Photo
+                        {
+                            PhotoId = dataReader.GetInt32("photoid"),
+                            Title = dataReader.GetString("title"),
+                            Description = dataReader.GetString("description"),
+                            UserId = dataReader.GetInt32("userid"),
+                            Width = dataReader.GetInt32("width"),
+                            Height = dataReader.GetInt32("height"),
+                            SubmittedBy = dataReader.GetString("username")
+                        };
+
+                        tagPhotos.Add(photo);
+                    }
+                }
+
+                return tagPhotos;
             }
         }
 

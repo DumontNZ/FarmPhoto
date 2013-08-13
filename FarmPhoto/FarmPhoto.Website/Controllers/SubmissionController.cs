@@ -57,6 +57,28 @@ namespace FarmPhoto.Website.Controllers
         }
 
         [HttpPost]
+        public JsonResult Update(SubmissionModel model)
+        {
+            if (model.UserId == CurrentUser.Id)
+            {
+                var photo = new Photo
+                {
+                    PhotoId = model.PhotoId, 
+                    Title = model.Title,
+                    Description = model.Description,
+                    UserId = CurrentUser.Id
+                };
+                var success = _photoManager.Update(photo);
+
+                _tagManager.Update(model.Tags, model.PhotoId);
+
+                return new JsonResult { Data = new { Success = true } };
+            }
+
+            return new JsonResult { Data = new { Success = false } };
+        }
+
+        [HttpPost]
         public ActionResult Upload(int? chunk, string name)
         {
             var fileUpload = Request.Files[0];

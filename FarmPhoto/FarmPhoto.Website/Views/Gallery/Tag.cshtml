@@ -1,0 +1,22 @@
+﻿@model FarmPhoto.Website.Models.GalleryModel 
+
+@{
+    ViewBag.Title = "" + @ViewBag.Tag + " Photos";
+}
+
+<div id="ContentContainer">
+
+    <div class="ContentContainerHeader">
+        <h2>@ViewBag.Tag Photos</h2>
+        <h3>Each of these photos have been tagged with @ViewBag.Tag</h3>
+    </div>
+    @if (Model.PhotoModels.Count > 0)
+    {
+        @Html.Partial("_Gallery")
+
+    }
+    else
+    {
+        <div class="NoContentMessage">No photos have been tagged with @ViewBag.Tag check back later</div>
+    }
+</div>

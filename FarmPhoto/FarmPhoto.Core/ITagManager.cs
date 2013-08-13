@@ -17,5 +17,7 @@ namespace FarmPhoto.Core
         /// <param name="photoId">The photo id.</param>
         /// <returns></returns>
         IList<string> Get(int photoId);
+
+        void Update(string tags, int photoId);
     }
 }

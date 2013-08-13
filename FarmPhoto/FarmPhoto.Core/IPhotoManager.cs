@@ -30,11 +30,18 @@ namespace FarmPhoto.Core
         Photo Get(int id, bool thumbnail);
 
         /// <summary>
-        /// Gets the specified user.
+        /// Gets the photos added by the specified user.
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
         IList<Photo> Get(User user);
+
+        /// <summary>
+        /// Gets photos that have been tagged with tag.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <returns></returns>
+        IList<Photo> Get(Tag tag);
 
         /// <summary>
         /// Gets all photos that have been approved. 20 Per page 

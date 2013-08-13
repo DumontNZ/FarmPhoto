@@ -24,7 +24,7 @@ namespace FarmPhoto.Core
         }
 
         /// <summary>
-        /// Creates the photo.
+        /// Creates the photo from an uploaded file slow option probably going to become obsolete.
         /// </summary>
         /// <param name="photo">The photo.</param>
         /// <param name="file">The file.</param>
@@ -54,6 +54,11 @@ namespace FarmPhoto.Core
             return _photoRepository.Create(photo);
         }
 
+        /// <summary>
+        /// Creates the photo created from a file on the Server.
+        /// </summary>
+        /// <param name="photo">The photo.</param>
+        /// <returns></returns>
         public int CreatePhoto(Photo photo)
         {
             Image image = Image.FromStream(File.OpenRead(photo.FileName));
@@ -77,6 +82,8 @@ namespace FarmPhoto.Core
 
             return _photoRepository.Create(photo);
         }
+
+        
 
         /// <summary>
         /// Gets all photos that have been approved if gallery otherwise unapproved if admin.
@@ -102,28 +109,6 @@ namespace FarmPhoto.Core
         }
 
         /// <summary>
-        /// Updates the specified photo to apporved.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <param name="approved">if set to <c>true</c> [approved].</param>
-        /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public int Update(int id, bool approved)
-        {
-            return _photoRepository.Update(id, approved); 
-        }
-
-        /// <summary>
-        /// Deletes the specified photo.
-        /// </summary>
-        /// <param name="id">The id.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public int Delete(int id)
-        {
-            return _photoRepository.Delete(id); 
-        }
-
-        /// <summary>
         /// Gets the specified photo by id.
         /// </summary>
         /// <param name="id">The id.</param>
@@ -142,6 +127,38 @@ namespace FarmPhoto.Core
         public IList<Photo> Get(User user)
         {
             return _photoRepository.Get(user);
+        }
+
+        /// <summary>
+        /// Gets photos that have been tagged with tag.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <returns></returns>
+        public IList<Photo> Get(Tag tag)
+        {
+            return _photoRepository.Get(tag);
+        }
+
+        /// <summary>
+        /// Updates the specified photo to apporved.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="approved">if set to <c>true</c> [approved].</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public int Update(int id, bool approved)
+        {
+            return _photoRepository.Update(id, approved);
+        }
+
+        /// <summary>
+        /// Deletes the specified photo.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public int Delete(int id)
+        {
+            return _photoRepository.Delete(id);
         }
 
         /// <summary>

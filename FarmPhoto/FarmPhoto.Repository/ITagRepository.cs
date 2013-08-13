@@ -17,5 +17,7 @@ namespace FarmPhoto.Repository
         /// <param name="photoId">The photo id.</param>
         /// <returns></returns>
         IList<Tag> Get(int photoId);
+
+        void Delete(int photoId);
     }
 }

@@ -21,16 +21,8 @@ namespace FarmPhoto.Core
         /// <param name="photoId">The photo id.</param>
         public void CreateTag(string tags, int photoId)
         {
-            string[] arrayOfTags = tags.Split(new[] { ',' });
-
-            foreach (var tagString in arrayOfTags)
+            foreach (var tag in ExtractTags(tags, photoId))
             {
-                var tag = new Tag
-                {
-                    Description = tagString.Trim(),
-                    PhotoId = photoId
-                };
-
                 _tagRepository.Create(tag);
             }
         }
@@ -43,6 +35,36 @@ namespace FarmPhoto.Core
         public IList<string> Get(int photoId)
         {
             return _tagRepository.Get(photoId).Select(tag => tag.Description).ToList();
+        }
+       
+        /// <summary>
+        /// Updates all the tags corrisponding to a photo by first deleting any then recreating them 
+        /// </summary>
+        /// <param name="tags">The tags.</param>
+        /// <param name="photoId">The photo id.</param>
+        /// <returns></returns>
+        public void Update(string tags, int photoId)
+        {
+            _tagRepository.Delete(photoId);
+
+            CreateTag(tags, photoId); 
+        }
+
+        private static IEnumerable<Tag> ExtractTags(string tags, int photoId)
+        {
+            var tagList = new List<Tag>();
+            string[] arrayOfTags = tags.Split(new[] { ',' });
+
+            foreach (var tagString in arrayOfTags)
+            {
+                var photoTag = new Tag
+                {
+                    Description = tagString.Trim(),
+                    PhotoId = photoId
+                };
+                tagList.Add(photoTag);
+            }
+            return tagList;
         }
     }
 }

@@ -35,8 +35,14 @@ namespace FarmPhoto.Repository
         /// </summary>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         IList<Photo> Get(User user);
+
+        /// <summary>
+        /// Gets all the photos that have been tagged with tag.
+        /// </summary>
+        /// <param name="tag">The tag.</param>
+        /// <returns></returns>
+        IList<Photo> Get(Tag tag);
 
         /// <summary>
         /// Updates the specified photos details.

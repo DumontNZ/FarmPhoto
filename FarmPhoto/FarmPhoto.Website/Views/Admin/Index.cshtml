@@ -60,7 +60,7 @@
                 data: { id: photoid },
                 success: function (data) {
                     if (data.Success) {
-                        $(grandParent.children).hide('slow', function() {
+                        $(grandParent).hide('slow', function() {
                             $(grandParent.innerHTML = "<div class='SuccessMessage'>" + title + " has been Successesfully Approved</div>").fadeIn('slow');
                         });
                     } 
@@ -85,5 +85,29 @@
                 }
             });
         });
+        
+        $("body").on('click', '#Update', function () {
+            alert("hie");
+            var valid = true;
+            var title = $('#Title').Text;
+            var description = $('#Description').text();
+            var tags = $('#Tags').text();
+
+            $.ajax({
+                url: "@Url.Action("Update","Submission")",
+                type: "POST",
+                data: {
+                    Title: "Title",
+                    Description: "Description",
+                    Tags: "Tags"
+                },
+                success: function (data) {
+                    if (data.Success) {
+
+                    }
+                }
+            });
+         });
+
     });
 </script>

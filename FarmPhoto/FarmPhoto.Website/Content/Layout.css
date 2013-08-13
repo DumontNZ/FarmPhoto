@@ -1,5 +1,5 @@
 ﻿#ContentContainer {
-    background: RGB(246, 247,248);
+    background: white;
     width: 1000px;
     margin-top: 5px;
     margin-left: 0px;
@@ -9,8 +9,10 @@
 }
 
 .ContentContainerHeader {
-    margin-left: 10px;
-    margin-top: 15px; 
+    padding-left: 49px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    background: RGB(238, 230,216); 
 }
 
 

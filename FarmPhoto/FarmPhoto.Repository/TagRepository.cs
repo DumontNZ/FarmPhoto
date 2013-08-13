@@ -80,5 +80,19 @@ namespace FarmPhoto.Repository
                 return photoTags;
             }
         }
+
+        public void Delete(int photoId)
+        {
+            using (var sqlConnection = new MySqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "delete from tag where photoid = @PhotoId" };
+
+                mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
+ 
+                mySqlCommand.ExecuteNonQuery();
+            }
+        }
     }
 }

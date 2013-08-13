@@ -1,7 +1,7 @@
 ﻿@model FarmPhoto.Website.Models.GalleryModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Farm Photo";
 }
 
 @*<div id="photoBannerContainer">
@@ -30,12 +30,12 @@
         {
             if (firstOrDefault.SubmittedBy != null)
             {
-            <div class="ContentContainerHeader">
-                <h2>Recently Added Photo</h2>
-                <h3>Submitted By: @Html.Label(firstOrDefault.SubmittedBy)</h3>
-                <h3>Submitted On: @Html.Label(firstOrDefault.SubmittedOn.ToShortDateString())</h3>
-                <h3>@firstOrDefault.Title</h3>
-            </div>
+                <div class="ContentContainerHeader">
+                    <h2>Most Recently Added Photo</h2>
+                    <h3>@firstOrDefault.Title</h3>
+                    <h4>Submitted By @firstOrDefault.SubmittedBy</h4>
+                    
+                </div>
             <div class="portraitframe">
                 <img src="@Url.Action("HomeImage", "Gallery")" alt="" />
             </div>

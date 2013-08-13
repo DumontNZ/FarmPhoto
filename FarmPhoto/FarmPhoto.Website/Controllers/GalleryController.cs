@@ -59,6 +59,19 @@ namespace FarmPhoto.Website.Controllers
         }
 
         /// <summary>
+        /// Get a all photos with the following Tag.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Tag(string tag)
+        {
+            ViewBag.Tag = tag;
+
+            IList<Photo> photos = _photoManager.Get(new Tag { Description = tag });
+
+            return View(PhotoListToGalleryModel(photos));
+        }
+
+        /// <summary>
         /// Gets the most recently added Image for the home page.
         /// </summary>
         /// <returns></returns>

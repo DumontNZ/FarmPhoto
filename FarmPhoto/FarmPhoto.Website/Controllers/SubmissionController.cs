@@ -1,12 +1,16 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
+using System.Drawing;
+using System.Web;
 using System.Web.Mvc;
-using FarmPhoto.Common.Configuration;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
+using System.Drawing.Imaging;
 using FarmPhoto.Website.Models;
+using FarmPhoto.Common.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace FarmPhoto.Website.Controllers
 {
@@ -25,10 +29,7 @@ namespace FarmPhoto.Website.Controllers
 
         public ActionResult Index()
         {
-            var hodler = Server.MapPath("~/App_Data/Uploads/Thumbnails/");
-            var encodedString = Server.HtmlEncode(hodler); 
-           
-            return View(new SubmissionModel { GalleryDirectory = encodedString });
+            return View();
         }
 
         [HttpPost]
@@ -36,6 +37,11 @@ namespace FarmPhoto.Website.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+
+
+
+
                 var uploadPath = Server.MapPath("~/App_Data/Uploads");
                 string uploadedFilePath = Path.Combine(uploadPath, model.FileName);
 
@@ -94,7 +100,26 @@ namespace FarmPhoto.Website.Controllers
         [HttpPost]
         public ActionResult Upload(int? chunk, string name)
         {
-            var fileUpload = Request.Files[0];
+            HttpPostedFileBase fileUpload = Request.Files[0];
+
+            //var storageConnectionString = _config.StorageConnectionString;
+
+            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+
+            //CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            //CloudBlobContainer photoContainer = blobClient.GetContainerReference("photos");
+
+            //CloudBlockBlob blockBlob = photoContainer.GetBlockBlobReference(name); 
+
+            //blockBlob.UploadFromStream(fileUpload.InputStream);
+
+
+
+
+
+
+            
             var uploadPath = Server.MapPath("~/App_Data/Uploads");
             chunk = chunk ?? 0;
             string uploadedFilePath = Path.Combine(uploadPath, name);

@@ -125,6 +125,8 @@
 
             if (data.Title == "") {
                 $('[data-valmsg-for="Title"]').text("Title must not be empty");
+                $('[data-valmsg-for="Title"]').removeClass('field-validation-valid');
+                $('[data-valmsg-for="Title"]').addClass('field-validation-error');
                 valid = false;
             } else {
                 $('[data-valmsg-for="Title"]').text("");
@@ -132,12 +134,16 @@
 
             if (data.Description == "") {
                 $('[data-valmsg-for="Description"]').text("Description must not be empty");
+                $('[data-valmsg-for="Description"]').removeClass('field-validation-valid');
+                $('[data-valmsg-for="Description"]').addClass('field-validation-error');
                 valid = false;
             } else {
                 $('[data-valmsg-for="Description"]').text("");
             }
             if (data.Tags == "") {
                 $('[data-valmsg-for="TagString"]').text("Tags must not be empty");
+                $('[data-valmsg-for="TagString"]').removeClass('field-validation-valid');
+                $('[data-valmsg-for="TagString"]').addClass('field-validation-error');
                 valid = false;
             } else {
                 $('[data-valmsg-for="TagString"]').text("");

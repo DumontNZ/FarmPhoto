@@ -1,34 +1,37 @@
 ﻿@model FarmPhoto.Website.Models.LoginModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Sign in";
 }
 
 <div id="ContentContainer">
     <div class="ContentContainerHeader">
-        <h2>Login</h2>
+        <h2>Please sign in</h2>
     </div>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-signin" }))
     {
         @Html.AntiForgeryToken()
 
         <div class="formRow">
-            @Html.LabelFor(m => m.Username)
-            @Html.TextBoxFor(m => m.Username)
+            @Html.TextBoxFor(m => m.Username, new { placeholder = "Username" })
             @Html.ValidationMessageFor(m => m.Username)
         </div>
         <div class="formRow">
-            @Html.LabelFor(m => m.Password)
-            @Html.PasswordFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
             @Html.ValidationMessageFor(m => m.Password)
         </div>
         <div class="formRow">
-            @Html.LabelFor(m => m.RememberMe)
-            @Html.CheckBoxFor(m => m.RememberMe)
+            <label class="checkbox">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                Remember Me
+            </label>
         </div>
-        <input type="submit" value="Login" />
+        
+        <button class="btn btn-primary" type="submit">Sign in</button>
+        <div>
+            @Html.ActionLink("or Sign up", "Create")
+        </div>
     }
 
-    @Html.ActionLink("Account", "Create")
 
 </div>

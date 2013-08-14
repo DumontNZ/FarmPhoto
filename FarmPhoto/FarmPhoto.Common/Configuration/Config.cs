@@ -27,6 +27,10 @@ namespace FarmPhoto.Common.Configuration
             get { return ConfigurationManager.ConnectionStrings[ConfigKeys.SqlConnection].ConnectionString; }
         }
 
+        public string StorageConnectionString {
+            get { return GetConfigurationValues(ConfigKeys.StorageConnectionString); }
+        }
+
         /// <summary>
         /// Gets the year in minutes.
         /// </summary>

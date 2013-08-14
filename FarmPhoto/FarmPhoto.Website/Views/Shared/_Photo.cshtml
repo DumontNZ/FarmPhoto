@@ -6,58 +6,66 @@
     <img src="@Url.Action("Image", "Gallery", new { id = Model.PhotoId, thumbnail = false })" alt="" />
 
 </div>
-
+<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="close">
+    <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
+    <span class="ui-button-text">close</span>
+</button>
 
 @if (CurrentUser.Id == Model.UserId)
 {
-    using(Ajax.BeginForm("Update", "Submission", null, null, null))
+    using (Ajax.BeginForm("Update", "Submission", null, null, new { @class = "form-photoupdate" }))
     {
-        <div class="photofields">
-            
-            @Html.HiddenFor(m=>m.PhotoId)
-            @Html.HiddenFor(m=>m.UserId)
-            <div class="formRow">
-                @Html.LabelFor(m => m.Title)
-                @Html.TextBoxFor(m => m.Title)
-                @Html.ValidationMessageFor(m => m.Title)
-            </div>
-            <div class="formRow">
-                @Html.LabelFor(m => m.Description)
-                @Html.TextBoxFor(m => m.Description)
-                @Html.ValidationMessageFor(m => m.Description)
-            </div>
-            <div class="formRow">
-                @Html.LabelFor(m => m.TagString)
-                @Html.TextBoxFor(m => m.TagString)
-                @Html.ValidationMessageFor(m => m.TagString)
-            </div>
-            
-            <input id="Delete" class="Delete" type="button" value="Delete" />
-            <input id="Update" class="Update" type="button" value="Update" />
+    <div class="updatephotofields">
+
+        @Html.HiddenFor(m => m.PhotoId)
+        @Html.HiddenFor(m => m.UserId)
+        <div class="formRow">
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title)
         </div>
+        <div class="validationmessage">
+            @Html.ValidationMessageFor(m => m.Title)
+        </div>
+        <div class="formRow">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextBoxFor(m => m.Description)
+        </div>
+        <div class="validationmessage">
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+        <div class="formRow">
+            @Html.LabelFor(m => m.TagString)
+            @Html.TextBoxFor(m => m.TagString)
+        </div>
+        <div class="validationmessage">
+            @Html.ValidationMessageFor(m => m.TagString)
+        </div>
+
+        <button id="Update" class="btn btn-primary" type="submit">Update</button>
+        <button id="Delete" class="btn btn-danger" type="submit">Delete</button>
+
+    </div>
     }
 }
 else
 {
     <div class="photofields">
         <div class="formRow">
-            @Model.Title
+            <label>@Model.Title</label>
         </div>
         <div class="formRow">
-            @Model.Description
+            <p>@Model.Description</p>
         </div>
         <div class="formRow">
-            @foreach (var tag in Model.Tags)
-            {
-                <div class="tag">
-                    @Html.ActionLink("" + @tag, "Tag", "Gallery", new { Tag = @tag }, null)
-                </div>
-            }
+            <div class="tag">
+                @foreach (var tag in Model.Tags)
+                {
+                
+                    @Html.ActionLink("" + @tag, "Tag", "Gallery", new { Tag = @tag}, new{@class = "btn btn-mini" })
+                }
+            </div>
 
         </div>
     </div>
 }
-<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="close">
-    <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
-    <span class="ui-button-text">close</span>
-</button>
+

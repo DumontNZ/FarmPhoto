@@ -10,6 +10,8 @@
         /// </value>
         string SqlConnectionString { get; }
 
+        string StorageConnectionString { get; }
+
         /// <summary>
         /// Gets the year in minutes.
         /// </summary>

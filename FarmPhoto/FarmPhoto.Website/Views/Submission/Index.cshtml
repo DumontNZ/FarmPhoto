@@ -27,7 +27,7 @@
             <div id="fileUploadProgress"></div>
 
         </div>
-        <a id="pickfiles" href="javascript:;">[Select file]</a>
+        <a id="pickfiles" href="javascript:;">Select file</a>
 
         @using (Html.BeginForm("Index", "Submission", FormMethod.Post, new { enctype = "multipart/form-data", id = "submissionForm", style = "display:none" }))
         {
@@ -37,23 +37,20 @@
         
             <div class="submissionRows">
                 <div class="formRow">
-                    @Html.LabelFor(m => m.Title)
-                    @Html.TextBoxFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, new { placeholder = "Title" })
                     @Html.ValidationMessageFor(m => m.Title)
                 </div>
                 <div class="formRow">
-                    @Html.LabelFor(m => m.Description)
-                    @Html.TextBoxFor(m => m.Description)
+                    @Html.TextBoxFor(m => m.Description, new { placeholder = "Description" })
                     @Html.ValidationMessageFor(m => m.Description)
                 </div>
                 <div class="formRow">
-                    @Html.LabelFor(m => m.Tags)
-                    @Html.TextBoxFor(m => m.Tags)
+                    @Html.TextBoxFor(m => m.Tags, new { placeholder = "Tags" })
                     @Html.ValidationMessageFor(m => m.Tags)
                 </div>
 
                 <div class="submissionbutton">
-                    <input id="SubmitButton" type="submit" value="Submit" disabled="disabled" />
+                    <button class="btn btn-primary" type="submit">Submit photo</button>
                 </div>
             </div>
         }
@@ -79,7 +76,7 @@
 
         uploader.bind('FilesAdded', function (up, files) {
             startProgressBar();
-            $('#pickfiles').text('[Change file]');
+            $('#pickfiles').text('Change file');
             $('#submissionForm').slideDown('slow');
 
             $('#photoPreviewImage').fadeOut();

@@ -27,6 +27,28 @@ h1 {
     -webkit-margin-end: 0;
 }
 
+.ContentContainerHeader h2 {
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+    line-height: 20px; 
+}
+
+.ContentContainerHeader h3 {
+    display: block;
+    font-size: 1.17em;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+    line-height: 10px;
+}
+
 #main {
     margin-left: auto;
     margin-right: auto;
@@ -99,11 +121,12 @@ header {
     /*width: 800px;*/
     height: 800px;
 }
+
     #MostRecentPicture img {
         margin-left: auto;
         margin-right: auto;
         display: block;
-        margin-top: 5px; 
+        margin-top: 5px;
     }
 
 #MainLeftColumn {
@@ -159,10 +182,6 @@ ul#menu {
 }
 
 .formRow {
-    margin: 0 0 10px 0;
-    color: black;
-    min-height: 40px;
-    position: relative;
 }
 
 .formWrapper {
@@ -170,12 +189,8 @@ ul#menu {
 }
 
 label {
-    text-align: right;
-    display: inline-block;
-    width: 83px;
+    width: 262px;
     color: #686868;
-    font-size: 12px;
-    font-weight: bold;
 }
 
 .photoalbum {
@@ -195,6 +210,7 @@ label {
 .AdminRow {
     height: 220px;
     padding: 10px;
+    margin-left: 30px;
 }
 
 #header {
@@ -210,8 +226,8 @@ label {
     margin-right: auto;
 }
 
+.updatephotofields,
 .photofields {
-    /*background: orange;*/
     float: left;
 }
 
@@ -257,7 +273,6 @@ label {
 }
 
 .submissionbutton {
-    margin-left: 182px;
 }
 
 #status {
@@ -286,9 +301,63 @@ label {
 .submissionRows {
     float: left;
     margin-top: 10px;
+    margin-left: 20px;
 }
 
-a:link {
+.form-signin {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 225px;
+}
+
+.form-createaccount {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 225px;
+}
+
+.field-validation-error {
+    color: #b94a48;
+}
+
+.AdminRow .photofields {
+    margin-top: 10px;
+}
+
+.updatephotofields,
+.photofields {
+    margin-left: 15px;
+}
+
+.form-photoupdate .updatephotofields .formRow input {
+    margin-bottom: 3px;
+}
+
+.photofields .formRow label {
+    font-size: 20px;
+    margin-bottom: 11px;
+}
+
+.btn.btn-danger {
+    margin-left: 5px;
+}
+
+.validationmessage {
+    margin-bottom: 10px;
+}
+
+.adminButtons {
+    margin-top: 5px;
+}
+
+.NoContentMessage,
+.SuccessMessage {
+    margin-left: 50px;
+}
+
+/*a:link {
     text-decoration: none;
 }
 
@@ -303,5 +372,5 @@ a:visited {
 
 a:active {
     text-decoration: none;
-}
+}*/
 

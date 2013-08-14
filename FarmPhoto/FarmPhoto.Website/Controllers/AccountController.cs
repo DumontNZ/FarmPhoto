@@ -100,7 +100,7 @@ namespace FarmPhoto.Website.Controllers
 
                    // UserMailer.Welcome(user).Send();
 
-                    return View("Login");
+                    return RedirectToAction("Login");
                 }
             }
 

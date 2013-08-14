@@ -8,10 +8,12 @@ namespace FarmPhoto.Website.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js")); //,
+                        //"~/Scripts/Bootstrap/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
@@ -21,7 +23,12 @@ namespace FarmPhoto.Website.App_Start
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/Site.css", "~/Content/Layout.css", "~/Content/MovingBanner.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                        "~/Content/Site.css", 
+                        "~/Content/Layout.css", 
+                        "~/Content/MovingBanner.css")); //,
+                        //"~/Content/Bootstrap/css/bootstrap-responsive.css",
+                        //"~/Content/Bootstrap/css/bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

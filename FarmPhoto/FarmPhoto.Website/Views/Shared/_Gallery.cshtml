@@ -1,5 +1,7 @@
 ﻿@model FarmPhoto.Website.Models.GalleryModel
 
+
+
 <div class="photoalbum">
     @foreach (var photo in Model.PhotoModels)
     {
@@ -30,51 +32,27 @@
             resizable: true,
             modal: true,
             open: function (event, ui) {
-                $(".ui.widget-overlay").click(function () {
-                    alert('click');
-                });
+                //$("body").on('click', '.ui-widget-overlay', function () {
+                //    $("#partial").dialog('close');
+                //});
 
-                $(".ui.widget-overlay").on('click', function () {
-                    alert("on");
-                    $("#partial").dialog('close');
-                });
-
-                $(".ui.widget-overlay").bind('click', function () {
-                    alert("bind");
-                    $("#partial").dialog('close');
+                $("body").on('click', '.ui-dialog-titlebar-close', function () {
+                    $("#partial").dialog("close");
                 });
             }
         });
 
-        var validateForm = function(data) {
+        $(".openDialog").on("click", function (e) {
+            e.preventDefault();
 
-            var valid = true; 
-
-            if (data.Title == "") {
-                $('[data-valmsg-for="Title"]').text("Title must not be empty");
-                valid = false;
-            } else {
-                $('[data-valmsg-for="Title"]').text("");
-            }
-
-            if (data.Description == "") {
-                $('[data-valmsg-for="Description"]').text("Description must not be empty");
-                valid = false;
-            } else {
-                $('[data-valmsg-for="Description"]').text("");
-            }
-            if (data.Tags == "") {
-                $('[data-valmsg-for="TagString"]').text("Tags must not be empty");
-                valid = false;
-            } else {
-                $('[data-valmsg-for="TagString"]').text("");
-            }
-
-            return valid; 
-        }; 
+            $.get(this.href).done(function (results) {
+                dialog.html(results);
+                dialog.dialog("open");
+            });
+        });
 
         $("body").on('click', '#Update', function () {
-
+            
             var formData = {
                 Title: $('#Title').val(),
                 Description: $('#Description').val(),
@@ -100,13 +78,72 @@
             }
         });
 
-        $(".openDialog").on("click", function (e) {
-            e.preventDefault();
-
-            $.get(this.href).done(function (results) {
-                dialog.html(results);
-                dialog.dialog("open");
-            });
+        $("body").on('click', '#Delete', function () {
+            $('<div></div>').appendTo('body')
+                    .html('<div><h6>Are you sure you want to delete this photo?</h6></div>')
+                    .dialog({
+                        modal: true, title: 'Delete message', zIndex: 10000, autoOpen: true,
+                        width: 'auto', resizable: false,
+                        buttons: {
+                            "YesButton": {
+                                text:'Yes',
+                                id: 'yesButton',
+                                click: function() {
+                                    $.ajax({
+                                        url: "@Url.Action("Delete", "Submission")",
+                                        type: "POST",
+                                        data: { photoId: $('#PhotoId').val(), userId: $('#UserId').val() },
+                                        success: function(data) {
+                                            if (data.Success) {
+                                                alert("Successfully Deleted Photo");
+                                                $("#partial").dialog('close');
+                                            }
+                                        }
+                                    });
+                                }
+                            },
+                            "NoButton": {
+                                text: 'No',
+                                id: 'noButton',
+                                click: function() {
+                                    $(this).dialog("close");
+                                    
+                                } 
+                            }
+                        },
+                        open: function () {
+                        },
+                        close: function (event, ui) {
+                            $(this).remove();
+                        }
+                    });
         });
+
+        var validateForm = function (data) {
+
+            var valid = true;
+
+            if (data.Title == "") {
+                $('[data-valmsg-for="Title"]').text("Title must not be empty");
+                valid = false;
+            } else {
+                $('[data-valmsg-for="Title"]').text("");
+            }
+
+            if (data.Description == "") {
+                $('[data-valmsg-for="Description"]').text("Description must not be empty");
+                valid = false;
+            } else {
+                $('[data-valmsg-for="Description"]').text("");
+            }
+            if (data.Tags == "") {
+                $('[data-valmsg-for="TagString"]').text("Tags must not be empty");
+                valid = false;
+            } else {
+                $('[data-valmsg-for="TagString"]').text("");
+            }
+
+            return valid;
+        };
     });
 </script>

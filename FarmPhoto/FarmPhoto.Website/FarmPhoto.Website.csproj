@@ -184,6 +184,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bootstrap\css\bootstrap-responsive.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap-responsive.min.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap.css" />
+    <Content Include="Content\Bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\Images\banner2.jpg" />
     <Content Include="Content\Images\P1030794.JPG" />
     <Content Include="Content\Images\Thumbnails\P1030794.JPG" />
@@ -270,6 +276,9 @@
     <None Include="Properties\PublishProfiles\farmphoto - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\farmphoto - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\farmphoto - Web Deploy.pubxml" />
+    <Content Include="Scripts\Bootstrap\bootstrap.js" />
+    <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
+    <Content Include="Scripts\Confirmation\jquery.confirm.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />

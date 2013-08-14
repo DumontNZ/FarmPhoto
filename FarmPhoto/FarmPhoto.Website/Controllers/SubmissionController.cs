@@ -79,6 +79,19 @@ namespace FarmPhoto.Website.Controllers
         }
 
         [HttpPost]
+        public JsonResult Delete(int photoId, int userId)
+        {
+            if (userId == CurrentUser.Id)
+            {
+                var success = _photoManager.Delete(photoId);
+
+                return new JsonResult { Data = new { Success = true } };
+            }
+
+            return new JsonResult { Data = new { Success = false } };
+        }
+
+        [HttpPost]
         public ActionResult Upload(int? chunk, string name)
         {
             var fileUpload = Request.Files[0];

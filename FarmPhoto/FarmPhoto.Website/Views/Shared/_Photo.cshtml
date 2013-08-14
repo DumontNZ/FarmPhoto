@@ -31,7 +31,8 @@
                 @Html.TextBoxFor(m => m.TagString)
                 @Html.ValidationMessageFor(m => m.TagString)
             </div>
-
+            
+            <input id="Delete" class="Delete" type="button" value="Delete" />
             <input id="Update" class="Update" type="button" value="Update" />
         </div>
     }
@@ -60,26 +61,3 @@ else
     <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
     <span class="ui-button-text">close</span>
 </button>
-
-<script type="text/javascript">
-   
-    $(".ui-dialog-titlebar-close").on("click", function () {
-        $("#partial").dialog("close");
-        
-    });
-
-    $(".ui.widget-overlay").click(function () {
-        alert('hi'); 
-    });
-
-    $('.ui-widget-overlay').click(function () { $("#partial").dialog("close"); });
-
-    $(".ui.widget-overlay").on('click', function () {
-        alert("HI");
-        $("#partial").dialog('close');
-
-    });
-
-</script>
-
-

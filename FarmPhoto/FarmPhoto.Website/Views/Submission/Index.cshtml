@@ -66,7 +66,7 @@
             runtimes: 'html5,html4',
             browse_button: 'pickfiles',
             url: "@Url.Action("Upload", "Submission")",
-            max_file_size: '10mb',
+            max_file_size: '100mb',
             multi_selection: false,
             unique_names: true,
             filters: [{ title: "Image files", extensions: "jpg,gif,png" }]
@@ -110,7 +110,7 @@
                 $('#photoPreview').html('<img src="/Gallery/Preview?filename=' + filename + '" alt="" id="photoPreviewImage"/>');
             }
             
-            $('#status').animate({ width: '' + file.percent + '%' }, 500, function () {
+            $('#status').animate({ width: '' + file.percent + '%' }, 200, function () {
                 if (file.percent >= 100) {
                     $('#photoPreviewImage').fadeIn('slow');
                 }

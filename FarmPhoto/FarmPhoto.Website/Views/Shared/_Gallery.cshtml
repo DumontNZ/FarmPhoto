@@ -96,6 +96,7 @@
                                         success: function(data) {
                                             if (data.Success) {
                                                 alert("Successfully Deleted Photo");
+                                                $(this).dialog("close");
                                                 $("#partial").dialog('close');
                                             }
                                         }

@@ -37,11 +37,6 @@ namespace FarmPhoto.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-
-
-
-
                 var uploadPath = Server.MapPath("~/App_Data/Uploads");
                 string uploadedFilePath = Path.Combine(uploadPath, model.FileName);
 
@@ -69,7 +64,7 @@ namespace FarmPhoto.Website.Controllers
             {
                 var photo = new Photo
                 {
-                    PhotoId = model.PhotoId, 
+                    PhotoId = model.PhotoId,
                     Title = model.Title,
                     Description = model.Description,
                     UserId = CurrentUser.Id
@@ -100,50 +95,57 @@ namespace FarmPhoto.Website.Controllers
         [HttpPost]
         public ActionResult Upload(int? chunk, string name)
         {
-            HttpPostedFileBase fileUpload = Request.Files[0];
-
-            //var storageConnectionString = _config.StorageConnectionString;
-
-            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
-
-            //CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            //CloudBlobContainer photoContainer = blobClient.GetContainerReference("photos");
-
-            //CloudBlockBlob blockBlob = photoContainer.GetBlockBlobReference(name); 
-
-            //blockBlob.UploadFromStream(fileUpload.InputStream);
-
-
-
-
-
-
-            
-            var uploadPath = Server.MapPath("~/App_Data/Uploads");
-            chunk = chunk ?? 0;
-            string uploadedFilePath = Path.Combine(uploadPath, name);
-
-            var fileName = Path.GetFileName(uploadedFilePath);
-
-            using (var fs = new FileStream(uploadedFilePath, chunk == 0 ? FileMode.Create : FileMode.Append))
+            try
             {
-                var buffer = new byte[fileUpload.InputStream.Length];
-                fileUpload.InputStream.Read(buffer, 0, buffer.Length);
-                fs.Write(buffer, 0, buffer.Length);
+                HttpPostedFileBase fileUpload = Request.Files[0];
+
+                if (fileUpload != null)
+                {
+                    var storageConnectionString = _config.StorageConnectionString;
+
+                    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+
+                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+                    SaveImage(fileUpload, blobClient, name, "thumbnails", 200, 200);
+
+                    SaveImage(fileUpload, blobClient, name, "photos", 800, 800);
+
+                }
+                else
+                {
+                    throw new Exception("Shit went bad");
+                }
             }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index", "Home"); 
+                //throw new Exception(e.Message);
 
-            var thumbnailUploadPath = uploadPath + "\\Thumbnails";
-            string thumbnailFilePath = Path.Combine(thumbnailUploadPath, name);
-
-            Image image = Image.FromStream(System.IO.File.OpenRead(uploadedFilePath));
-
-            ScaleImage(image, 200, 200, thumbnailFilePath);
+            }
 
             return View("Index");
         }
 
-        private static void ScaleImage(Image image, int maxWidth, int maxHeight, string imageLocation)
+        private void SaveImage(HttpPostedFileBase fileUpload, CloudBlobClient blobClient, string filename, string containerName, int width, int height)
+        {
+            CloudBlobContainer thumbnailContainer = blobClient.GetContainerReference(containerName);
+
+            CloudBlockBlob thumbnailBlob = thumbnailContainer.GetBlockBlobReference(filename); 
+            Image image = Image.FromStream(fileUpload.InputStream);
+
+            using (var thumbnail = ScaleImage(image, width, height))
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    thumbnail.Save(memoryStream, ImageFormat.Jpeg);
+                    memoryStream.Position = 0;
+                    thumbnailBlob.UploadFromStream(memoryStream);
+                }
+            }
+        }
+
+        private Bitmap ScaleImage(Image image, int maxWidth, int maxHeight)
         {
             var ratioX = (double)maxWidth / image.Width;
             var ratioY = (double)maxHeight / image.Height;
@@ -155,11 +157,7 @@ namespace FarmPhoto.Website.Controllers
             var newImage = new Bitmap(newWidth, newHeight);
             Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
 
-            var ms = new MemoryStream();
-
-            newImage.Save(imageLocation, ImageFormat.Jpeg);
-            
-            ms.Dispose();
+            return newImage; 
         }
     }
 }

@@ -18,7 +18,7 @@
 
 </head>
 <body>
-    
+
     <div id="header">
         <img src="~/Content/Images/banner2.jpg" />
         @*<img src="~/Content/Images/P1030794.JPG"/>*@
@@ -27,7 +27,7 @@
     <div id="PageContent">
         <div id="LeftColumn">
             <ul id="menu">
-                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("Gallery", "Index", "Gallery")</li>
                 @if (Request.IsAuthenticated)
                 {
@@ -39,27 +39,31 @@
                     <li>@Html.ActionLink("Login", "Login", "Account")</li>
                     <li>@Html.ActionLink("Register", "Create", "Account")</li>
                 }
-                @if (CurrentUser.IsAdministrator)
+                @if (Request.IsAuthenticated)
                 {
+                    if (CurrentUser.IsAdministrator)
+                    {
                     <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
+                    }
                 }
+
                 <li>@Html.ActionLink("About Us", "AboutUs", "Home")</li>
-                
-                 @if (Request.IsAuthenticated)
-                 {
-                     <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
-                 }
+
+                @if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                }
             </ul>
         </div>
 
         <div id="InnerContent">
             @RenderBody()
         </div>
-        
+
         <div id="RightColumn">
             <p>Right Column</p>
         </div>
-        
+
     </div>
     @RenderSection("scripts", required: false)
 </body>

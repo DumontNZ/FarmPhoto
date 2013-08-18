@@ -1,10 +1,15 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Web.Mvc;
-using FarmPhoto.Common.Configuration;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using FarmPhoto.Website.Models;
 using System.Collections.Generic;
+using FarmPhoto.Common.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Auth;
+using Microsoft.WindowsAzure.Storage.Blob;
+
 
 namespace FarmPhoto.Website.Controllers
 {
@@ -28,10 +33,10 @@ namespace FarmPhoto.Website.Controllers
         [AllowAnonymous]
         public ActionResult Index()
         {
-            int page = 1; 
-            IList<Photo> photos = _photoManager.Get(page, _config.PhotosPerPage);  
+            int page = 1;
+            IList<Photo> photos = _photoManager.Get(page, _config.PhotosPerPage);
 
-            return View(PhotoListToGalleryModel(photos)); 
+            return View(PhotoListToGalleryModel(photos));
         }
 
         /// <summary>
@@ -40,9 +45,9 @@ namespace FarmPhoto.Website.Controllers
         /// <returns></returns>
         public ActionResult MyPhotos()
         {
-            IList<Photo> photos = _photoManager.Get(new User{UserId = CurrentUser.Id});
+            IList<Photo> photos = _photoManager.Get(new User { UserId = CurrentUser.Id });
 
-            return View(PhotoListToGalleryModel(photos)); 
+            return View(PhotoListToGalleryModel(photos));
         }
 
         /// <summary>
@@ -51,7 +56,7 @@ namespace FarmPhoto.Website.Controllers
         /// <returns></returns>
         public ActionResult UsersPhotos(string username)
         {
-            ViewBag.Username = username; 
+            ViewBag.Username = username;
 
             IList<Photo> photos = _photoManager.Get(new User { UserName = username });
 
@@ -112,7 +117,7 @@ namespace FarmPhoto.Website.Controllers
                 return View(photoModel);
             }
 
-            return View("Error"); 
+            return View("Error");
         }
 
         [HttpPost]
@@ -123,9 +128,9 @@ namespace FarmPhoto.Website.Controllers
                 _photoManager.Update(new Photo
                     {
                         PhotoId = photoModel.PhotoId,
-                        Title =  photoModel.Title,
+                        Title = photoModel.Title,
                         Description = photoModel.Description
-                    }); 
+                    });
 
                 return PartialView("_Photo", photoModel);
             }
@@ -150,13 +155,35 @@ namespace FarmPhoto.Website.Controllers
         [AllowAnonymous]
         public ActionResult Preview(string filename)
         {
-            var uploadPath = Server.MapPath("~/App_Data/Uploads/Thumbnails");
-            string uploadedFilePath = Path.Combine(uploadPath, filename);
+            var storageConnectionString = _config.StorageConnectionString;
 
-            return File(uploadedFilePath, "image/jpeg");
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            CloudBlobContainer container = blobClient.GetContainerReference("thumbnails");
+
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(filename);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                try
+                {
+                    blockBlob.DownloadToStream(memoryStream);
+
+                    byte[] holder = memoryStream.ToArray();
+
+                    return File(holder, "image/jpeg");
+                }
+                catch (StorageException e)
+                {
+                    return Preview(filename); 
+                }
+
+            }
         }
 
-        private GalleryModel PhotoListToGalleryModel(IEnumerable<Photo> photos) 
+        private GalleryModel PhotoListToGalleryModel(IEnumerable<Photo> photos)
         {
             var galleryModel = new GalleryModel();
 

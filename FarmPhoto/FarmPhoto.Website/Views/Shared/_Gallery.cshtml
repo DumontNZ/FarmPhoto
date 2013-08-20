@@ -1,13 +1,11 @@
 ﻿@model FarmPhoto.Website.Models.GalleryModel
 
-
-
 <div class="photoalbum">
     @foreach (var photo in Model.PhotoModels)
     {
-        <div class="photoframe">
-            <a href="@Url.Action("Photo", "Gallery", new { id = @photo.PhotoId })" class="openDialog" id= "@photo.PhotoId">
-                <img src="@Url.Action("Image", "Gallery", new { id = photo.PhotoId })" alt="" />
+        <div class="photoframe" id= "@photo.PhotoId">
+            <a href="@Url.Action("Photo", "Gallery", new { id = @photo.PhotoId })" class="openDialog" >
+                <img src="@Url.Action("Image", "Gallery", new { fileName = photo.FileName })" alt="" />
             </a>
 
             Submitted by @Html.ActionLink("" + @photo.SubmittedBy, "UsersPhotos", "Gallery", new { username = photo.SubmittedBy }, null)
@@ -88,16 +86,18 @@
                             "YesButton": {
                                 text:'Yes',
                                 id: 'yesButton',
-                                click: function() {
+                                click: function () {
+                                    var that = $(this);
+                                    var photoId = $('#PhotoId').val(); 
                                     $.ajax({
                                         url: "@Url.Action("Delete", "Submission")",
                                         type: "POST",
-                                        data: { photoId: $('#PhotoId').val(), userId: $('#UserId').val() },
-                                        success: function(data) {
+                                        data: { photoId: photoId, userId: $('#UserId').val() },
+                                        success: function (data) {
                                             if (data.Success) {
-                                                alert("Successfully Deleted Photo");
-                                                $(this).dialog("close");
+                                                that.dialog("close");
                                                 $("#partial").dialog('close');
+                                                $("#" + photoId).hide('slow'); 
                                             }
                                         }
                                     });
@@ -106,7 +106,7 @@
                             "NoButton": {
                                 text: 'No',
                                 id: 'noButton',
-                                click: function() {
+                                click: function () {
                                     $(this).dialog("close");
                                     
                                 } 

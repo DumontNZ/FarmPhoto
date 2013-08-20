@@ -16,6 +16,7 @@ namespace FarmPhoto.Website.Models
         public bool Approved { get; set; }
         public string Height { get; set; }
         public string Width { get; set; }
+        public string FileName { get; set; }
         public DateTime SubmittedOn { get; set; }
     }
 }

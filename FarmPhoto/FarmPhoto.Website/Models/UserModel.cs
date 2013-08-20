@@ -33,7 +33,6 @@ namespace FarmPhoto.Website.Models
         [PasswordCompare("Password")]
         public string ReenterPassword { get; set; }
 
-        [Required]
         [LocalisedDisplayName("Country")]
         public string Country { get; set; }
 

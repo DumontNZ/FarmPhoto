@@ -35,6 +35,7 @@ namespace FarmPhoto.Website.Controllers
                             UserId = photo.UserId,
                             Description = photo.Description,
                             Title = photo.Title,
+                            FileName = photo.FileName,
                             Approved = photo.Approved,
                             SubmittedBy = photo.SubmittedBy, 
                             SubmittedOn = photo.CreatedOnDateUtc

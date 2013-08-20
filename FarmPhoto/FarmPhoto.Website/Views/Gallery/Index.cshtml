@@ -8,8 +8,16 @@
     <div class="ContentContainerHeader">
         <h2>Gallery</h2>
 
+
         <h3>Welcome to the Galley when you can view photos submitted by others</h3>
     </div>
     @Html.Partial("_Gallery")
 
+    <div class="pageing">
+        @if (ViewBag.Page > 1)
+        {
+            <div class="previousPage">@Html.ActionLink("Previous", "Index", "Gallery", new { page = ViewBag.Page-1 }, null)</div>
+        }
+        <div class="nextPage">@Html.ActionLink("Next", "Index", "Gallery", new { page = ViewBag.Page + 1 }, null)</div>
+    </div>
 </div>

@@ -1,5 +1,6 @@
-﻿using FarmPhoto.Domain;
-using MySql.Data.MySqlClient;
+﻿using System;
+using FarmPhoto.Domain;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 using FarmPhoto.Common.Configuration;
 
@@ -13,7 +14,7 @@ namespace FarmPhoto.Repository
         public TagRepository(IConfig config)
         {
             _config = config;
-            _connectionString = _config.SqlConnectionString; 
+            _connectionString = _config.SqlConnectionString;
         }
 
         /// <summary>
@@ -22,21 +23,22 @@ namespace FarmPhoto.Repository
         /// <param name="tag">The tag.</param>
         public int Create(Tag tag)
         {
-            var mySqlCommand = new MySqlCommand();
-
-            using (var sqlConnection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                sqlConnection.Open();
+                connection.Open();
+                var command = new SqlCommand
+                {
+                    Connection = connection,
+                    CommandText = "Insert into Tag(Description, PhotoId, CreatedOnDateUTC) " +
+                        "values(@Description, @PhotoId, @CreatedOnDateUTC); " +
+                        "Select Cast(scope_identity() AS int)"
+                };
 
-                const string sql = "Insert into tag(description, photoid) values(@Description, @PhotoId)";
+                command.Parameters.AddWithValue("@PhotoId", tag.PhotoId);
+                command.Parameters.AddWithValue("@Description", tag.Description);
+                command.Parameters.AddWithValue("@CreatedOnDateUTC", DateTime.UtcNow);
 
-                mySqlCommand.Connection = sqlConnection;
-                mySqlCommand.CommandText = sql;
-                mySqlCommand.Parameters.AddWithValue("@Description", tag.Description);
-                mySqlCommand.Parameters.AddWithValue("@PhotoId", tag.PhotoId);
-
-                mySqlCommand.ExecuteNonQuery();
-                return (int)mySqlCommand.LastInsertedId;
+                return (int)command.ExecuteScalar();
             }
         }
 
@@ -47,30 +49,29 @@ namespace FarmPhoto.Repository
         /// <returns></returns>
         public IList<Tag> Get(int photoId)
         {
-            using (var sqlConnection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                sqlConnection.Open();
+                connection.Open();
+                var command = new SqlCommand
+                {
+                    Connection = connection,
+                    CommandText =
+                        "select TagId, Description, PhotoId from Tag where PhotoId = @PhotoId"
+                };
 
-                var mySqlCommand = new MySqlCommand
-                    {
-                        Connection = sqlConnection,
-                        CommandText =
-                            "select tagid, description, photoid from tag where photoId = @PhotoId"
-                    };
-
-                mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
+                command.Parameters.AddWithValue("PhotoId", photoId);
 
                 var photoTags = new List<Tag>();
 
-                using (MySqlDataReader dataReader = mySqlCommand.ExecuteReader())
+                using (SqlDataReader dataReader = command.ExecuteReader())
                 {
                     while (dataReader.Read())
                     {
                         var photo = new Tag
                         {
-                            TagId =  dataReader.GetInt32("tagid"),
-                            PhotoId = dataReader.GetInt32("photoid"),
-                            Description = dataReader.GetString("description"),
+                            TagId = Convert.ToInt32(dataReader["TagId"]),
+                            PhotoId = Convert.ToInt32(dataReader["PhotoId"]),
+                            Description = dataReader["Description"].ToString()
                         };
 
                         photoTags.Add(photo);
@@ -83,15 +84,18 @@ namespace FarmPhoto.Repository
 
         public void Delete(int photoId)
         {
-            using (var sqlConnection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                sqlConnection.Open();
+                connection.Open();
+                var command = new SqlCommand
+                    {
+                        Connection = connection,
+                        CommandText = "delete from Tag where PhotoId = @PhotoId"
+                    };
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "delete from tag where photoid = @PhotoId" };
+                command.Parameters.AddWithValue("PhotoId", photoId);
 
-                mySqlCommand.Parameters.AddWithValue("PhotoId", photoId);
- 
-                mySqlCommand.ExecuteNonQuery();
+                command.ExecuteNonQuery();
             }
         }
     }

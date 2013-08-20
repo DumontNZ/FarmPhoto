@@ -1,5 +1,5 @@
 ﻿html {
-    height: 1045px;
+    /*height: 1045px;*/
 }
 
 
@@ -35,7 +35,7 @@ h1 {
     -webkit-margin-start: 0px;
     -webkit-margin-end: 0px;
     font-weight: bold;
-    line-height: 20px; 
+    line-height: 20px;
 }
 
 .ContentContainerHeader h3 {
@@ -355,6 +355,11 @@ label {
 .NoContentMessage,
 .SuccessMessage {
     margin-left: 50px;
+}
+
+.pageing {
+    /*margin-top: 100%;*/
+    height: 52px;
 }
 
 /*a:link {

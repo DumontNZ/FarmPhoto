@@ -17,9 +17,8 @@
         {
         <div class="adminWrapper">
             <div class="AdminRow" id="Approve@(photo.PhotoId)">
-
                 <div class="photoframe">
-                    <img src="@Url.Action("Image", "Gallery", new { id = photo.PhotoId })" alt="" />
+                    <img src="@Url.Action("Image", "Gallery", new { fileName = photo.FileName })" alt="" />
                 </div>
                 <div class="photofields">
                     <div class="Title formRow">
@@ -36,7 +35,6 @@
                         <button id="Delete" class="btn btn-danger Delete" type="submit">Delete</button>
                     </div>
                 </div>
-
             </div>
         </div>
         }
@@ -45,8 +43,6 @@
     {
         <div class="NoContentMessage">There are no Photos awaiting approval. </div>
     }
-
-
 </div>
 
 <script type="text/javascript">
@@ -63,7 +59,7 @@
                 success: function (data) {
                     if (data.Success) {
                         $(greatGrandParent).hide('slow', function () {
-                            $(greatGrandParent.innerHTML = "<div class='SuccessMessage'>" + title + " has been Successesfully Approved</div>").fadeIn('slow');
+                            $(greatGrandParent.parentElement.innerHTML = "<div class='SuccessMessage'>" + title + " has been Successesfully Approved</div>").fadeIn();
                         });
                     }
                 }
@@ -82,35 +78,11 @@
                 success: function (data) {
                     if (data.Success) {
                         $(greatGrandParent).hide('slow', function () {
-                            $(greatGrandParent.parentElement.innerHTML = "<div class='SuccessMessage'>" + title + " has been Successesfully Deleted</div>").fadeIn('slow');
+                            $(greatGrandParent.parentElement.innerHTML = "<div class='SuccessMessage'>" + title + " has been Successesfully Deleted</div>").fadeIn();
                         });
                     }
                 }
             });
         });
-
-        $("body").on('click', '#Update', function () {
-            alert("hie");
-            var valid = true;
-            var title = $('#Title').Text;
-            var description = $('#Description').text();
-            var tags = $('#Tags').text();
-
-            $.ajax({
-                url: "@Url.Action("Update", "Submission")",
-                type: "POST",
-                data: {
-                    Title: "Title",
-                    Description: "Description",
-                    Tags: "Tags"
-                },
-                success: function (data) {
-                    if (data.Success) {
-
-                    }
-                }
-            });
-        });
-
     });
 </script>

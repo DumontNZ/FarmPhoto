@@ -15,12 +15,12 @@ namespace FarmPhoto.Repository
         /// <summary>
         /// Gets all photos that have been approved if its for gallery otherwise gets unapproved if adminscreen .
         /// </summary>
-        /// <param name="page">The page.</param>
-        /// <param name="numberReturned">The number returned.</param>
+        /// <param name="from">First Image</param>
+        /// <param name="to">Last Image</param>
         /// <param name="approved">if set to <c>true</c> [approved].</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        IList<Photo> Get(int page, int numberReturned, bool approved);
+        IList<Photo> Get(int from, int to, bool approved);
 
         /// <summary>
         /// Gets the specified photo by id.

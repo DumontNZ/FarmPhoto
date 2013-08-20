@@ -1,16 +1,13 @@
 ﻿using System;
 using System.IO;
-using System.Drawing;
 using System.Web;
+using System.Drawing;
 using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using System.Drawing.Imaging;
 using FarmPhoto.Website.Models;
 using FarmPhoto.Common.Configuration;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace FarmPhoto.Website.Controllers
 {
@@ -39,12 +36,14 @@ namespace FarmPhoto.Website.Controllers
             {
                 var uploadPath = Server.MapPath("~/App_Data/Uploads");
                 string uploadedFilePath = Path.Combine(uploadPath, model.FileName);
-
+                Image img = Image.FromFile(uploadedFilePath);
                 var photo = new Photo
                     {
                         Title = model.Title,
                         Description = model.Description,
-                        FileName = uploadedFilePath,
+                        FileName = model.FileName,
+                        Width = img.Width,
+                        Height = img.Height,
                         UserId = CurrentUser.Id
                     };
                 var photoId = _photoManager.CreatePhoto(photo);
@@ -95,57 +94,30 @@ namespace FarmPhoto.Website.Controllers
         [HttpPost]
         public ActionResult Upload(int? chunk, string name)
         {
-            try
+            HttpPostedFileBase fileUpload = Request.Files[0];
+
+            if (fileUpload != null)
             {
-                HttpPostedFileBase fileUpload = Request.Files[0];
+                var uploadPath = Server.MapPath("~/App_Data/Uploads");
 
-                if (fileUpload != null)
+                string uploadedFilePath = Path.Combine(uploadPath, name);
+
+                var thumbnailUploadPath = uploadPath + "\\Thumbnails";
+                string thumbnailFilePath = Path.Combine(thumbnailUploadPath, name);
+
+                using (var memoryStream = new MemoryStream())
                 {
-                    var storageConnectionString = _config.StorageConnectionString;
-
-                    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
-
-                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-                    SaveImage(fileUpload, blobClient, name, "thumbnails", 200, 200);
-
-                    SaveImage(fileUpload, blobClient, name, "photos", 800, 800);
-
+                    fileUpload.InputStream.CopyTo(memoryStream);
+                    Image image = Image.FromStream(memoryStream);
+                    ScaleImage(image, 200, 200, thumbnailFilePath);
+                    ScaleImage(image, 800, 800, uploadedFilePath);
                 }
-                else
-                {
-                    throw new Exception("Shit went bad");
-                }
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Index", "Home"); 
-                //throw new Exception(e.Message);
-
             }
 
             return View("Index");
         }
 
-        private void SaveImage(HttpPostedFileBase fileUpload, CloudBlobClient blobClient, string filename, string containerName, int width, int height)
-        {
-            CloudBlobContainer thumbnailContainer = blobClient.GetContainerReference(containerName);
-
-            CloudBlockBlob thumbnailBlob = thumbnailContainer.GetBlockBlobReference(filename); 
-            Image image = Image.FromStream(fileUpload.InputStream);
-
-            using (var thumbnail = ScaleImage(image, width, height))
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    thumbnail.Save(memoryStream, ImageFormat.Jpeg);
-                    memoryStream.Position = 0;
-                    thumbnailBlob.UploadFromStream(memoryStream);
-                }
-            }
-        }
-
-        private Bitmap ScaleImage(Image image, int maxWidth, int maxHeight)
+        private static void ScaleImage(Image image, int maxWidth, int maxHeight, string imageLocation)
         {
             var ratioX = (double)maxWidth / image.Width;
             var ratioY = (double)maxHeight / image.Height;
@@ -157,7 +129,7 @@ namespace FarmPhoto.Website.Controllers
             var newImage = new Bitmap(newWidth, newHeight);
             Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
 
-            return newImage; 
+            newImage.Save(imageLocation, ImageFormat.Jpeg);
         }
     }
 }

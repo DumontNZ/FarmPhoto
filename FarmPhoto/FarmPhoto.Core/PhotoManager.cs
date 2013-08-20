@@ -61,25 +61,6 @@ namespace FarmPhoto.Core
         /// <returns></returns>
         public int CreatePhoto(Photo photo)
         {
-            Image image = Image.FromStream(File.OpenRead(photo.FileName));
-
-            var appdataFolderLocation =
-                photo.FileName.Substring(photo.FileName.IndexOf("App_Data", StringComparison.Ordinal));
-
-            photo.ImageType = "image/" + appdataFolderLocation.Substring(appdataFolderLocation.IndexOf(".", StringComparison.Ordinal) + 1); 
-
-            Photo thumbnailData = ScaleImage(image, 200, 200);
-            Photo photoData = ScaleImage(image, 800, 800);
-
-            photo.FileSize = photoData.PhotoData.Length;
-            photo.ThumbnailSize = thumbnailData.PhotoData.Length;
-
-            photo.PhotoData = photoData.PhotoData;
-            photo.ThumbnailData = thumbnailData.PhotoData;
-
-            photo.Width = photoData.Width;
-            photo.Height = photoData.Height;
-
             return _photoRepository.Create(photo);
         }
 
@@ -88,13 +69,13 @@ namespace FarmPhoto.Core
         /// <summary>
         /// Gets all photos that have been approved if gallery otherwise unapproved if admin.
         /// </summary>
-        /// <param name="page">The page.</param>
-        /// <param name="numberReturned">The number returned.</param>
+        /// <param name="from">Starting Image</param>
+        /// <param name="to">last Image</param>
         /// <param name="approved">if set to <c>true</c> [approved].</param>
         /// <returns></returns>
-        public IList<Photo> Get(int page, int numberReturned = 20, bool approved = true)
+        public IList<Photo> Get(int from, int to, bool approved = true)
         {
-            return _photoRepository.Get(page, numberReturned, approved);
+            return _photoRepository.Get(from, to, approved);
         }
 
         /// <summary>

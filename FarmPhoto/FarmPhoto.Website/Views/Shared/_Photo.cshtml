@@ -2,9 +2,7 @@
 @model FarmPhoto.Website.Models.PhotoModel
 
 <div class="portraitframe" style="width: @Model.Width; height: @Model.Height">
-
-    <img src="@Url.Action("Image", "Gallery", new { id = Model.PhotoId, thumbnail = false })" alt="" />
-
+    <img src="@Url.Action("Image", "Gallery", new { fileName = Model.FileName, thumbnail = false })" alt="" />
 </div>
 <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="close">
     <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
@@ -13,39 +11,38 @@
 
 @if (CurrentUser.Id == Model.UserId)
 {
-    using (Ajax.BeginForm("Update", "Submission", null, null, new { @class = "form-photoupdate" }))
-    {
-    <div class="updatephotofields">
+    <div class="form-photoupdate">
+        <div class="updatephotofields">
 
-        @Html.HiddenFor(m => m.PhotoId)
-        @Html.HiddenFor(m => m.UserId)
-        <div class="formRow">
-            @Html.LabelFor(m => m.Title)
-            @Html.TextBoxFor(m => m.Title)
-        </div>
-        <div class="validationmessage">
-            @Html.ValidationMessageFor(m => m.Title)
-        </div>
-        <div class="formRow">
-            @Html.LabelFor(m => m.Description)
-            @Html.TextBoxFor(m => m.Description)
-        </div>
-        <div class="validationmessage">
-            @Html.ValidationMessageFor(m => m.Description)
-        </div>
-        <div class="formRow">
-            @Html.LabelFor(m => m.TagString)
-            @Html.TextBoxFor(m => m.TagString)
-        </div>
-        <div class="validationmessage">
-            @Html.ValidationMessageFor(m => m.TagString)
-        </div>
+            @Html.HiddenFor(m => m.PhotoId)
+            @Html.HiddenFor(m => m.UserId)
+            <div class="formRow">
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title)
+            </div>
+            <div class="validationmessage">
+                @Html.ValidationMessageFor(m => m.Title)
+            </div>
+            <div class="formRow">
+                @Html.LabelFor(m => m.Description)
+                @Html.TextBoxFor(m => m.Description)
+            </div>
+            <div class="validationmessage">
+                @Html.ValidationMessageFor(m => m.Description)
+            </div>
+            <div class="formRow">
+                @Html.LabelFor(m => m.TagString)
+                @Html.TextBoxFor(m => m.TagString)
+            </div>
+            <div class="validationmessage">
+                @Html.ValidationMessageFor(m => m.TagString)
+            </div>
 
-        <button id="Update" class="btn btn-primary" type="submit">Update</button>
-        <button id="Delete" class="btn btn-danger" type="submit">Delete</button>
+            <button id="Update" class="btn btn-primary" type="submit">Update</button>
+            <button id="Delete" class="btn btn-danger" type="submit">Delete</button>
 
+        </div>
     </div>
-    }
 }
 else
 {
@@ -61,7 +58,7 @@ else
                 @foreach (var tag in Model.Tags)
                 {
                 
-                    @Html.ActionLink("" + @tag, "Tag", "Gallery", new { Tag = @tag}, new{@class = "btn btn-mini" })
+                    @Html.ActionLink("" + @tag, "Tag", "Gallery", new { Tag = @tag }, new { @class = "btn btn-mini" })
                 }
             </div>
 

@@ -1,8 +1,8 @@
 ﻿using System;
-using FarmPhoto.Common.Configuration;
 using FarmPhoto.Domain;
+using System.Data.SqlClient;
 using System.Collections.Generic;
-using MySql.Data.MySqlClient;
+using FarmPhoto.Common.Configuration;
 
 namespace FarmPhoto.Repository
 {
@@ -25,28 +25,28 @@ namespace FarmPhoto.Repository
         /// <returns></returns>
         public int Create(User user)
         {
-            var mySqlCommand = new MySqlCommand();
-
-            using (var sqlConnection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                sqlConnection.Open();
+                connection.Open();
+                var command = new SqlCommand
+                    {
+                        Connection = connection,
+                        CommandText =
+                            "Insert into Users(FirstName, Surname, Username, Email, Password, PasswordSalt, CreatedOnDateUTC) " +
+                            "values(@FirstName, @Surname, @Username, @Email, @Password, @PasswordSalt, @CreatedOnDateUTC); " +
+                            "Select Cast(scope_identity() AS int)"
+                    };
 
-                const string sql =
-                    "Insert into user(firstname, surname, username, email, password, passwordsalt, country) values(@FirstName, @Surname, @Username, @Email, @Password, @PasswordSalt, @Country)";
+                command.Parameters.AddWithValue("@FirstName", user.FirstName);
+                command.Parameters.AddWithValue("@Surname", user.Surname);
+                command.Parameters.AddWithValue("@Username", user.UserName);
+                command.Parameters.AddWithValue("@Email", user.Email);
+                command.Parameters.AddWithValue("@Password", user.Password);
+                command.Parameters.AddWithValue("@PasswordSalt", user.PasswordSalt);
+                command.Parameters.AddWithValue("@CreatedOnDateUTC", DateTime.UtcNow);
+                //command.Parameters.AddWithValue("@Country", user.Country);
 
-                mySqlCommand.Connection = sqlConnection;
-                mySqlCommand.CommandText = sql;
-                mySqlCommand.Parameters.AddWithValue("@FirstName", user.FirstName);
-                mySqlCommand.Parameters.AddWithValue("@Surname", user.Surname);
-                mySqlCommand.Parameters.AddWithValue("@Username", user.UserName);
-                mySqlCommand.Parameters.AddWithValue("@Email", user.Email);
-                mySqlCommand.Parameters.AddWithValue("@Password", user.Password);
-                mySqlCommand.Parameters.AddWithValue("@PasswordSalt", user.PasswordSalt);
-                mySqlCommand.Parameters.AddWithValue("@Country", user.Country);
-
-                mySqlCommand.ExecuteNonQuery();
-
-                return (int)mySqlCommand.LastInsertedId;
+                return (int)command.ExecuteScalar(); 
             }
         }
 
@@ -67,26 +67,26 @@ namespace FarmPhoto.Repository
         /// <exception cref="System.NotImplementedException"></exception>
         public User Get(int userId)
         {
-            using (var sqlConnection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                sqlConnection.Open();
+                connection.Open();
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select password, passwordsalt, userid, firstname, surname, username from user where userid = @UserId" };
+                var command = new SqlCommand { Connection = connection, CommandText = "select Password, Passwordsalt, UserId, FirstName, Surname, Username from Users where UserId = @UserId" };
 
-                mySqlCommand.Parameters.AddWithValue("UserId", userId);
+                command.Parameters.AddWithValue("UserId", userId);
 
-                MySqlDataReader dataReader = mySqlCommand.ExecuteReader();
+                SqlDataReader dataReader = command.ExecuteReader();
 
                 var returnedUser = new User();
 
                 while (dataReader.Read())
                 {
-                    returnedUser.Password = dataReader.GetString("password");
-                    returnedUser.PasswordSalt = dataReader.GetString("passwordsalt");
-                    returnedUser.UserId = dataReader.GetInt32("userid");
-                    returnedUser.FirstName = dataReader.GetString("firstname");
-                    returnedUser.Surname = dataReader.GetString("surname");
-                    returnedUser.UserName = dataReader.GetString("username");
+                    returnedUser.Password = dataReader["Password"].ToString();
+                    returnedUser.PasswordSalt = dataReader["PasswordSalt"].ToString();
+                    returnedUser.UserId = Convert.ToInt32(dataReader["Userid"]);
+                    returnedUser.FirstName = dataReader["FirstName"].ToString();
+                    returnedUser.Surname = dataReader["Surname"].ToString();
+                    returnedUser.UserName = dataReader["Username"].ToString();
                 }
 
                 return returnedUser;
@@ -101,26 +101,26 @@ namespace FarmPhoto.Repository
         /// <exception cref="System.NotImplementedException"></exception>
         public User Get(User user)
         {
-            using (var sqlConnection = new MySqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                sqlConnection.Open();
+                connection.Open();
 
-                var mySqlCommand = new MySqlCommand { Connection = sqlConnection, CommandText = "select password, passwordsalt, userid, firstname, surname, username from user where username = @UserName" };
+                var command = new SqlCommand { Connection = connection, CommandText = "select Password, PasswordSalt, UserId, FirstName, Surname, Username from Users where Username = @UserName" };
 
-                mySqlCommand.Parameters.AddWithValue("UserName", user.UserName);
+                command.Parameters.AddWithValue("UserName", user.UserName);
 
-                MySqlDataReader dataReader = mySqlCommand.ExecuteReader();
+                SqlDataReader dataReader = command.ExecuteReader();
 
                 var returnedUser = new User();
 
                 while (dataReader.Read())
                 {
-                    returnedUser.Password = dataReader.GetString("password");
-                    returnedUser.PasswordSalt = dataReader.GetString("passwordsalt");
-                    returnedUser.UserId = dataReader.GetInt32("userid");
-                    returnedUser.FirstName = dataReader.GetString("firstname");
-                    returnedUser.Surname = dataReader.GetString("surname"); 
-                    returnedUser.UserName = dataReader.GetString("username");
+                    returnedUser.Password = dataReader["Password"].ToString();
+                    returnedUser.PasswordSalt = dataReader["PasswordSalt"].ToString();
+                    returnedUser.UserId = Convert.ToInt32(dataReader["Userid"]);
+                    returnedUser.FirstName = dataReader["FirstName"].ToString();
+                    returnedUser.Surname = dataReader["Surname"].ToString();
+                    returnedUser.UserName = dataReader["Username"].ToString();
                 }
 
                 return returnedUser;

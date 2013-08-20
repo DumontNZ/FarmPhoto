@@ -1,15 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using FarmPhoto.Website.Models;
 using System.Collections.Generic;
 using FarmPhoto.Common.Configuration;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
-
 
 namespace FarmPhoto.Website.Controllers
 {
@@ -31,10 +26,18 @@ namespace FarmPhoto.Website.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            int page = 1;
-            IList<Photo> photos = _photoManager.Get(page, _config.PhotosPerPage);
+            int pageing = 1;
+            if (page.HasValue)
+            {
+                pageing = page.Value;
+            }
+            var from = (pageing - 1) * _config.PhotosPerPage + 1;
+            var to = pageing * _config.PhotosPerPage;
+
+            IList<Photo> photos = _photoManager.Get(from, to);
+            ViewBag.Page = pageing;
 
             return View(PhotoListToGalleryModel(photos));
         }
@@ -85,7 +88,11 @@ namespace FarmPhoto.Website.Controllers
         {
             Photo photo = _photoManager.Get(0, false);
 
-            return File(photo.PhotoData, photo.ImageType);
+            string directoryPath = Server.MapPath("~/App_Data/Uploads");
+
+            string uploadedFilePath = Path.Combine(directoryPath, photo.FileName);
+
+            return File(uploadedFilePath, "image/jpeg");
         }
 
         [AllowAnonymous]
@@ -102,6 +109,7 @@ namespace FarmPhoto.Website.Controllers
                     UserId = photo.UserId,
                     Description = photo.Description,
                     Title = photo.Title,
+                    FileName = photo.FileName,
                     Tags = _tagManager.Get(photo.PhotoId),
                     Width = "" + photo.Width + "px",
                     Height = "" + photo.Height + "px"
@@ -141,46 +149,35 @@ namespace FarmPhoto.Website.Controllers
         /// <summary>
         /// Get an image by id.
         /// </summary>
-        /// <param name="id">The id.</param>
+        /// <param name="fileName">The id.</param>
         /// <param name="thumbnail">if set to <c>true</c> [thumbnail].</param>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Image(int id, bool thumbnail = true)
+        public ActionResult Image(string fileName, bool thumbnail = true)
         {
-            Photo photo = _photoManager.Get(id, thumbnail);
+            string directoryPath;
 
-            return File(photo.PhotoData, photo.ImageType);
+            if (thumbnail)
+            {
+                directoryPath = Server.MapPath("~/App_Data/Uploads/Thumbnails");
+            }
+            else
+            {
+                directoryPath = Server.MapPath("~/App_Data/Uploads");
+            }
+
+            string uploadedFilePath = Path.Combine(directoryPath, fileName);
+
+            return File(uploadedFilePath, "image/jpeg");
         }
 
         [AllowAnonymous]
         public ActionResult Preview(string filename)
         {
-            var storageConnectionString = _config.StorageConnectionString;
+            var uploadPath = Server.MapPath("~/App_Data/Uploads/Thumbnails");
+            string uploadedFilePath = Path.Combine(uploadPath, filename);
 
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(storageConnectionString);
-
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-
-            CloudBlobContainer container = blobClient.GetContainerReference("thumbnails");
-
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(filename);
-
-            using (var memoryStream = new MemoryStream())
-            {
-                try
-                {
-                    blockBlob.DownloadToStream(memoryStream);
-
-                    byte[] holder = memoryStream.ToArray();
-
-                    return File(holder, "image/jpeg");
-                }
-                catch (StorageException e)
-                {
-                    return Preview(filename); 
-                }
-
-            }
+            return File(uploadedFilePath, "image/jpeg");
         }
 
         private GalleryModel PhotoListToGalleryModel(IEnumerable<Photo> photos)
@@ -194,6 +191,7 @@ namespace FarmPhoto.Website.Controllers
                     PhotoId = photo.PhotoId,
                     UserId = photo.UserId,
                     Title = photo.Title,
+                    FileName = photo.FileName,
                     Description = photo.Description,
                     SubmittedBy = photo.SubmittedBy,
                     SubmittedOn = photo.CreatedOnDateUtc,

@@ -13,10 +13,48 @@
     @if (Model.PhotoModels.Count > 0)
     {
         @Html.Partial("_Gallery")
+        <div class="pagination pagination-centered pageing">
+            <ul>
+                @if (ViewBag.Page > 1)
+                {
+                    <li>
+                        @Html.ActionLink("Previous", "MyPhotos", "Gallery", new { page = ViewBag.Page - 1 }, new { @class = "btn btn-large previouspage" })
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        @Html.ActionLink("Previous", "MyPhotos", "Gallery", new { page = ViewBag.Page - 1 }, new { @class = "btn btn-large disabled previouspage" })
+                    </li>
+                }
 
+                @if (Model.PhotoModels.Count() < 12)
+                {
+                    <li>
+                        @Html.ActionLink("Next", "MyPhotos", "Gallery", new { page = ViewBag.Page + 1 }, new { @class = "btn btn-large disabled nextpage" })
+                    </li>
+            
+                }
+                else
+                {
+                    <li>
+                        @Html.ActionLink("Next", "MyPhotos", "Gallery", new { page = ViewBag.Page + 1 }, new { @class = "btn btn-large nextpage" })
+                    </li>
+            
+                }
+            </ul>
+        </div>
     }
     else
     {
         <div class="NoContentMessage">You haven't uploaded any photos yet cruise over to the @Html.ActionLink("Submission Page", "Index", "Submission") page to add one. </div>
     }
+
 </div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("a.disabled").bind("click", false);
+    })
+
+</script>

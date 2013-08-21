@@ -13,7 +13,37 @@
     @if (Model.PhotoModels.Count > 0)
     {
         @Html.Partial("_Gallery")
+        <div class="pagination pagination-centered pageing">
+        <ul>
+            @if (ViewBag.Page > 1)
+            {
+                <li>
+                    @Html.ActionLink("Previous", "Tag", "Gallery", new { tag = ViewBag.Tag, page = ViewBag.Page - 1 }, new { @class = "btn btn-large previouspage" })
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink("Previous", "Tag", "Gallery", new { tag = ViewBag.Tag, page = ViewBag.Page - 1 }, new { @class = "btn btn-large disabled previouspage" })
+                </li>
+            }
 
+            @if (Model.PhotoModels.Count() < 12)
+            {
+                <li>
+                    @Html.ActionLink("Next", "Tag", "Gallery", new { tag = ViewBag.Tag, page = ViewBag.Page + 1 }, new { @class = "btn btn-large disabled nextpage" })
+                </li>
+            
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink("Next", "Tag", "Gallery", new { tag = ViewBag.Tag, page = ViewBag.Page + 1 }, new { @class = "btn btn-large nextpage" })
+                </li>
+            
+            }
+        </ul>
+    </div>
     }
     else
     {

@@ -33,16 +33,20 @@ namespace FarmPhoto.Repository
         /// <summary>
         /// Gets all the users photos.
         /// </summary>
+        /// <param name="from">First Image</param>
+        /// <param name="to">Last Image</param>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        IList<Photo> Get(User user);
+        IList<Photo> Get(int from, int to, User user);
 
         /// <summary>
         /// Gets all the photos that have been tagged with tag.
         /// </summary>
+        /// <param name="from">First Image</param>
+        /// <param name="to">Last Image</param>
         /// <param name="tag">The tag.</param>
         /// <returns></returns>
-        IList<Photo> Get(Tag tag);
+        IList<Photo> Get(int from, int to, Tag tag);
 
         /// <summary>
         /// Updates the specified photos details.

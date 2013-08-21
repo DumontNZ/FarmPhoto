@@ -37,7 +37,7 @@
             <div class="validationmessage">
                 @Html.ValidationMessageFor(m => m.TagString)
             </div>
-
+            <div class="rate"></div>
             <button id="Update" class="btn btn-primary" type="submit">Update</button>
             <button id="Delete" class="btn btn-danger" type="submit">Delete</button>
 
@@ -55,14 +55,14 @@ else
         </div>
         <div class="formRow">
             <div class="tag">
-                @foreach (var tag in Model.Tags)
+                @foreach (var description in Model.Tags)
                 {
-                
-                    @Html.ActionLink("" + @tag, "Tag", "Gallery", new { Tag = @tag }, new { @class = "btn btn-mini" })
+                    @Html.RouteLink(description, "Tags", new{tag = description, page = 1}, new {@class = "btn btn-mini"})
                 }
             </div>
 
         </div>
+        <div class="rate"></div>
     </div>
 }
 

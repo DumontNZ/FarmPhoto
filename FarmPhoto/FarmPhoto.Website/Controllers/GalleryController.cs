@@ -46,9 +46,19 @@ namespace FarmPhoto.Website.Controllers
         /// Get a users images to return as a gallery.
         /// </summary>
         /// <returns></returns>
-        public ActionResult MyPhotos()
+        public ActionResult MyPhotos(int? page)
         {
-            IList<Photo> photos = _photoManager.Get(new User { UserId = CurrentUser.Id });
+            int pageing = 1;
+            if (page.HasValue)
+            {
+                pageing = page.Value;
+            }
+            var from = (pageing - 1) * _config.PhotosPerPage + 1;
+            var to = pageing * _config.PhotosPerPage;
+
+            IList<Photo> photos = _photoManager.Get(from, to, new User { UserId = CurrentUser.Id });
+
+            ViewBag.Page = pageing;
 
             return View(PhotoListToGalleryModel(photos));
         }
@@ -57,11 +67,19 @@ namespace FarmPhoto.Website.Controllers
         /// Get a users images to return as a gallery.
         /// </summary>
         /// <returns></returns>
-        public ActionResult UsersPhotos(string username)
+        public ActionResult UsersPhotos(string username, int? page)
         {
-            ViewBag.Username = username;
+            int pageing = 1;
+            if (page.HasValue)
+            {
+                pageing = page.Value;
+            }
+            var from = (pageing - 1) * _config.PhotosPerPage + 1;
+            var to = pageing * _config.PhotosPerPage;
 
-            IList<Photo> photos = _photoManager.Get(new User { UserName = username });
+            ViewBag.Username = username;
+            ViewBag.Page = pageing;
+            IList<Photo> photos = _photoManager.Get(from, to, new User { UserName = username });
 
             return View(PhotoListToGalleryModel(photos));
         }
@@ -70,11 +88,18 @@ namespace FarmPhoto.Website.Controllers
         /// Get a all photos with the following Tag.
         /// </summary>
         /// <returns></returns>
-        public ActionResult Tag(string tag)
+        public ActionResult Tag(string tag, int? page)
         {
+            int pageing = 1;
+            if (page.HasValue)
+            {
+                pageing = page.Value;
+            }
+            var from = (pageing - 1) * _config.PhotosPerPage + 1;
+            var to = pageing * _config.PhotosPerPage;
             ViewBag.Tag = tag;
-
-            IList<Photo> photos = _photoManager.Get(new Tag { Description = tag });
+            ViewBag.Page = pageing;
+            IList<Photo> photos = _photoManager.Get(from, to, new Tag { Description = tag });
 
             return View(PhotoListToGalleryModel(photos));
         }

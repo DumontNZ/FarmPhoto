@@ -192,23 +192,8 @@
     <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\Images\banner2.jpg" />
-    <Content Include="Content\Images\P1030794.JPG" />
-    <Content Include="Content\Images\Thumbnails\P1030794.JPG" />
-    <Content Include="Content\Images\Thumbnails\P1030795.JPG" />
-    <Content Include="Content\Images\Thumbnails\P1030796.JPG" />
-    <Content Include="Content\Images\Thumbnails\P1030797.JPG" />
-    <Content Include="Content\Images\Thumbnails\P1030798.JPG" />
-    <Content Include="Content\Images\Thumbnails\P1030799.JPG" />
-    <Content Include="Content\Images\Thumbnails\P1030800.JPG" />
     <Content Include="Content\MovingBanner.css" />
     <Content Include="Content\Layout.css" />
-    <Content Include="Content\Images\117700.jpg" />
-    <Content Include="Content\Images\Image1.jpg" />
-    <Content Include="Content\Images\Image2.jpg" />
-    <Content Include="Content\Images\Image3.jpg" />
-    <Content Include="Content\Images\Image4.jpg" />
-    <Content Include="Content\Images\Image5.jpg" />
-    <Content Include="Content\Images\Image6.jpg" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -298,6 +283,13 @@
     <Content Include="Scripts\Plupload\jquery.plupload.queue.js" />
     <Content Include="Scripts\Plupload\plupload.full.js" />
     <Content Include="Scripts\Plupload\plupload.js" />
+    <Content Include="Scripts\Raty\img\cancel-off.png" />
+    <Content Include="Scripts\Raty\img\cancel-on.png" />
+    <Content Include="Content\Images\star-half.png" />
+    <Content Include="Content\Images\star-off.png" />
+    <Content Include="Content\Images\star-on.png" />
+    <Content Include="Scripts\Raty\jquery.raty.js" />
+    <Content Include="Scripts\Raty\jquery.raty.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -331,6 +323,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Uploads\Thumbnails\" />
+    <Folder Include="Content\Images\Thumbnails\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

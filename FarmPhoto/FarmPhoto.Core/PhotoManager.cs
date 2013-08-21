@@ -103,21 +103,25 @@ namespace FarmPhoto.Core
         /// <summary>
         /// Returns all the users photos.
         /// </summary>
+        /// <param name="from">Starting Image</param>
+        /// <param name="to">last Image</param>
         /// <param name="user">The user.</param>
         /// <returns></returns>
-        public IList<Photo> Get(User user)
+        public IList<Photo> Get(int from, int to, User user)
         {
-            return _photoRepository.Get(user);
+            return _photoRepository.Get(from, to, user);
         }
 
         /// <summary>
         /// Gets photos that have been tagged with tag.
         /// </summary>
+        /// <param name="from">Starting Image</param>
+        /// <param name="to">last Image</param>
         /// <param name="tag">The tag.</param>
         /// <returns></returns>
-        public IList<Photo> Get(Tag tag)
+        public IList<Photo> Get(int from, int to, Tag tag)
         {
-            return _photoRepository.Get(tag);
+            return _photoRepository.Get(from, to, tag);
         }
 
         /// <summary>

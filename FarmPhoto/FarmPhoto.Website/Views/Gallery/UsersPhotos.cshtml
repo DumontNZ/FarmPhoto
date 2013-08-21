@@ -13,10 +13,47 @@
     @if (Model.PhotoModels.Count > 0)
     {
         @Html.Partial("_Gallery")
+        <div class="pagination pagination-centered pageing">
+        <ul>
+            @if (ViewBag.Page > 1)
+            {
+                <li>
+                    @Html.ActionLink("Previous", "UsersPhotos", "Gallery", new { username = ViewBag.Username, page = ViewBag.Page - 1 }, new { @class = "btn btn-large previouspage" })
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink("Previous", "UsersPhotos", "Gallery", new { username = ViewBag.Username, page = ViewBag.Page - 1 }, new { @class = "btn btn-large disabled previouspage" })
+                </li>
+            }
 
+            @if (Model.PhotoModels.Count() < 12)
+            {
+                <li>
+                    @Html.ActionLink("Next", "UsersPhotos", "Gallery", new {  username = ViewBag.Username, page = ViewBag.Page + 1 }, new { @class = "btn btn-large disabled nextpage" })
+                </li> 
+            
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink("Next", "UsersPhotos", "Gallery", new {  username = ViewBag.Username, page = ViewBag.Page + 1 }, new { @class = "btn btn-large nextpage" })
+                </li>
+            
+            }
+        </ul>
+    </div>
     }
     else
     {
         <div class="NoContentMessage">@ViewBag.Username hasn't added any photos yet check back later</div>
     }
 </div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("a.disabled").bind("click", false);
+    })
+
+</script>

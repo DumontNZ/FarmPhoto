@@ -28,11 +28,11 @@
         <div id="LeftColumn">
             <ul id="menu">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Gallery", "Index", "Gallery")</li>
+                <li>@Html.RouteLink("Gallery", "GalleryPage", new {page = 1 })</li>
                 @if (Request.IsAuthenticated)
                 {
                     <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
-                    <li>@Html.ActionLink("My Photos", "MyPhotos", "Gallery")</li>
+                    <li>@Html.RouteLink("My Photos", "MyPhotos", new {page = 1 })</li>
                 }
                 else
                 { 

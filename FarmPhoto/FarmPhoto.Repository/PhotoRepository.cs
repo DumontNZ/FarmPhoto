@@ -67,7 +67,7 @@ namespace FarmPhoto.Repository
                 {
                     Connection = connection,
                     CommandText = "SELECT * " +
-                             "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC ) AS RowNum, " +
+                             "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc ) AS RowNum, " +
                              "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.Username, p.Width, p.Height " +
                              "FROM Photo as p " +
                              "inner join Users as u on p.Userid = u.UserId " +
@@ -174,7 +174,7 @@ namespace FarmPhoto.Repository
         /// <param name="user">The user.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public IList<Photo> Get(User user)
+        public IList<Photo> Get(int from, int to, User user)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -187,26 +187,36 @@ namespace FarmPhoto.Repository
 
                 if (user.UserName != null)
                 {
-                    command.CommandText = "select p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, u.Username, p.Width, p.Height " +
-                                               "from Photo as p " +
-                                               "inner join Users as u on p.UserId = u.UserId " +
-                                               "where Username = @Username and p.DeletedOnDateUTC is null and Approved = 'true' " +
-                                               "order by p.CreatedOnDateUTC desc";
-
+                    command.CommandText = "SELECT * " +
+                                          "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc) AS RowNum, " +
+                                          "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.Username, p.Width, p.Height " +
+                                          "FROM Photo as p " +
+                                          "inner join Users as u on p.Userid = u.UserId " +
+                                          "WHERE Username = @Username AND Approved = 'true' AND p.DeletedOnDateUTC is null " +
+                                          ") AS RowConstrainedResult " +
+                                          "WHERE RowNum >= @From " +
+                                          "AND RowNum <= @To " +
+                                          "ORDER BY RowNum ";
 
                     command.Parameters.AddWithValue("Username", user.UserName);
                 }
                 else
                 {
-                    command.CommandText = "select p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, u.Username, p.Width, p.Height " +
-                                               "from Photo as p " +
-                                               "inner join Users as u on p.UserId = u.UserId " +
-                                               "where p.UserId = @UserId and p.DeletedOnDateUTC is null " +
-                                               "order by p.CreatedOnDateUTC desc";
+                    command.CommandText = "SELECT * " +
+                                          "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc) AS RowNum, " +
+                                          "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.Username, p.Width, p.Height " +
+                                          "FROM Photo as p " +
+                                          "inner join Users as u on p.Userid = u.UserId " +
+                                          "WHERE p.UserId = @UserId AND p.DeletedOnDateUTC is null " +
+                                          ") AS RowConstrainedResult " +
+                                          "WHERE RowNum >= @From " +
+                                          "AND RowNum <= @To " +
+                                          "ORDER BY RowNum ";
 
                     command.Parameters.AddWithValue("UserId", user.UserId);
                 }
-
+                command.Parameters.AddWithValue("From", from);
+                command.Parameters.AddWithValue("To", to);
                 var usersPhotos = new List<Photo>();
 
                 using (SqlDataReader dataReader = command.ExecuteReader())
@@ -238,7 +248,7 @@ namespace FarmPhoto.Repository
         /// </summary>
         /// <param name="tag">The tag.</param>
         /// <returns></returns>
-        public IList<Photo> Get(Tag tag)
+        public IList<Photo> Get(int from, int to, Tag tag)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -248,15 +258,22 @@ namespace FarmPhoto.Repository
                 {
                     Connection = connection,
                     CommandText =
-                        "select p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, u.Username, p.Width, p.Height " +
-                        "from Photo as p " +
-                        "inner join Users as u on p.UserId = u.UserId " +
+                        "SELECT * " +
+                        "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc ) AS RowNum, " +
+                        "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.Username, p.Width, p.Height " +
+                        "FROM Photo as p " +
+                        "inner join Users as u on p.Userid = u.UserId " +
                         "inner join Tag as t on p.PhotoId = t.PhotoId " +
-                        "where t.Description = @Description and p.DeletedOnDateUTC is null and Approved = 'true' " +
-                        "order by p.CreatedOnDateUTC desc"
+                        "WHERE t.Description = @Description AND Approved = 'true' AND p.DeletedOnDateUTC is null " +
+                        ") AS RowConstrainedResult " +
+                        "WHERE RowNum >= @From " +
+                        "AND RowNum <= @To " +
+                        "ORDER BY RowNum "
                 };
 
                 command.Parameters.AddWithValue("Description", tag.Description);
+                command.Parameters.AddWithValue("From", from);
+                command.Parameters.AddWithValue("To", to);
 
                 var tagPhotos = new List<Photo>();
 

@@ -365,12 +365,20 @@ label {
 }
 
 .nextpage {
-    background: red;
 }
 
 .previouspage {
-    background: orange;
     margin-right: 10px;
+}
+
+.rate {
+    margin-top: 4px; 
+    margin-bottom: 5px;
+}
+.ratingValidationMessage {
+    margin-top: 5px;
+    margin-bottom: 5px;
+     
 }
 
 /*a:link {

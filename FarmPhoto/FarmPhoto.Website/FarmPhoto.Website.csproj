@@ -192,6 +192,7 @@
     <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\Images\banner2.jpg" />
+    <Content Include="Content\Images\KensBanner.png" />
     <Content Include="Content\MovingBanner.css" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />

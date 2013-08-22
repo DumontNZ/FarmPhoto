@@ -1,4 +1,5 @@
 ﻿using System;
+using FarmPhoto.Domain;
 using System.Collections.Generic;
 
 namespace FarmPhoto.Website.Models
@@ -11,7 +12,7 @@ namespace FarmPhoto.Website.Models
         public IList<string> Tags { get; set; }
         public string TagString { get; set; }
         public string Description { get; set; }
-        public double Rating { get; set; }
+        public Rating Rating { get; set; }
         public string SubmittedBy { get; set; }
         public bool Approved { get; set; }
         public string Height { get; set; }

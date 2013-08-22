@@ -20,7 +20,8 @@
 <body>
 
     <div id="header">
-        <img src="~/Content/Images/banner2.jpg" />
+        @*<img src="~/Content/Images/banner2.jpg" />*@
+        <img src="~/Content/Images/KensBanner.png" />
         @*<img src="~/Content/Images/P1030794.JPG"/>*@
     </div>
 
@@ -28,11 +29,12 @@
         <div id="LeftColumn">
             <ul id="menu">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.RouteLink("Gallery", "GalleryPage", new {page = 1 })</li>
+                <li>@Html.RouteLink("Gallery", "GalleryPage", new { page = 1 })</li>
+                <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
+
                 @if (Request.IsAuthenticated)
                 {
-                    <li>@Html.ActionLink("Submit Photo", "Index", "Submission")</li>
-                    <li>@Html.RouteLink("My Photos", "MyPhotos", new {page = 1 })</li>
+                    <li>@Html.RouteLink("My Photos", "MyPhotos", new { page = 1 })</li>
                 }
                 else
                 { 
@@ -60,9 +62,9 @@
             @RenderBody()
         </div>
 
-        <div id="RightColumn">
+        @*<div id="RightColumn">
             <p>Right Column</p>
-        </div>
+        </div>*@
 
     </div>
     @RenderSection("scripts", required: false)

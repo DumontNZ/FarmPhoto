@@ -9,8 +9,21 @@
     <span class="ui-button-text">close</span>
 </button>
 
-@if (CurrentUser.Id == Model.UserId)
+@Html.HiddenFor(m => m.Rating.Score)
+@Html.HiddenFor(m => m.Rating.UserHasVoted)
+@if (Request.IsAuthenticated)
 {
+    <input type="hidden" id="CurrentUser" value="@CurrentUser.Id " />
+}
+else
+{
+    <input type="hidden" id="CurrentUser" value="0" />
+}
+@{
+    var userId = Request.IsAuthenticated ? CurrentUser.Id : 0;
+
+    if (userId == Model.UserId)
+    {
     <div class="form-photoupdate">
         <div class="updatephotofields">
 
@@ -38,15 +51,17 @@
                 @Html.ValidationMessageFor(m => m.TagString)
             </div>
             <div class="rate"></div>
+            <div class="ratingValidationMessage"><span></span></div>
             <button id="Update" class="btn btn-primary" type="submit">Update</button>
             <button id="Delete" class="btn btn-danger" type="submit">Delete</button>
 
         </div>
     </div>
-}
-else
-{
+    }
+    else
+    {
     <div class="photofields">
+        @Html.HiddenFor(m => m.PhotoId)
         <div class="formRow">
             <label>@Model.Title</label>
         </div>
@@ -57,12 +72,14 @@ else
             <div class="tag">
                 @foreach (var description in Model.Tags)
                 {
-                    @Html.RouteLink(description, "Tags", new{tag = description, page = 1}, new {@class = "btn btn-mini"})
+                    @Html.RouteLink(description, "Tags", new { tag = description, page = 1 }, new { @class = "btn btn-mini" })
                 }
             </div>
 
         </div>
         <div class="rate"></div>
+        <div class="ratingValidationMessage" style="display: none"><span></span></div>
     </div>
+    }
 }
 

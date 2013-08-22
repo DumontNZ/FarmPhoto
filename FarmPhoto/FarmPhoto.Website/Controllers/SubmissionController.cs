@@ -13,15 +13,17 @@ namespace FarmPhoto.Website.Controllers
 {
     public class SubmissionController : Controller
     {
-        private readonly ITagManager _tagManager;
         private readonly IConfig _config;
+        private readonly ITagManager _tagManager;
         private readonly IPhotoManager _photoManager;
+        private readonly IRatingManager _ratingManager;
 
-        public SubmissionController(IPhotoManager photoManager, ITagManager tagManager, IConfig config)
+        public SubmissionController(IPhotoManager photoManager, ITagManager tagManager, IConfig config, IRatingManager ratingManager)
         {
             _photoManager = photoManager;
             _tagManager = tagManager;
             _config = config;
+            _ratingManager = ratingManager;
         }
 
         public ActionResult Index()
@@ -76,6 +78,28 @@ namespace FarmPhoto.Website.Controllers
             }
 
             return new JsonResult { Data = new { Success = false } };
+        }
+
+        [HttpPost]
+        public JsonResult Rate(double score, int photoId)
+        {
+            try
+            {
+                var rating = new Rating
+                {
+                    Score = score,
+                    PhotoId = photoId,
+                    UserId = CurrentUser.Id
+                };
+
+                var newRating = _ratingManager.Submit(rating);
+
+                return new JsonResult { Data = new { Success = true, Rating = newRating } };
+            }
+            catch(Exception e)
+            {
+                return new JsonResult { Data = new { Success = false } };
+            }
         }
 
         [HttpPost]

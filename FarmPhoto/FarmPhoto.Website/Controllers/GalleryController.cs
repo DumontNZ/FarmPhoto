@@ -10,15 +10,17 @@ namespace FarmPhoto.Website.Controllers
 {
     public class GalleryController : Controller
     {
-        private readonly ITagManager _tagManager;
         private readonly IConfig _config;
+        private readonly ITagManager _tagManager;
         private readonly IPhotoManager _photoManager;
+        private readonly IRatingManager _ratingManager;
 
-        public GalleryController(IPhotoManager photoManager, ITagManager tagManager, IConfig config)
+        public GalleryController(IPhotoManager photoManager, ITagManager tagManager, IConfig config, IRatingManager ratingManager)
         {
-            _photoManager = photoManager;
-            _tagManager = tagManager;
             _config = config;
+            _tagManager = tagManager;
+            _photoManager = photoManager;
+            _ratingManager = ratingManager;
         }
 
         /// <summary>
@@ -123,11 +125,13 @@ namespace FarmPhoto.Website.Controllers
         [AllowAnonymous]
         public ActionResult Photo(int? id)
         {
-
             if (id.HasValue)
             {
                 Photo photo = _photoManager.Get(id.Value, true);
 
+                var userId = Request.IsAuthenticated ? CurrentUser.Id : 0 ; 
+
+                var rating = _ratingManager.Get(new Rating{PhotoId = id.Value, UserId = userId}); 
                 var photoModel = new PhotoModel
                 {
                     PhotoId = photo.PhotoId,
@@ -137,7 +141,8 @@ namespace FarmPhoto.Website.Controllers
                     FileName = photo.FileName,
                     Tags = _tagManager.Get(photo.PhotoId),
                     Width = "" + photo.Width + "px",
-                    Height = "" + photo.Height + "px"
+                    Height = "" + photo.Height + "px",
+                    Rating = rating
                 };
 
                 photoModel.TagString = string.Join(", ", photoModel.Tags);

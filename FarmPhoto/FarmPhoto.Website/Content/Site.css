@@ -1,5 +1,5 @@
 ﻿html {
-    /*height: 1045px;*/
+    height: 100%;
 }
 
 
@@ -17,7 +17,9 @@ body {
     margin: 0;
     padding: 0;
     color: #696969;
-    height: 800px;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 h1 {
@@ -111,8 +113,8 @@ header {
     width: 1000px;
     height: 268px;
     margin-top: 5px;
-    margin-left: 0;
-    margin-right: 5px;
+    margin-left: auto;
+    margin-right: auto;
     float: left;
     height: 800px;
 }
@@ -216,6 +218,7 @@ label {
 #header {
     height: 154px;
     width: 1000px;
+    margin-top: 41px;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
@@ -372,13 +375,13 @@ label {
 }
 
 .rate {
-    margin-top: 4px; 
+    margin-top: 4px;
     margin-bottom: 5px;
 }
+
 .ratingValidationMessage {
     margin-top: 5px;
     margin-bottom: 5px;
-     
 }
 
 /*a:link {

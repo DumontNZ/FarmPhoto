@@ -1,4 +1,5 @@
 ﻿@using FarmPhoto.Domain
+@using FarmPhoto.Website.Extensions
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,48 @@
 
 </head>
 <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="#">FarmPhoto</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        @Html.MenuItemAction("Home", "Index", "Home")
+                        @Html.MenuItemRoute("Gallery", "GalleryPage", "Index", "Gallery", new{page = 1 })
+                        @Html.MenuItemAction("Submit", "Index", "Submission")
 
+                        @if (Request.IsAuthenticated)
+                        {
+                            @Html.MenuItemRoute("My Photos", "MyPhotos", "MyPhotos", "Gallery", new{page = 1 })
+                        }
+                        else
+                        { 
+                            @Html.MenuItemAction("Login", "Login", "Account")
+                            @Html.MenuItemAction("Register", "Create", "Account")
+                        }
+                        @if (Request.IsAuthenticated)
+                        {
+                            if (CurrentUser.IsAdministrator)
+                            {
+                                @Html.MenuItemAction("Administration", "Index", "Admin")
+                            }
+                        }
+                        @Html.MenuItemAction("About Us", "AboutUs", "Home")
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            @Html.MenuItemAction("Logout", "Logout", "Account")
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="header">
         @*<img src="~/Content/Images/banner2.jpg" />*@
         <img src="~/Content/Images/KensBanner.png" />
@@ -26,7 +68,7 @@
     </div>
 
     <div id="PageContent">
-        <div id="LeftColumn">
+        @*<div id="LeftColumn">
             <ul id="menu">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.RouteLink("Gallery", "GalleryPage", new { page = 1 })</li>
@@ -55,8 +97,8 @@
                 {
                     <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
                 }
-            </ul>
-        </div>
+            </ul>*@
+        @*</div>*@
 
         <div id="InnerContent">
             @RenderBody()

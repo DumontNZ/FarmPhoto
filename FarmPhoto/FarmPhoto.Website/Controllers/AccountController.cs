@@ -3,7 +3,6 @@ using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using FarmPhoto.Website.Models;
 using FarmPhoto.Common.Resources;
-using Ninject.Extensions.Logging;
 using FarmPhoto.Common.Cryptography;
 using FarmPhoto.Core.Authentication;
 using FarmPhoto.Common.Configuration;
@@ -14,15 +13,13 @@ namespace FarmPhoto.Website.Controllers
     {
         private readonly IUserManager _userManager;
         private readonly IConfig _config;
-        private readonly ILogger _logger;
         private readonly ICryptography _cryptography;
         private readonly IFormsAuthenticationManager _formsAuthenticationManager;
 
-        public AccountController(IUserManager userManager, IConfig config, ILogger logger, ICryptography cryptography, IFormsAuthenticationManager formsAuthenticationManager)
+        public AccountController(IUserManager userManager, IConfig config, ICryptography cryptography, IFormsAuthenticationManager formsAuthenticationManager)
         {
             _userManager = userManager;
             _config = config;
-            _logger = logger;
             _cryptography = cryptography;
             _formsAuthenticationManager = formsAuthenticationManager;
         }
@@ -38,8 +35,6 @@ namespace FarmPhoto.Website.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel loginModel)
         {
-            _logger.Debug("SurveyController Index post");
-
             if (ModelState.IsValid)
             {
                 bool successfullyValidated = _formsAuthenticationManager.ValidateUser(new User { UserName = loginModel.Username, Password = loginModel.Password });

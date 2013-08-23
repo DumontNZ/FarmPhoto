@@ -43,10 +43,6 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
@@ -62,14 +58,6 @@
     <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject.Extensions.Logging, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Ninject.Extensions.Logging.3.0.1.0\lib\net45-full\Ninject.Extensions.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject.Extensions.Logging.Log4Net, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Ninject.Extensions.Logging.Log4net.3.0.1.0\lib\net45-full\Ninject.Extensions.Logging.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="Ninject.Web.Common, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -173,6 +161,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubmissionController.cs" />
     <Compile Include="DependencyModule\DependencyModule.cs" />
+    <Compile Include="Extensions\MenuExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -259,10 +248,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <None Include="Properties\PublishProfiles\farmphoto - FTP %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\farmphoto - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\farmphoto - Web Deploy %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\farmphoto - Web Deploy.pubxml" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Confirmation\jquery.confirm.js" />
@@ -318,6 +303,8 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Gallery\UsersPhotos.cshtml" />
     <Content Include="Views\Shared\_Photo.cshtml" />
+    <None Include="Properties\PublishProfiles\farmphoto.co.nz - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\farmphoto.co.nz - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Views\Gallery\Tag.cshtml" />

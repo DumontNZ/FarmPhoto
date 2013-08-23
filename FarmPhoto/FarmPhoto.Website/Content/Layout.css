@@ -2,8 +2,8 @@
     background: white;
     width: 1000px;
     margin-top: 5px;
-    margin-left: 0px;
-    margin-right: 5px;
+    margin-left: auto;
+    margin-right: auto;
     float: left;
     min-height: 456px; 
     height: 100%;
@@ -38,7 +38,7 @@
 
 
 #PageContent {
-    width: 1310px;
+    width: 1000px;
     height: 100%;
     margin-left: auto;
     margin-right: auto;

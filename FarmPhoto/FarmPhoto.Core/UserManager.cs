@@ -1,24 +1,21 @@
 ﻿using FarmPhoto.Domain;
 using FarmPhoto.Repository;
 using System.Collections.Generic;
-using Ninject.Extensions.Logging;
 
 namespace FarmPhoto.Core
 {
     public class UserManager : IUserManager
     {
         private readonly IUserRepository _userRepository;
-        private readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserManager" /> class.
         /// </summary>
         /// <param name="userRepository">The user repository.</param>
-        /// <param name="logger">The logger.</param>
-        public UserManager(IUserRepository userRepository, ILogger logger)
+        public UserManager(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _logger = logger;
+          
         }
 
         /// <summary>
@@ -27,8 +24,6 @@ namespace FarmPhoto.Core
         /// <returns></returns>
         public int Create(User user)
         {
-            _logger.Debug("Inside Manager");
-
             return _userRepository.Create(user);
         }
 

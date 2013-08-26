@@ -184,6 +184,11 @@ ul#menu {
 }
 
 .formRow {
+ 
+}
+
+.accountRow {
+   width: 526px; 
 }
 
 .formWrapper {
@@ -383,6 +388,43 @@ label {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+#helpText {
+    position: relative;
+    left: 253px;
+    top: -151px;
+    z-index: 1000;
+}
+
+.bubble {
+    position: relative;
+    width: 295px;
+    height: 100px;
+    padding: 0px;
+    background: #EBEAEA;
+    -webkit-border-radius: 17px;
+    -moz-border-radius: 17px;
+    border-radius: 17px;
+}
+
+    .bubble:after {
+        content: "";
+        position: absolute;
+        top: 27px;
+        left: -36px;
+        border-style: solid;
+        border-width: 21px 36px 21px 0;
+        border-color: transparent #EBEAEA;
+        display: block;
+        width: 0;
+        z-index: 1;
+    }
+
+    .bubble span {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+    }
 
 /*a:link {
     text-decoration: none;

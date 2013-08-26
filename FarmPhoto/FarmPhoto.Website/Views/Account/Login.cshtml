@@ -12,15 +12,15 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="formRow">
+        <div class="accountRow">
             @Html.TextBoxFor(m => m.Username, new { placeholder = "Username" })
             @Html.ValidationMessageFor(m => m.Username)
         </div>
-        <div class="formRow">
+        <div class="accountRow">
             @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
             @Html.ValidationMessageFor(m => m.Password)
         </div>
-        <div class="formRow">
+        <div class="accountRow">
             <label class="checkbox">
                 @Html.CheckBoxFor(m => m.RememberMe)
                 Remember Me

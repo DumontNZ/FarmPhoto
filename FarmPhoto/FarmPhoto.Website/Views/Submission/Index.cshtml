@@ -16,7 +16,9 @@
     </div>
 
     <div id="submissionContent">
-        <div><h4>Add Photo</h4></div>
+        <div>
+            <h4>Add Photo</h4>
+        </div>
         <div id="filelist">
             <div id="fileuploading"></div>
 
@@ -50,17 +52,30 @@
                 </div>
 
                 <div class="submissionbutton">
-                    <button class="btn btn-primary" type="submit">Submit photo</button>
+                    <button id="Submit" class="btn btn-primary disabled" type="submit">Submit photo</button>
                 </div>
             </div>
         }
+        <div id="helpText" style="display: none" class="help-block">
+            <span>Tags are used to group similar Photos together.
+                <br />
+                Each tag must be seperate by a comma.
+                <br />
+                For example:
+                <br />
+                Red Shed, Cows
+            </span>
+        </div>
     </div>
 </div>
 
 <script type="text/javascript">
 
-
     $(function () {
+
+        $('#Submit').on('click', function () {
+            $(this).prop("disabled", true);
+        });
 
         var uploader = new plupload.Uploader({
             runtimes: 'html5,html4',
@@ -75,6 +90,12 @@
         uploader.init();
 
         uploader.bind('FilesAdded', function (up, files) {
+            
+            $('#Submit').addClass("disabled");
+            $('#Submit').on('click', function () {
+                $(this).prop("disabled", true);
+            });
+            
             startProgressBar();
             $('#pickfiles').text('Change file');
             $('#submissionForm').slideDown('slow');
@@ -98,23 +119,31 @@
             uploader.start();
         });
 
+        uploader.bind('FileUploaded', function (up, file, response) {
+
+            $('#status').animate({ width: '' + 100 + '%' }, 200);
+
+            $('#fileUploadProgress').html('<b><span>' + 100 + "%</span></b>");
+
+            $('#SubmitButton').removeAttr('disabled');
+
+            var filename = file.id + file.name.substring(file.name.indexOf('.'));
+
+            $('#photoPreviewImage').fadeIn('slow');
+            $('#photoPreview').html('<img src="/Gallery/Preview?filename=' + filename + '" alt="" id="photoPreviewImage"/>');
+
+            $('#Submit').removeClass("disabled");
+
+            $('#Submit').on('click', function () {
+                $(this).prop("disabled", false);
+            });
+        });
+
         uploader.bind('UploadProgress', function (up, file) {
 
-            $('#fileUploadProgress').html('<b><span>' + file.percent + "%</span></b>");
+            $('#fileUploadProgress').html('<b><span>' + file.percent * 0.9 + "%</span></b>");
 
-            
-            if (file.percent >= 100) {
-                $('#SubmitButton').removeAttr('disabled');
-
-                var filename = file.id + file.name.substring(file.name.indexOf('.'));
-                $('#photoPreview').html('<img src="/Gallery/Preview?filename=' + filename + '" alt="" id="photoPreviewImage"/>');
-            }
-            
-            $('#status').animate({ width: '' + file.percent + '%' }, 200, function () {
-                if (file.percent >= 100) {
-                    $('#photoPreviewImage').fadeIn('slow');
-                }
-            });
+            $('#status').animate({ width: '' + file.percent * 0.9 + '%' }, 200);
 
         });
 
@@ -122,6 +151,28 @@
 
             return false;
         });
+
+        $('#Title').focus(function () {
+            $('#helpText').fadeOut('slow', function () {
+                $('#helpText span').text("");
+                $('#helpText').fadeIn('slow');
+            });
+        });
+
+        $('#Description').focus(function () {
+            $('#helpText').fadeOut('slow', function () {
+                $('#helpText span').html("Give a brief description of the circumstances of the photo");
+                $('#helpText').fadeIn('slow');
+            });
+        });
+
+        $('#Tags').focus(function () {
+            $('#helpText').fadeOut('slow', function () {
+                $('#helpText span').html("Tags are used to group similar Photos together. <br/>Each tag must be seperate by a comma.<br />For example:<br />Red Shed, Cows");
+                $('#helpText').fadeIn('slow');
+            });
+        });
+
     });
 
     var startProgressBar = function () {

@@ -32,7 +32,7 @@ namespace FarmPhoto.Repository
                     {
                         Connection = connection,
                         CommandText =
-                            "Insert into Users(FirstName, Surname, Username, Email, Password, PasswordSalt, CreatedOnDateUTC) " +
+                            "Insert into Users(FirstName, Surname, Username, Email, Password, PasswordSalt, CreatedOnDateUTC, DisplayName) " +
                             "values(@FirstName, @Surname, @Username, @Email, @Password, @PasswordSalt, @CreatedOnDateUTC); " +
                             "Select Cast(scope_identity() AS int)"
                     };
@@ -44,6 +44,7 @@ namespace FarmPhoto.Repository
                 command.Parameters.AddWithValue("@Password", user.Password);
                 command.Parameters.AddWithValue("@PasswordSalt", user.PasswordSalt);
                 command.Parameters.AddWithValue("@CreatedOnDateUTC", DateTime.UtcNow);
+                command.Parameters.AddWithValue("@DisplayName", user.DisplayName);
                 //command.Parameters.AddWithValue("@Country", user.Country);
 
                 return (int)command.ExecuteScalar(); 
@@ -71,7 +72,7 @@ namespace FarmPhoto.Repository
             {
                 connection.Open();
 
-                var command = new SqlCommand { Connection = connection, CommandText = "select Password, Passwordsalt, UserId, FirstName, Surname, Username from Users where UserId = @UserId" };
+                var command = new SqlCommand { Connection = connection, CommandText = "select Password, Passwordsalt, UserId, FirstName, Surname, Username, DisplayName from Users where UserId = @UserId" };
 
                 command.Parameters.AddWithValue("UserId", userId);
 
@@ -87,6 +88,7 @@ namespace FarmPhoto.Repository
                     returnedUser.FirstName = dataReader["FirstName"].ToString();
                     returnedUser.Surname = dataReader["Surname"].ToString();
                     returnedUser.UserName = dataReader["Username"].ToString();
+                    returnedUser.UserName = dataReader["DisplayName"].ToString();
                 }
 
                 return returnedUser;
@@ -105,7 +107,7 @@ namespace FarmPhoto.Repository
             {
                 connection.Open();
 
-                var command = new SqlCommand { Connection = connection, CommandText = "select Password, PasswordSalt, UserId, FirstName, Surname, Username from Users where Username = @UserName" };
+                var command = new SqlCommand { Connection = connection, CommandText = "select Password, PasswordSalt, UserId, FirstName, Surname, Username, DisplayName from Users where Username = @UserName" };
 
                 command.Parameters.AddWithValue("UserName", user.UserName);
 
@@ -121,6 +123,7 @@ namespace FarmPhoto.Repository
                     returnedUser.FirstName = dataReader["FirstName"].ToString();
                     returnedUser.Surname = dataReader["Surname"].ToString();
                     returnedUser.UserName = dataReader["Username"].ToString();
+                    returnedUser.UserName = dataReader["DisplayName"].ToString();
                 }
 
                 return returnedUser;

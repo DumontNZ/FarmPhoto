@@ -81,7 +81,7 @@ namespace FarmPhoto.Website.Controllers
 
             ViewBag.Username = username;
             ViewBag.Page = pageing;
-            IList<Photo> photos = _photoManager.Get(from, to, new User { UserName = username });
+            IList<Photo> photos = _photoManager.Get(from, to, new User { UserName = username.ToLower() });
 
             return View(PhotoListToGalleryModel(photos));
         }

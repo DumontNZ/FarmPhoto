@@ -11,27 +11,28 @@
     @using (Html.BeginForm("Create", "Account", FormMethod.Post, new{@class="form-createaccount"}))
     {
         @Html.AntiForgeryToken()
-        <div class="formRow">
-            <div class="formRow">
+        <div class="accountRow">
+            
             @Html.TextBoxFor(m => m.EmailAddress, new { placeholder = "Email Address" })
             @Html.ValidationMessageFor(m => m.EmailAddress)
         </div>
+        <div class="accountRow">
             @Html.TextBoxFor(m => m.Username, new { placeholder = "Username" })
             @Html.ValidationMessageFor(m => m.Username)
         </div>
-        <div class="formRow">
+        <div class="accountRow">
             @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First name" })
             @Html.ValidationMessageFor(m => m.FirstName)
         </div>
-        <div class="formRow">
+        <div class="accountRow">
             @Html.TextBoxFor(m => m.Surname, new { placeholder = "Surname" })
             @Html.ValidationMessageFor(m => m.Surname)
         </div>
-        <div class="formRow">
+        <div class="accountRow">
             @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
             @Html.ValidationMessageFor(m => m.Password)
         </div>
-        <div class="formRow">
+        <div class="accountRow">
             @Html.PasswordFor(m => m.ReenterPassword, new { placeholder = "Re-enter password" })
             @Html.ValidationMessageFor(m => m.ReenterPassword)
         </div>

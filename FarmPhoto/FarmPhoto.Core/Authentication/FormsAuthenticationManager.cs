@@ -48,7 +48,7 @@ namespace FarmPhoto.Core.Authentication
             DateTime expiration = remember
                                       ? issued.AddMinutes(_config.YearInMinutes)
                                       : issued.AddMinutes(FormsAuthentication.Timeout.TotalMinutes);
-
+            
             bool isAdministrator = user.UserName == _config.AdministratorUsername;
 
             data.InsertRange(0, new List<string>{user.FirstName, user.Surname, user.UserId.ToString(CultureInfo.InvariantCulture), isAdministrator.ToString()});                

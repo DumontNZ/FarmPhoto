@@ -11,15 +11,15 @@ namespace FarmPhoto.Website.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IUserManager _userManager;
         private readonly IConfig _config;
+        private readonly IUserManager _userManager;
         private readonly ICryptography _cryptography;
         private readonly IFormsAuthenticationManager _formsAuthenticationManager;
 
         public AccountController(IUserManager userManager, IConfig config, ICryptography cryptography, IFormsAuthenticationManager formsAuthenticationManager)
         {
-            _userManager = userManager;
             _config = config;
+            _userManager = userManager;
             _cryptography = cryptography;
             _formsAuthenticationManager = formsAuthenticationManager;
         }
@@ -37,10 +37,10 @@ namespace FarmPhoto.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool successfullyValidated = _formsAuthenticationManager.ValidateUser(new User { UserName = loginModel.Username, Password = loginModel.Password });
+                bool successfullyValidated = _formsAuthenticationManager.ValidateUser(new User { UserName = loginModel.Username.ToLower(), Password = loginModel.Password });
                 if (successfullyValidated)
                 {
-                    _formsAuthenticationManager.Login(_userManager.Get(new User{UserName = loginModel.Username}), loginModel.RememberMe);
+                    _formsAuthenticationManager.Login(_userManager.Get(new User{UserName = loginModel.Username.ToLower()}), loginModel.RememberMe);
                     return RedirectToAction("MyPhotos", "Gallery");
                 }
                 ModelState.AddModelError("UserName", ErrorMessages.InvalidUserNameOrPassword);
@@ -60,7 +60,6 @@ namespace FarmPhoto.Website.Controllers
         public ActionResult Create()
         {
 
-
             return View();
         }
 
@@ -71,7 +70,7 @@ namespace FarmPhoto.Website.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userManager.Get(new User { UserName = userModel.Username }).UserName != null)
+                if (_userManager.Get(new User { UserName = userModel.Username.ToLower() }).UserName != null)
                 {
                     ModelState.AddModelError("Username", ErrorMessages.UsernameInUse);
                 }
@@ -82,7 +81,8 @@ namespace FarmPhoto.Website.Controllers
 
                     var user = new User
                     {
-                        UserName = userModel.Username,
+                        UserName = userModel.Username.ToLower(),
+                        DisplayName = userModel.Username, 
                         FirstName = userModel.FirstName,
                         Surname = userModel.Surname,
                         Country = userModel.Country,

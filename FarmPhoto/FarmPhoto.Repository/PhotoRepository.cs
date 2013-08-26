@@ -171,6 +171,8 @@ namespace FarmPhoto.Repository
         /// <summary>
         /// Gets all the users photos.
         /// </summary>
+        /// <param name="from">Starting Photo.</param>
+        /// <param name="to">Ending Photo.</param>
         /// <param name="user">The user.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
@@ -189,7 +191,7 @@ namespace FarmPhoto.Repository
                 {
                     command.CommandText = "SELECT * " +
                                           "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc) AS RowNum, " +
-                                          "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.Username, p.Width, p.Height " +
+                                          "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                                           "FROM Photo as p " +
                                           "inner join Users as u on p.Userid = u.UserId " +
                                           "WHERE Username = @Username AND Approved = 'true' AND p.DeletedOnDateUTC is null " +
@@ -204,7 +206,7 @@ namespace FarmPhoto.Repository
                 {
                     command.CommandText = "SELECT * " +
                                           "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc) AS RowNum, " +
-                                          "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.Username, p.Width, p.Height " +
+                                          "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                                           "FROM Photo as p " +
                                           "inner join Users as u on p.Userid = u.UserId " +
                                           "WHERE p.UserId = @UserId AND p.DeletedOnDateUTC is null " +
@@ -232,7 +234,7 @@ namespace FarmPhoto.Repository
                             Width = Convert.ToInt32(dataReader["Width"]),
                             Height = Convert.ToInt32(dataReader["Height"]),
                             FileName = dataReader["FileName"].ToString(),
-                            SubmittedBy = dataReader["Username"].ToString()
+                            SubmittedBy = dataReader["DisplayName"].ToString()
                         };
 
                         usersPhotos.Add(photo);
@@ -260,7 +262,7 @@ namespace FarmPhoto.Repository
                     CommandText =
                         "SELECT * " +
                         "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc ) AS RowNum, " +
-                        "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.Username, p.Width, p.Height " +
+                        "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                         "FROM Photo as p " +
                         "inner join Users as u on p.Userid = u.UserId " +
                         "inner join Tag as t on p.PhotoId = t.PhotoId " +
@@ -290,7 +292,7 @@ namespace FarmPhoto.Repository
                             UserId = Convert.ToInt32(dataReader["UserId"]),
                             Width = Convert.ToInt32(dataReader["Width"]),
                             Height = Convert.ToInt32(dataReader["Height"]),
-                            SubmittedBy = dataReader["Username"].ToString()
+                            SubmittedBy = dataReader["DisplayName"].ToString()
                         };
 
                         tagPhotos.Add(photo);

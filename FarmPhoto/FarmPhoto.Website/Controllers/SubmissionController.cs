@@ -8,21 +8,24 @@ using FarmPhoto.Domain;
 using System.Drawing.Imaging;
 using FarmPhoto.Website.Models;
 using FarmPhoto.Common.Configuration;
+using Ninject.Extensions.Logging;
 
 namespace FarmPhoto.Website.Controllers
 {
     public class SubmissionController : Controller
     {
         private readonly IConfig _config;
+        private readonly ILogger _logger;
         private readonly ITagManager _tagManager;
         private readonly IPhotoManager _photoManager;
         private readonly IRatingManager _ratingManager;
 
-        public SubmissionController(IPhotoManager photoManager, ITagManager tagManager, IConfig config, IRatingManager ratingManager)
+        public SubmissionController(IPhotoManager photoManager, ILogger logger, ITagManager tagManager, IConfig config, IRatingManager ratingManager)
         {
-            _photoManager = photoManager;
-            _tagManager = tagManager;
+            _logger = logger;
             _config = config;
+            _tagManager = tagManager;
+            _photoManager = photoManager;
             _ratingManager = ratingManager;
         }
 
@@ -116,12 +119,14 @@ namespace FarmPhoto.Website.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(int? chunk, string name)
+        public JsonResult Upload(int? chunk, string name)
         {
-            HttpPostedFileBase fileUpload = Request.Files[0];
-
-            if (fileUpload != null)
+            try
             {
+                _logger.Info("SubmissionController, Upload, beginning Upload"); 
+
+                HttpPostedFileBase fileUpload = Request.Files[0];
+
                 var uploadPath = Server.MapPath("~/App_Data/Uploads");
 
                 string uploadedFilePath = Path.Combine(uploadPath, name);
@@ -129,20 +134,32 @@ namespace FarmPhoto.Website.Controllers
                 var thumbnailUploadPath = uploadPath + "\\Thumbnails";
                 string thumbnailFilePath = Path.Combine(thumbnailUploadPath, name);
 
-                using (var memoryStream = new MemoryStream())
-                {
-                    fileUpload.InputStream.CopyTo(memoryStream);
-                    Image image = Image.FromStream(memoryStream);
-                    ScaleImage(image, 200, 200, thumbnailFilePath);
-                    ScaleImage(image, 800, 800, uploadedFilePath);
-                }
-            }
+                _logger.Info("SubmissionController, Upload, upload location" + thumbnailFilePath);
 
-            return View("Index");
+                if (fileUpload != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        fileUpload.InputStream.CopyTo(memoryStream);
+                        Image image = Image.FromStream(memoryStream);
+                        ScaleImage(image, 200, 200, thumbnailFilePath);
+                        ScaleImage(image, 800, 800, uploadedFilePath);
+                    }
+                }
+
+                return new JsonResult { Data = new { Success = true } };
+            }
+            catch (Exception e)
+            {
+                _logger.Error("SubmissionController, Upload, Error Uploading File to System :" + e.Message);
+
+                return new JsonResult { Data = new { Success = false } };
+            }
         }
 
         private static void ScaleImage(Image image, int maxWidth, int maxHeight, string imageLocation)
         {
+            
             var ratioX = (double)maxWidth / image.Width;
             var ratioY = (double)maxHeight / image.Height;
             var ratio = Math.Min(ratioX, ratioY);

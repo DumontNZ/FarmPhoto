@@ -56,7 +56,7 @@ namespace FarmPhoto.Core.Authentication
             
             bool isAdministrator = user.UserName == _config.AdministratorUsername || user.UserName == "dumontnz";
 
-            data.InsertRange(0, new List<string>{user.FirstName, user.Surname, user.UserId.ToString(CultureInfo.InvariantCulture), isAdministrator.ToString()});                
+            data.InsertRange(0, new List<string>{user.FirstName, user.DisplayName, user.UserId.ToString(CultureInfo.InvariantCulture), isAdministrator.ToString()});                
             
             var ticket = new FormsAuthenticationTicket(1, user.UserName, issued, expiration,
                                                        true, string.Join(",", data));

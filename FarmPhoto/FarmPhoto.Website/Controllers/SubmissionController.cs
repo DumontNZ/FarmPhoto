@@ -7,10 +7,10 @@ using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using System.Drawing.Imaging;
 using FarmPhoto.Website.Core;
-using FarmPhoto.Website.Core.Resources;
 using FarmPhoto.Website.Models;
-using FarmPhoto.Common.Configuration;
 using Ninject.Extensions.Logging;
+using FarmPhoto.Common.Configuration;
+using FarmPhoto.Website.Core.Resources;
 
 namespace FarmPhoto.Website.Controllers
 {

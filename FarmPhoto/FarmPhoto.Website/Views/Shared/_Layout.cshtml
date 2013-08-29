@@ -11,11 +11,7 @@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jqueryval")
-
     @Styles.Render("~/Content/themes/base/css")
-    <script src="~/Scripts/Bootstrap/bootstrap.js"></script>
-    <script src="~/Scripts/Confirmation/jquery.confirm.js"></script>
-    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
 
 </head>
     <body>
@@ -30,7 +26,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="brand" href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                    
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             @Html.MenuItemAction("Home", "Index", "Home")
@@ -39,25 +35,39 @@
 
                             @if (Request.IsAuthenticated)
                             {
-                                @Html.MenuItemRoute("My Photos", "MyPhotos", "MyPhotos", "Gallery", new{page = 1 })
-                            }
-                            else
-                            { 
-                                @Html.MenuItemAction("Login", "Login", "Account")
-                                @Html.MenuItemAction("Register", "Create", "Account")
-                            }
-                            @if (Request.IsAuthenticated)
-                            {
+                                @Html.MenuItemRoute("My Photos", "MyPhotos", "MyPhotos", "Gallery", new {page = 1})
                                 if (CurrentUser.IsAdministrator)
                                 {
                                     @Html.MenuItemAction("Administration", "Index", "Admin")
                                 }
                             }
-                            @Html.MenuItemAction("About Us", "AboutUs", "Home")
-
+                            else
+                            {
+                               
+                                
+                            }
+                            
+                            @Html.MenuItemAction("Contact Us", "AboutUs", "Home")
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li class="divider-vertical"></li>
                             @if (Request.IsAuthenticated)
                             {
-                                @Html.MenuItemAction("Logout", "Logout", "Account")
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">@CurrentUser.Username <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">My Profile</a></li>
+                                        <li class="divider"></li>
+                                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                
+                                @Html.MenuItemAction("Sign in", "SignIn", "Account")
+                                <li class="divider-vertical"></li>
+                                @Html.MenuItemAction("Register", "Create", "Account")
                             }
                         </ul>
                     </div>

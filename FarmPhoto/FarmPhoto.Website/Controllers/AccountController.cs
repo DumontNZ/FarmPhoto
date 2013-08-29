@@ -36,7 +36,7 @@ namespace FarmPhoto.Website.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Login()
+        public ActionResult SignIn()
         {
             ViewBag.ReturnUrl = Request.QueryString["ReturnURL"];
 
@@ -46,7 +46,7 @@ namespace FarmPhoto.Website.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel loginModel)
+        public ActionResult SignIn(LoginModel loginModel)
         {
             if (ModelState.IsValid)
             {
@@ -116,7 +116,7 @@ namespace FarmPhoto.Website.Controllers
 
                     SetRedirectMessage(MessageKey.AccountCreated);
 
-                    return RedirectToAction("Login");
+                    return RedirectToAction("SignIn");
                 }
             }
 
@@ -159,7 +159,7 @@ namespace FarmPhoto.Website.Controllers
 
             SetRedirectMessage(MessageKey.PasswordResetEmailSent);
 
-            return RedirectToAction("Login");
+            return RedirectToAction("SignIn");
         }
 
         [AllowAnonymous]
@@ -193,7 +193,7 @@ namespace FarmPhoto.Website.Controllers
 
                     SetRedirectMessage(MessageKey.PasswordHasBeenReset);
 
-                    return RedirectToAction("Login"); 
+                    return RedirectToAction("SignIn"); 
                 }
 
                 model.HasValidToken = false;

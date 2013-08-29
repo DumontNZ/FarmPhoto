@@ -29,6 +29,9 @@ namespace FarmPhoto.Website.Extensions
                                             action,
                                             controller,
                                             routeValues).ToHtmlString();
+            }else if (htmlAttributes != null)
+            {
+                li.InnerHtml = htmlHelper.ActionLink(linkText, action, controller, null, htmlAttributes).ToHtmlString(); 
             }
             else
             {
@@ -36,6 +39,9 @@ namespace FarmPhoto.Website.Extensions
                                                      action,
                                                      controller).ToHtmlString();
             }
+
+
+
             return MvcHtmlString.Create(li.ToString());
         }
 
@@ -60,11 +66,14 @@ namespace FarmPhoto.Website.Extensions
                     : htmlHelper.RouteLink(linkText,
                                             routeName,
                                             routeValues).ToHtmlString();
+            } else if (htmlAttributes != null)
+            {
+                li.InnerHtml = htmlHelper.RouteLink(linkText, routeName, null, htmlAttributes).ToHtmlString(); 
             }
             else
             {
                 li.InnerHtml = htmlHelper.RouteLink(linkText,
-                                                     routeName).ToHtmlString();
+                                                    routeName).ToHtmlString();
             }
             return MvcHtmlString.Create(li.ToString());
         }

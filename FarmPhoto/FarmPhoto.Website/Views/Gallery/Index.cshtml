@@ -10,6 +10,7 @@
 
 
         <h3>Welcome to the Galley when you can view photos submitted by others</h3>
+        <h3>@Html.ActionLink("Submit a photo", "Index", "Submission")</h3>
     </div>
     @Html.Partial("_Gallery")
 
@@ -19,14 +20,12 @@
             {
                 <li>
                     @Html.RouteLink("Previous", "GalleryPage", new{ page = ViewBag.Page - 1}, new { @class = "btn btn-large previouspage" })
-                    @*@Html.ActionLink("Previous", "Index", "Gallery", new { page = ViewBag.Page - 1 }, new { @class = "btn btn-large previouspage" })*@
                 </li>
             }
             else
             {
                 <li>
                      @Html.RouteLink("Previous", "GalleryPage", new{ page = ViewBag.Page - 1}, new { @class = "btn btn-large disabled previouspage" })
-                    @*@Html.ActionLink("Previous", "Index", "Gallery", new { page = ViewBag.Page - 1 }, new { @class = "btn btn-large disabled previouspage" })*@
                 </li>
             }
 
@@ -34,7 +33,6 @@
             {
                 <li>
                     @Html.RouteLink("Next", "GalleryPage", new{ page = ViewBag.Page + 1}, new { @class = "btn btn-large disabled nextpage" })
-                    @*@Html.ActionLink("Next", "Index", "Gallery", new { page = ViewBag.Page + 1 }, new { @class = "btn btn-large disabled nextpage" })*@
                 </li>
             
             }
@@ -42,7 +40,6 @@
             {
                 <li>
                     @Html.RouteLink("Next", "GalleryPage", new{ page = ViewBag.Page + 1}, new { @class = "btn btn-large nextpage" })
-                    @*@Html.ActionLink("Next", "Index", "Gallery", new { page = ViewBag.Page + 1 }, new { @class = "btn btn-large nextpage" })*@
                 </li>
             
             }

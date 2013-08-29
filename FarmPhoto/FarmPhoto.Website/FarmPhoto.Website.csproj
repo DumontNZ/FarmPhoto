@@ -270,7 +270,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
-    <Content Include="Scripts\Confirmation\jquery.confirm.js" />
     <Content Include="Scripts\farmphoto.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -313,7 +312,7 @@
     <Content Include="Views\Shared\_HomePageLayout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Submission\Index.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Account\Create.cshtml" />
     <Content Include="Views\Gallery\MyPhotos.cshtml" />
     <Content Include="Views\Gallery\Index.cshtml" />

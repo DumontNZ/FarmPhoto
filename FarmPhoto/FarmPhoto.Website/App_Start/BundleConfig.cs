@@ -26,11 +26,12 @@ namespace FarmPhoto.Website.App_Start
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/Site.css", 
                         "~/Content/Layout.css", 
                         "~/Content/MovingBanner.css",
                         "~/Content/Bootstrap/css/bootstrap-responsive.css",
-                        "~/Content/Bootstrap/css/bootstrap.css"));
+                        "~/Content/Bootstrap/css/bootstrap.css",
+                        "~/Content/Site.css"
+                        ));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

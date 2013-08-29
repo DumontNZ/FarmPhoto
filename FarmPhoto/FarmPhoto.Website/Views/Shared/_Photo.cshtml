@@ -50,7 +50,7 @@ else
             <div class="validationmessage">
                 @Html.ValidationMessageFor(m => m.TagString)
             </div>
-            <div class="rate"></div>
+            <div class="voteArea"><div class="rate"></div><div class="voteCountDiv">(<span class="voteCount">@Model.Rating.Count</span>&nbsp;votes)</div></div>
             <div class="ratingValidationMessage"><span></span></div>
             <button id="Update" class="btn btn-primary" type="submit">Update</button>
             <button id="Delete" class="btn btn-danger" type="submit">Delete</button>
@@ -77,7 +77,7 @@ else
             </div>
 
         </div>
-        <div class="rate"></div>
+        <div class="voteArea"><div class="rate"></div><div class="voteCountDiv">(<span class="voteCount">@Model.Rating.Count</span>&nbsp;votes)</div></div>
         <div class="ratingValidationMessage" style="display: none"><span></span></div>
     </div>
     }

@@ -29,6 +29,14 @@ namespace FarmPhoto.Repository
         /// <summary>
         /// Gets the user.
         /// </summary>
+        /// <param name="emailAddress">The users emailAddress.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        User Get(string emailAddress);
+
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
         /// <param name="user">The user to get.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
@@ -63,5 +71,8 @@ namespace FarmPhoto.Repository
         /// <param name="user">The user.</param>
         /// <exception cref="System.NotImplementedException"></exception>
         void Delete(User user);
+
+        void CreateToken(User user);
+        void UpdatePassword(User user);
     }
 }

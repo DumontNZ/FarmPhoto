@@ -54,6 +54,9 @@
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.1\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Mvc.Mailer">
+      <HintPath>..\packages\MvcMailer.4.5\lib\45\Mvc.Mailer.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\MySql.Data.6.6.5\lib\net40\MySql.Data.dll</HintPath>
@@ -179,9 +182,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HttpContextKeys.cs" />
+    <Compile Include="Mailers\IUserMailer.cs" />
+    <Compile Include="Mailers\UserMailer.cs" />
     <Compile Include="Models\ErrorModel.cs" />
+    <Compile Include="Models\ForgottenPasswordModel.cs" />
     <Compile Include="Models\GalleryModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\EmailPasswordResetModel.cs" />
+    <Compile Include="Models\PasswordResetModel.cs" />
     <Compile Include="Models\PhotoModel.cs" />
     <Compile Include="Models\SubmissionModel.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -191,10 +199,8 @@
     <Content Include="Content\Bootstrap\css\bootstrap-responsive.css" />
     <Content Include="Content\Bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="Content\Bootstrap\css\bootstrap.css" />
-    <Content Include="Content\Bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
-    <Content Include="Content\Images\banner2.jpg" />
     <Content Include="Content\Images\KensBanner.png" />
     <Content Include="Content\MovingBanner.css" />
     <Content Include="Content\Layout.css" />
@@ -265,6 +271,7 @@
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\Confirmation\jquery.confirm.js" />
+    <Content Include="Scripts\farmphoto.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
@@ -319,10 +326,17 @@
     <Content Include="Views\Shared\_Photo.cshtml" />
     <None Include="Properties\PublishProfiles\farmphoto.co.nz - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\farmphoto.co.nz - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\FileSystem.pubxml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Views\Gallery\Tag.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Shared\_PageMessaging.cshtml" />
+    <Content Include="Views\UserMailer\_Layout.cshtml" />
+    <Content Include="Views\UserMailer\Welcome.cshtml" />
+    <Content Include="Views\UserMailer\PasswordReset.cshtml" />
+    <Content Include="Views\Account\ForgottenPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Uploads\Thumbnails\" />
@@ -347,6 +361,10 @@
     <ProjectReference Include="..\FarmPhoto.Repository\FarmPhoto.Repository.csproj">
       <Project>{1564BB31-AF95-4E83-B782-EE009BB64F20}</Project>
       <Name>FarmPhoto.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FarmPhoto.Website.Core\FarmPhoto.Website.Core.csproj">
+      <Project>{cdc107ec-1ca0-4f84-b153-a5ae49e2a93a}</Project>
+      <Name>FarmPhoto.Website.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

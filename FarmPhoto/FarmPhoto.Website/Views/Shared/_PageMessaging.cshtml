@@ -1,0 +1,27 @@
+﻿@using FarmPhoto.Website.Core.Resources
+@{
+    Message message = ViewBag.Message;
+}
+
+@{
+    if (message != null)
+    {
+    <div class="alertPanel">
+        <div class="farmphotoalert @message.Type.ToString().ToLower()">
+            <div>
+                <span>@Html.Raw(message.Content)</span>
+            </div>
+            <a class="alertClose">close</a>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            setTimeout(function () {
+                new FarmPhoto.Effects.Fading().Messaging();
+            }, 5000);
+        });
+    </script>   
+    
+    }
+}

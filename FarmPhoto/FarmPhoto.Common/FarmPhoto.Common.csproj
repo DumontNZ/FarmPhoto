@@ -53,6 +53,7 @@
     <Compile Include="Configuration\IConfig.cs" />
     <Compile Include="Cryptography\Cryptography.cs" />
     <Compile Include="Cryptography\ICryptography.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IImageScaler.cs" />
     <Compile Include="ImageScaler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,6 +79,7 @@
     <EmbeddedResource Include="Resources\ErrorMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

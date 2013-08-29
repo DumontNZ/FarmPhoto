@@ -61,7 +61,7 @@ namespace FarmPhoto.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid User Name Or Password.
+        ///   Looks up a localized string similar to Incorrect User Name Or Password.
         /// </summary>
         public static string InvalidUserNameOrPassword {
             get {

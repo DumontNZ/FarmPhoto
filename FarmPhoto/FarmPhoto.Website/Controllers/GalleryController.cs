@@ -2,13 +2,14 @@
 using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
+using FarmPhoto.Website.Core;
 using FarmPhoto.Website.Models;
 using System.Collections.Generic;
 using FarmPhoto.Common.Configuration;
 
 namespace FarmPhoto.Website.Controllers
 {
-    public class GalleryController : Controller
+    public class GalleryController : FarmPhotoControllerBase
     {
         private readonly IConfig _config;
         private readonly ITagManager _tagManager;

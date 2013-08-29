@@ -61,6 +61,7 @@
                                         if (data.Success) {
                                             $('#Rating_Score').val(data.Rating.Score);
                                             $("input[name=score]").val(data.Rating.Score);
+                                            $('.voteCount').text(data.Rating.Count);
                                             $(".ratingValidationMessage span").addClass("text-success");
                                             $(".ratingValidationMessage span").text("Rating was Successful!");
                                             $(".ratingValidationMessage").fadeIn();
@@ -119,6 +120,7 @@
                     success: function (data) {
                         if (data.Success) {
                             $("#partial").dialog('close');
+                            new FarmPhoto.Dialogs.Messaging().showSuccessMessage("Photo Updated"); 
                         }
                     }
                 });
@@ -147,6 +149,7 @@
                                                 that.dialog("close");
                                                 $("#partial").dialog('close');
                                                 $("#" + photoId).hide('slow');
+                                                new FarmPhoto.Dialogs.Messaging().showSuccessMessage("Photo Deleted");
                                             }
                                         }
                                     });

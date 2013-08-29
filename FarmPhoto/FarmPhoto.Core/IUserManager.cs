@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FarmPhoto.Domain;
 
 namespace FarmPhoto.Core
@@ -31,5 +32,19 @@ namespace FarmPhoto.Core
         /// <param name="userId">The user id.</param>
         /// <returns></returns>
         User Get(int userId);
+
+        /// <summary>
+        /// Gets the specified user by emailAddress.
+        /// </summary>
+        /// <param name="emailAddress">The user emailAddress</param>
+        /// <returns></returns>
+        User Get(string emailAddress);
+
+        void CreateToken(User user, TimeSpan timeSpan);
+
+        bool CheckToken(string username, string token);
+
+        bool CheckToken(User user, string token);
+        void UpdatePasswordWithToken(User user, string password, string token);
     }
 }

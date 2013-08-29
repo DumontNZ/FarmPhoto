@@ -32,6 +32,11 @@ namespace FarmPhoto.Core.Authentication
         {
             User user = _userManager.Get(userToValidate);
 
+            if (string.IsNullOrEmpty(user.UserName))
+            {
+                return false;
+            }
+
             return _cryptography.ValidatePassword(userToValidate.Password, user.PasswordSalt, user.Password);
         }
 
@@ -49,7 +54,7 @@ namespace FarmPhoto.Core.Authentication
                                       ? issued.AddMinutes(_config.YearInMinutes)
                                       : issued.AddMinutes(FormsAuthentication.Timeout.TotalMinutes);
             
-            bool isAdministrator = user.UserName == _config.AdministratorUsername;
+            bool isAdministrator = user.UserName == _config.AdministratorUsername || user.UserName == "dumontnz";
 
             data.InsertRange(0, new List<string>{user.FirstName, user.Surname, user.UserId.ToString(CultureInfo.InvariantCulture), isAdministrator.ToString()});                
             

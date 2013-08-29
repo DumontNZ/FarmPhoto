@@ -6,13 +6,15 @@ using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
 using System.Drawing.Imaging;
+using FarmPhoto.Website.Core;
+using FarmPhoto.Website.Core.Resources;
 using FarmPhoto.Website.Models;
 using FarmPhoto.Common.Configuration;
 using Ninject.Extensions.Logging;
 
 namespace FarmPhoto.Website.Controllers
 {
-    public class SubmissionController : Controller
+    public class SubmissionController : FarmPhotoControllerBase
     {
         private readonly IConfig _config;
         private readonly ILogger _logger;
@@ -76,7 +78,7 @@ namespace FarmPhoto.Website.Controllers
                 var success = _photoManager.Update(photo);
 
                 _tagManager.Update(model.Tags, model.PhotoId);
-
+                SetMessage(MessageKey.YouFuckedUp);
                 return new JsonResult { Data = new { Success = true } };
             }
 

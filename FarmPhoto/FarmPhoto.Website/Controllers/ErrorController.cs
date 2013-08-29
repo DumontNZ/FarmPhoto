@@ -1,9 +1,10 @@
 ﻿using System.Web.Mvc;
+using FarmPhoto.Website.Core;
 using FarmPhoto.Website.Models;
 
 namespace FarmPhoto.Website.Controllers
 {
-    public class ErrorController : Controller
+    public class ErrorController : FarmPhotoControllerBase
     {
         //
         // GET: /Error/

@@ -184,11 +184,10 @@ ul#menu {
 }
 
 .formRow {
- 
 }
 
 .accountRow {
-   width: 526px; 
+    width: 526px;
 }
 
 .formWrapper {
@@ -382,6 +381,8 @@ label {
 .rate {
     margin-top: 4px;
     margin-bottom: 5px;
+    margin-right: 8px;
+    float: left;
 }
 
 .ratingValidationMessage {
@@ -390,10 +391,14 @@ label {
 }
 
 #helpText {
+    margin-left: 21px;
+    width: 315px;
+    float: left;
+    margin-top: 10px;
     position: relative;
-    left: 253px;
-    top: -151px;
-    z-index: 1000;
+    border: #cccccc solid 1px;
+    border-radius: 4px;
+    padding: 10px;
 }
 
 .bubble {
@@ -426,20 +431,39 @@ label {
         text-align: center;
     }
 
-/*a:link {
-    text-decoration: none;
+.alertPanel {
+    left: 0;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    z-index: 10;
 }
 
-a:hover {
-    text-decoration: none;
-    text-decoration: underline; 
+.farmphotoalert {
+    position: relative;
+    display: inline-block;
+    padding: 18px 45px 20px 30px;
+    min-width: 1050px;
+    background: #5aa314;
 }
 
-a:visited {
-    text-decoration: none;
+    .farmphotoalert span {
+        color: #444;
+    }
+
+    .farmphotoalert.warning {
+        background-color: #ce9a1d;
+    }
+
+    .farmphotoalert.error {
+        background-color: #e32730;
+    }
+
+.voteArea {
 }
 
-a:active {
-    text-decoration: none;
-}*/
-
+.voteCountDiv {
+    padding-top: 5px;
+    margin-left: 0px;
+    font-size: 13px;
+}

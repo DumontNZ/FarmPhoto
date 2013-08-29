@@ -1,10 +1,11 @@
 ﻿using System.Web.Mvc;
 using FarmPhoto.Core;
+using FarmPhoto.Website.Core;
 using FarmPhoto.Website.Models;
 
 namespace FarmPhoto.Website.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : FarmPhotoControllerBase
     {
         private readonly PhotoManager _photoManager;
         private readonly UserManager _userManager;

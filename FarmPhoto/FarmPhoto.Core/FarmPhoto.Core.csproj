@@ -48,6 +48,7 @@
     <Compile Include="Authentication\FormsAuthenticationManager.cs" />
     <Compile Include="Authentication\IFormsAuthenticationManager.cs" />
     <Compile Include="DependencyModule\DependencyModule.cs" />
+    <Compile Include="Extensions\UserExtensions.cs" />
     <Compile Include="IPhotoManager.cs" />
     <Compile Include="IRatingManager.cs" />
     <Compile Include="ITagManager.cs" />

@@ -67,8 +67,8 @@ namespace FarmPhoto.Repository
                 {
                     Connection = connection,
                     CommandText = "SELECT * " +
-                             "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc ) AS RowNum, " +
-                             "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.Username, p.Width, p.Height " +
+                             "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc ) AS RowNum, " +
+                             "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                              "FROM Photo as p " +
                              "inner join Users as u on p.Userid = u.UserId " +
                              "WHERE Approved = @Approved AND p.DeletedOnDateUTC is null " +
@@ -98,7 +98,7 @@ namespace FarmPhoto.Repository
                             Approved = Convert.ToBoolean(dataReader["Approved"]),
                             Width = Convert.ToInt32(dataReader["Width"]),
                             Height = Convert.ToInt32(dataReader["Height"]),
-                            SubmittedBy = dataReader["Username"].ToString(),
+                            SubmittedBy = dataReader["DisplayName"].ToString(),
                             CreatedOnDateUtc = (DateTime)dataReader["CreatedOnDateUTC"]
                         };
 
@@ -133,7 +133,7 @@ namespace FarmPhoto.Repository
                                                "from Photo as p " +
                                                "inner join Users as u on p.UserId = u.UserId " +
                                                "where Approved = 'true' AND p.DeletedOnDateUTC is null " +
-                                               "order by CreatedOnDateUTC desc";
+                                               "order by ApprovedOnDateUTC desc";
                 }
                 else
                 {
@@ -190,7 +190,7 @@ namespace FarmPhoto.Repository
                 if (user.UserName != null)
                 {
                     command.CommandText = "SELECT * " +
-                                          "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc) AS RowNum, " +
+                                          "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc) AS RowNum, " +
                                           "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                                           "FROM Photo as p " +
                                           "inner join Users as u on p.Userid = u.UserId " +
@@ -249,6 +249,8 @@ namespace FarmPhoto.Repository
         /// Gets all the photos that have been tagged with tag.
         /// </summary>
         /// <param name="tag">The tag.</param>
+        /// <param name="from">Photos from</param>
+        /// <param name="to">Photos to</param>
         /// <returns></returns>
         public IList<Photo> Get(int from, int to, Tag tag)
         {
@@ -261,7 +263,7 @@ namespace FarmPhoto.Repository
                     Connection = connection,
                     CommandText =
                         "SELECT * " +
-                        "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc ) AS RowNum, " +
+                        "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc ) AS RowNum, " +
                         "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                         "FROM Photo as p " +
                         "inner join Users as u on p.Userid = u.UserId " +
@@ -318,7 +320,7 @@ namespace FarmPhoto.Repository
                 var command = new SqlCommand
                 {
                     Connection = connection,
-                    CommandText = "update Photo set Title = @Title, Description = @Description " +
+                    CommandText = "update Photo set Title = @Title, Description = @Description  " +
                         "where PhotoId = @PhotoId"
                 };
 
@@ -345,12 +347,13 @@ namespace FarmPhoto.Repository
                 var command = new SqlCommand
                 {
                     Connection = connection,
-                    CommandText = "update photo set approved = @Approved " +
+                    CommandText = "update photo set approved = @Approved, ApprovedOnDateUTC = @ApprovedOnDateUTC " +
                         "where photoid = @PhotoId"
                 };
 
                 command.Parameters.AddWithValue("PhotoId", id);
                 command.Parameters.AddWithValue("Approved", approved);
+                command.Parameters.AddWithValue("ApprovedOnDateUTC", DateTime.UtcNow);
 
                 return command.ExecuteNonQuery();
             }

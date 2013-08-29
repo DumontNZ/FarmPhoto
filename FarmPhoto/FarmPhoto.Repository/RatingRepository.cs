@@ -50,7 +50,7 @@ namespace FarmPhoto.Repository
                 }
 
                 double score = 0;
-                var photoRating = new Rating(); 
+                var photoRating = new Rating {Count = ratings.Count};
                 if (ratings.Count > 0)
                 {
                     foreach (var rate in ratings)

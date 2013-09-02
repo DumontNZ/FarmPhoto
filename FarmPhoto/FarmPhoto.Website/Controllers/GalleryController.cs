@@ -70,6 +70,7 @@ namespace FarmPhoto.Website.Controllers
         /// Get a users images to return as a gallery.
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult UsersPhotos(string username, int? page)
         {
             int pageing = 1;
@@ -91,6 +92,7 @@ namespace FarmPhoto.Website.Controllers
         /// Get a all photos with the following Tag.
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
         public ActionResult Tag(string tag, int? page)
         {
             int pageing = 1;
@@ -100,11 +102,32 @@ namespace FarmPhoto.Website.Controllers
             }
             var from = (pageing - 1) * _config.PhotosPerPage + 1;
             var to = pageing * _config.PhotosPerPage;
+
             ViewBag.Tag = tag;
             ViewBag.Page = pageing;
+
             IList<Photo> photos = _photoManager.Get(from, to, new Tag { Description = tag });
 
             return View(PhotoListToGalleryModel(photos));
+        }
+
+        [AllowAnonymous]
+        public ActionResult Search(string query, int? page)
+        {
+            int pageing = 1;
+            if (page.HasValue)
+            {
+                pageing = page.Value;
+            }
+            var from = (pageing - 1) * _config.PhotosPerPage + 1;
+            var to = pageing * _config.PhotosPerPage;
+
+            ViewBag.Query = query;
+            ViewBag.Page = pageing;
+
+            IList<Photo> photos = _photoManager.Search(from, to, query); 
+
+            return View(PhotoListToGalleryModel(photos)); 
         }
 
         /// <summary>

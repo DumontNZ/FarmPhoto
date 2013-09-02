@@ -1,0 +1,52 @@
+﻿@model FarmPhoto.Website.Models.GalleryModel 
+
+@{
+    ViewBag.Title = "" + @ViewBag.Query + " Search";
+}
+
+<div id="ContentContainer">
+
+    <div class="ContentContainerHeader">
+        <h2>Search results for "@ViewBag.Query"</h2>
+        @*<h3>Each of these photos have been tagged with @ViewBag.Tag</h3>*@
+    </div>
+    @if (Model.PhotoModels.Count > 0)
+    {
+        @Html.Partial("_Gallery")
+        <div class="pagination pagination-centered pageing">
+        <ul>
+            @if (ViewBag.Page > 1)
+            {
+                <li>
+                    @Html.ActionLink("Previous", "Search", "Gallery", new { query = ViewBag.Query, page = ViewBag.Page - 1 }, new { @class = "btn btn-large previouspage" })
+                </li>
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink("Previous", "Search", "Gallery", new { query = ViewBag.Query, page = ViewBag.Page - 1 }, new { @class = "btn btn-large disabled previouspage" })
+                </li>
+            }
+
+            @if (Model.PhotoModels.Count() < 12)
+            {
+                <li>
+                    @Html.ActionLink("Next", "Search", "Gallery", new { query = ViewBag.Query, page = ViewBag.Page + 1 }, new { @class = "btn btn-large disabled nextpage" })
+                </li>
+            
+            }
+            else
+            {
+                <li>
+                    @Html.ActionLink("Next", "Search", "Gallery", new { query = ViewBag.Query, page = ViewBag.Page + 1 }, new { @class = "btn btn-large nextpage" })
+                </li>
+            
+            }
+        </ul>
+    </div>
+    }
+    else
+    {
+        <div class="NoContentMessage">Sorry, there are no search resutls for "@ViewBag.Query"</div>
+    }
+</div>

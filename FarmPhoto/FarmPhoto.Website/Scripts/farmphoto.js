@@ -33,14 +33,14 @@ FarmPhoto.Dialogs.Messaging = function() {
             this.show("Sorry we couldn't do that. Please try again. ", "error");
         },
         show: function (message, type) {
-            setTimeout(function () { new FarmPhoto.Effects.Fading().Messaging(); }, 5000);
+            setTimeout(function () { new FarmPhoto.Effects.Fading().Messaging(); }, 10000);
             
             $('#alertArea').append("<div class=\"alertPanel\"><div class=\"farmphotoalert " + type + "\"><div><span>" + message + "</span></div><a class=\"alertClose\">Close</a></div></div>");
         }
     };
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('.alertClose').on('click', function () {
         new FarmPhoto.Effects.Fading().Messaging();
     });

@@ -39,7 +39,7 @@ namespace FarmPhoto.Core
 
             memoryStream.Dispose();
 
-            Photo thumbnailData  = ScaleImage(image, 200, 200);
+            Photo thumbnailData = ScaleImage(image, 200, 200);
             Photo photoData = ScaleImage(image, 800, 800);
 
             photo.FileSize = photoData.PhotoData.Length;
@@ -49,7 +49,7 @@ namespace FarmPhoto.Core
             photo.ThumbnailData = thumbnailData.PhotoData;
 
             photo.Width = photoData.Width;
-            photo.Height = photoData.Height; 
+            photo.Height = photoData.Height;
 
             return _photoRepository.Create(photo);
         }
@@ -64,7 +64,7 @@ namespace FarmPhoto.Core
             return _photoRepository.Create(photo);
         }
 
-        
+
 
         /// <summary>
         /// Gets all photos that have been approved if gallery otherwise unapproved if admin.
@@ -86,7 +86,7 @@ namespace FarmPhoto.Core
         /// <exception cref="System.NotImplementedException"></exception>
         public int Update(Photo photo)
         {
-            return _photoRepository.Update(photo); 
+            return _photoRepository.Update(photo);
         }
 
         /// <summary>
@@ -146,6 +146,11 @@ namespace FarmPhoto.Core
             return _photoRepository.Delete(id);
         }
 
+        public IList<Photo> Search(int from, int to, string query)
+        {
+            return _photoRepository.Search(from, to, query);
+        }
+
         /// <summary>
         /// Scales the image.
         /// </summary>
@@ -155,7 +160,7 @@ namespace FarmPhoto.Core
         /// <returns></returns>
         private static Photo ScaleImage(Image image, int maxWidth, int maxHeight)
         {
-            
+
             var ratioX = (double)maxWidth / image.Width;
             var ratioY = (double)maxHeight / image.Height;
             var ratio = Math.Min(ratioX, ratioY);
@@ -175,7 +180,7 @@ namespace FarmPhoto.Core
                     PhotoData = ms.ToArray(),
                     Width = newWidth,
                     Height = newHeight
-                }; 
+                };
 
             ms.Dispose();
 

@@ -9,7 +9,6 @@ namespace FarmPhoto.Website.App_Start
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-
             routes.MapRoute(
                 name: "Tags",
                 url: "Gallery/Tag/{tag}/{page}",
@@ -20,6 +19,12 @@ namespace FarmPhoto.Website.App_Start
                 name: "Username",
                 url: "Gallery/UsersPhotos/{username}/{page}",
                 defaults: new { controller = "Gallery", action = "UsersPhotos", username = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Search",
+                url: "Gallery/Search/{query}/{page}",
+                defaults: new { controller = "Gallery", action = "Search", query = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -39,7 +44,6 @@ namespace FarmPhoto.Website.App_Start
                 url: "{controller}/{action}",
                 defaults: new { controller = "Home", action = "Index"}
             );
-
         }
     }
 }

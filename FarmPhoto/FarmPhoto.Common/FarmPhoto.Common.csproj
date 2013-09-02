@@ -56,6 +56,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IImageScaler.cs" />
     <Compile Include="ImageScaler.cs" />
+    <Compile Include="MIMEAssistant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\DisplayNames.Designer.cs">
       <AutoGen>True</AutoGen>

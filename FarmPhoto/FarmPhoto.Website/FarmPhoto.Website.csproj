@@ -201,6 +201,7 @@
     <Content Include="Content\Bootstrap\css\bootstrap.css" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
+    <Content Include="Content\IeStyles.css" />
     <Content Include="Content\Images\KensBanner.png" />
     <Content Include="Content\MovingBanner.css" />
     <Content Include="Content\Layout.css" />
@@ -276,6 +277,7 @@
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
+    <Content Include="Scripts\Placeholder\jquery.placeholder.js" />
     <Content Include="Scripts\Plupload\jquery.ui.plupload.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -287,6 +289,7 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\Plupload\jquery.plupload.queue.js" />
+    <Content Include="Scripts\Plupload\plupload.flash.swf" />
     <Content Include="Scripts\Plupload\plupload.full.js" />
     <Content Include="Scripts\Plupload\plupload.js" />
     <Content Include="Scripts\Raty\img\cancel-off.png" />
@@ -336,6 +339,7 @@
     <Content Include="Views\UserMailer\PasswordReset.cshtml" />
     <Content Include="Views\Account\ForgottenPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Gallery\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Uploads\Thumbnails\" />

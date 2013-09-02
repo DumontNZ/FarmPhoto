@@ -185,6 +185,9 @@ ul#menu {
 
 .formRow {
 }
+    .formRow p {
+        width: 320px;
+    }
 
 .accountRow {
     width: 526px;
@@ -466,4 +469,8 @@ label {
     padding-top: 5px;
     margin-left: 0px;
     font-size: 13px;
+}
+
+.placeholder {
+    color: #aaa !important;
 }

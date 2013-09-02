@@ -73,5 +73,7 @@ namespace FarmPhoto.Core
         /// </summary>
         /// <param name="id">The id.</param>
         int Delete(int id);
+
+        IList<Photo> Search(int from, int to, string query);
     }
 }

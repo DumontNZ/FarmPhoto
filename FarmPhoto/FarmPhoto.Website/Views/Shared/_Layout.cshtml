@@ -13,81 +13,90 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Styles.Render("~/Content/themes/base/css")
 
-</head>
-    <body>
-        <div id="alertArea">
-            @Html.Partial("_PageMessaging")
-        </div>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            @Html.MenuItemAction("Home", "Index", "Home")
-                            @Html.MenuItemRoute("Gallery", "GalleryPage", "Index", "Gallery", new{page = 1 })
-                            @Html.MenuItemAction("Submit", "Index", "Submission")
+    <!--[if IE]>
+    <link href="~/Content/IeStyles.css" rel="stylesheet" />
+    <![endif]-->
 
-                            @if (Request.IsAuthenticated)
-                            {
-                                @Html.MenuItemRoute("My Photos", "MyPhotos", "MyPhotos", "Gallery", new {page = 1})
-                                if (CurrentUser.IsAdministrator)
-                                {
-                                    @Html.MenuItemAction("Administration", "Index", "Admin")
-                                }
-                            }
-                            else
-                            {
-                               
+</head>
+<body>
+    <div id="alertArea">
+        @Html.Partial("_PageMessaging")
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        @Html.MenuItemAction("Home", "Index", "Home")
+                        @Html.MenuItemRoute("Gallery", "GalleryPage", "Index", "Gallery", new { page = 1 })
+                        @Html.MenuItemAction("Submit", "Index", "Submission")
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            @Html.MenuItemRoute("My Photos", "MyPhotos", "MyPhotos", "Gallery", new { page = 1 })
+                        }
+                        @Html.MenuItemAction("Contact Us", "AboutUs", "Home")
+                    </ul>
+                    
+                    @using (Html.BeginForm("Search", "Gallery", FormMethod.Post, new { @class = "navbar-search pull-left" }))
+                    {
+                        <input data-val="true" type ="text" id="Query" name="Query"class="search-query" placeholder="Search" value/>
+                    }
+                    
+                    <ul class="nav pull-right">
+                        <li class="divider-vertical"></li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@CurrentUser.Username <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    @*<li><a href="#">My Profile</a></li>*@
+                                    @if (CurrentUser.IsAdministrator)
+                                    {
+                                        @Html.MenuItemAction("Administration", "Index", "Admin")
+                                    }
+                                    <li class="divider"></li>
+                                    <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
                                 
-                            }
-                            
-                            @Html.MenuItemAction("Contact Us", "AboutUs", "Home")
-                        </ul>
-                        <ul class="nav pull-right">
+                            @Html.MenuItemAction("Sign in", "SignIn", "Account")
                             <li class="divider-vertical"></li>
-                            @if (Request.IsAuthenticated)
-                            {
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">@CurrentUser.Username <b class="caret"></b></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">My Profile</a></li>
-                                        <li class="divider"></li>
-                                        <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
-                                    </ul>
-                                </li>
-                            }
-                            else
-                            {
-                                
-                                @Html.MenuItemAction("Sign in", "SignIn", "Account")
-                                <li class="divider-vertical"></li>
-                                @Html.MenuItemAction("Register", "Create", "Account")
-                            }
-                        </ul>
-                    </div>
+                            @Html.MenuItemAction("Register", "Create", "Account")
+                        }
+                    </ul>
                 </div>
             </div>
         </div>
-        <div id="header">
-            <img src="~/Content/Images/KensBanner.png" />
+    </div>
+    <div id="header">
+        <img src="~/Content/Images/KensBanner.png" />
+    </div>
+
+    <div id="PageContent">
+        <div id="InnerContent">
+            @RenderBody()
         </div>
 
-        <div id="PageContent">
-            <div id="InnerContent">
-                @RenderBody()
-            </div>
-
-            @*<div id="RightColumn">
+        @*<div id="RightColumn">
             <p>Right Column</p>
         </div>*@
 
-        </div>
-        @RenderSection("scripts", required: false)
-    </body>
+    </div>
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input, textarea').placeholder();
+        });
+    </script>
+</body>
 </html>

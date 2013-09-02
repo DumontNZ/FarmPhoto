@@ -1,0 +1,23 @@
+﻿html {
+}
+
+body {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%
+}
+
+.ContentContainerHeader {
+}
+
+.farmphotoalert {
+    margin-top: 40px;
+}
+
+.ui-dialog-titlebar-close {
+    top: 0px !important; 
+}
+
+.rate {
+    width: 120px !important;
+}

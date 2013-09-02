@@ -119,7 +119,7 @@ namespace FarmPhoto.Website.Controllers
 
             return new JsonResult { Data = new { Success = false } };
         }
-
+        
         [HttpPost]
         public JsonResult Upload(int? chunk, string name)
         {

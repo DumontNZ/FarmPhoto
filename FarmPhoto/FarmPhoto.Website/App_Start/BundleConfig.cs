@@ -11,7 +11,8 @@ namespace FarmPhoto.Website.App_Start
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/farmphoto.js",
                         "~/Scripts/Bootstrap/bootstrap.js",
-                        "~/Scripts/Raty/jquery.raty.js"));
+                        "~/Scripts/Raty/jquery.raty.js",
+                        "~/Scripts/Placeholder/jquery.placeholder.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));

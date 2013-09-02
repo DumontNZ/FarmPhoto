@@ -67,46 +67,22 @@ namespace FarmPhoto.Repository
                 {
                     Connection = connection,
                     CommandText = "SELECT * " +
-                             "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc ) AS RowNum, " +
+                             "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc ) AS ResultNumber, " +
                              "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                              "FROM Photo as p " +
                              "inner join Users as u on p.Userid = u.UserId " +
                              "WHERE Approved = @Approved AND p.DeletedOnDateUTC is null " +
                              ") AS RowConstrainedResult " +
-                             "WHERE RowNum >= @From " +
-                             "AND RowNum <= @To " +
-                             "ORDER BY RowNum "
+                             "WHERE ResultNumber >= @From " +
+                             "AND ResultNumber <= @To " +
+                             "ORDER BY ResultNumber "
                 };
 
                 command.Parameters.AddWithValue("Approved", approved);
                 command.Parameters.AddWithValue("From", from);
                 command.Parameters.AddWithValue("To", to);
 
-                var usersPhotos = new List<Photo>();
-
-                using (SqlDataReader dataReader = command.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        var photo = new Photo
-                        {
-                            PhotoId = Convert.ToInt32(dataReader["PhotoId"]),
-                            Title = dataReader["Title"].ToString(),
-                            Description = dataReader["Description"].ToString(),
-                            FileName = dataReader["FileName"].ToString(),
-                            UserId = Convert.ToInt32(dataReader["UserId"]),
-                            Approved = Convert.ToBoolean(dataReader["Approved"]),
-                            Width = Convert.ToInt32(dataReader["Width"]),
-                            Height = Convert.ToInt32(dataReader["Height"]),
-                            SubmittedBy = dataReader["DisplayName"].ToString(),
-                            CreatedOnDateUtc = (DateTime)dataReader["CreatedOnDateUTC"]
-                        };
-
-                        usersPhotos.Add(photo);
-                    }
-                }
-
-                return usersPhotos;
+                return ProcessResults(command); 
             }
         }
 
@@ -125,7 +101,6 @@ namespace FarmPhoto.Repository
                 var command = new SqlCommand
                 {
                     Connection = connection
-
                 };
                 if (photoId == 0)
                 {
@@ -190,58 +165,38 @@ namespace FarmPhoto.Repository
                 if (user.UserName != null)
                 {
                     command.CommandText = "SELECT * " +
-                                          "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc) AS RowNum, " +
+                                          "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc) AS ResultNumber, " +
                                           "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                                           "FROM Photo as p " +
                                           "inner join Users as u on p.Userid = u.UserId " +
                                           "WHERE Username = @Username AND Approved = 'true' AND p.DeletedOnDateUTC is null " +
                                           ") AS RowConstrainedResult " +
-                                          "WHERE RowNum >= @From " +
-                                          "AND RowNum <= @To " +
-                                          "ORDER BY RowNum ";
+                                          "WHERE ResultNumber >= @From " +
+                                          "AND ResultNumber <= @To " +
+                                          "ORDER BY ResultNumber ";
 
                     command.Parameters.AddWithValue("Username", user.UserName);
                 }
                 else
                 {
                     command.CommandText = "SELECT * " +
-                                          "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc) AS RowNum, " +
+                                          "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.CreatedOnDateUTC desc) AS ResultNumber, " +
                                           "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                                           "FROM Photo as p " +
                                           "inner join Users as u on p.Userid = u.UserId " +
                                           "WHERE p.UserId = @UserId AND p.DeletedOnDateUTC is null " +
                                           ") AS RowConstrainedResult " +
-                                          "WHERE RowNum >= @From " +
-                                          "AND RowNum <= @To " +
-                                          "ORDER BY RowNum ";
+                                          "WHERE ResultNumber >= @From " +
+                                          "AND ResultNumber <= @To " +
+                                          "ORDER BY ResultNumber ";
 
                     command.Parameters.AddWithValue("UserId", user.UserId);
                 }
                 command.Parameters.AddWithValue("From", from);
                 command.Parameters.AddWithValue("To", to);
-                var usersPhotos = new List<Photo>();
 
-                using (SqlDataReader dataReader = command.ExecuteReader())
-                {
-                    while (dataReader.Read())
-                    {
-                        var photo = new Photo
-                        {
-                            PhotoId = Convert.ToInt32(dataReader["PhotoId"]),
-                            Title = dataReader["Title"].ToString(),
-                            Description = dataReader["Description"].ToString(),
-                            UserId = Convert.ToInt32(dataReader["UserId"]),
-                            Width = Convert.ToInt32(dataReader["Width"]),
-                            Height = Convert.ToInt32(dataReader["Height"]),
-                            FileName = dataReader["FileName"].ToString(),
-                            SubmittedBy = dataReader["DisplayName"].ToString()
-                        };
 
-                        usersPhotos.Add(photo);
-                    }
-                }
-
-                return usersPhotos;
+                return ProcessResults(command); 
             }
         }
 
@@ -263,29 +218,71 @@ namespace FarmPhoto.Repository
                     Connection = connection,
                     CommandText =
                         "SELECT * " +
-                        "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc ) AS RowNum, " +
+                        "FROM (SELECT ROW_NUMBER() OVER ( ORDER BY p.ApprovedOnDateUTC desc ) AS ResultNumber, " +
                         "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height " +
                         "FROM Photo as p " +
-                        "inner join Users as u on p.Userid = u.UserId " +
+                        "inner join Users as u on p.UserId = u.UserId " +
                         "inner join Tag as t on p.PhotoId = t.PhotoId " +
                         "WHERE t.Description = @Description AND Approved = 'true' AND p.DeletedOnDateUTC is null " +
                         ") AS RowConstrainedResult " +
-                        "WHERE RowNum >= @From " +
-                        "AND RowNum <= @To " +
-                        "ORDER BY RowNum "
+                        "WHERE ResultNumber >= @From " +
+                        "AND ResultNumber <= @To " +
+                        "ORDER BY ResultNumber "
                 };
 
                 command.Parameters.AddWithValue("Description", tag.Description);
                 command.Parameters.AddWithValue("From", from);
                 command.Parameters.AddWithValue("To", to);
 
-                var tagPhotos = new List<Photo>();
+                return ProcessResults(command); 
+            }
+        }
 
-                using (SqlDataReader dataReader = command.ExecuteReader())
-                {
-                    while (dataReader.Read())
+        public IList<Photo> Search(int from, int to, string query)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var command = new SqlCommand
                     {
-                        var photo = new Photo
+                        Connection = connection,
+                        CommandText = "select * from ( " + 
+                                      "select PhotoId, Title, Description, FileName, UserId, Approved, CreatedOnDateUTC, DisplayName, Width, Height, " +
+                                      "ROW_NUMBER() OVER (ORDER BY ApprovedOnDateUTC desc) as ResultNumber " +
+                                      "from ( SELECT " +
+                                      "p.PhotoId, p.Title, p.Description, p.FileName, p.UserId, p.Approved, p.CreatedOnDateUTC, u.DisplayName, p.Width, p.Height, p.ApprovedOnDateUTC, " +
+                                      "ROW_NUMBER() over (Partition by p.PhotoId Order by p.PhotoId) as ResultInstance " +
+                                      "FROM Photo as p " +
+                                      "inner join Users as u on u.UserId = p.UserId " +
+                                      "inner join Tag as t on t.PhotoId = p.PhotoId " +
+                                      "where (p.Description like @SearchQuery " +
+                                      "or Title like @SearchQuery  " +
+                                      "or u.Username like @SearchQuery  " +
+                                      "or t.Description like @SearchQuery) " +
+                                      "and p.DeletedOnDateUTC is null and Approved = 'true') as SubQuery " +
+                                      "where SubQuery.ResultInstance = 1) as b " +
+                                      "where ResultNumber >= @From and ResultNumber <= @To " +
+                                      "order by ResultNumber"
+                    };
+
+                command.Parameters.AddWithValue("SearchQuery", "%" + query + "%");
+                command.Parameters.AddWithValue("From", from);
+                command.Parameters.AddWithValue("To", to);
+
+                return ProcessResults(command); 
+            }
+        }
+
+        private IList<Photo> ProcessResults(SqlCommand command)
+        {
+            var searchPhotos = new List<Photo>();
+
+            using (SqlDataReader dataReader = command.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    var photo = new Photo
                         {
                             PhotoId = Convert.ToInt32(dataReader["PhotoId"]),
                             Title = dataReader["Title"].ToString(),
@@ -294,15 +291,14 @@ namespace FarmPhoto.Repository
                             UserId = Convert.ToInt32(dataReader["UserId"]),
                             Width = Convert.ToInt32(dataReader["Width"]),
                             Height = Convert.ToInt32(dataReader["Height"]),
-                            SubmittedBy = dataReader["DisplayName"].ToString()
+                            SubmittedBy = dataReader["DisplayName"].ToString(),
+                            CreatedOnDateUtc = (DateTime)dataReader["CreatedOnDateUTC"]
                         };
 
-                        tagPhotos.Add(photo);
-                    }
+                    searchPhotos.Add(photo);
                 }
-
-                return tagPhotos;
             }
+            return searchPhotos;
         }
 
         /// <summary>

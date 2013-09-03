@@ -2,6 +2,7 @@
 @model FarmPhoto.Website.Models.GalleryModel
 
 <div class="photoalbum">
+    @Html.HiddenFor(m=>m.ListOfPhotoIds)
     @foreach (var photo in Model.PhotoModels)
     {
         <div class="photoframe" id= "@photo.PhotoId">
@@ -34,61 +35,85 @@
                 //$("body").on('click', '.ui-widget-overlay', function () {
                 //    $("#partial").dialog('close');
                 //});
-                $('.rate').raty({
-                    score: $('#Rating_Score').val(),
-                    half: true,
-                    path: "../../../Content/Images",
-                    click: function (score, evt) {
-                        var that = $(this);
-                        var photoId = $("#PhotoId").val();
-                        var currentUser = $("#CurrentUser").val();
-                        var userHasVoted = $("#Rating_UserHasVoted").val();
 
-                        if (currentUser == 0) {
-                            $("input[name=score]").val($('#Rating_Score').val());
-                            $(".ratingValidationMessage span").addClass("text-error");
-                            $(".ratingValidationMessage span").text("You must be logged in to rate a photo");
-                            $(".ratingValidationMessage").fadeIn();
-                        } else {
-                            if (currentUser != $('#UserId').val()) {
-                                if (userHasVoted == 'False') {
-                                    $("#Rating_UserHasVoted").val("True");
-                                    $.ajax({
-                                        url: "@Url.Action("Rate", "Submission")",
-                                    type: "POST",
-                                    data: { score: score, photoId: photoId },
-                                    success: function (data) {
-                                        if (data.Success) {
-                                            $('#Rating_Score').val(data.Rating.Score);
-                                            $("input[name=score]").val(data.Rating.Score);
-                                            $('.voteCount').text(data.Rating.Count);
-                                            $(".ratingValidationMessage span").addClass("text-success");
-                                            $(".ratingValidationMessage span").text("Rating was Successful!");
-                                            $(".ratingValidationMessage").fadeIn();
+                updateLinks();
+                enableRatingSystem(); 
+            }
+        });
+
+        var enableRatingSystem = function() {
+            $('.rate').raty({
+                score: $('#Rating_Score').val(),
+                half: true,
+                path: "../../../Content/Images",
+                click: function (score, evt) {
+                    var that = $(this);
+                    var photoId = $("#PhotoId").val();
+                    var currentUser = $("#CurrentUser").val();
+                    var userHasVoted = $("#Rating_UserHasVoted").val();
+
+                    if (currentUser == 0) {
+                        $("input[name=score]").val($('#Rating_Score').val());
+                        $(".ratingValidationMessage span").addClass("text-error");
+                        $(".ratingValidationMessage span").text("You must be logged in to rate a photo");
+                        $(".ratingValidationMessage").fadeIn();
+                    } else {
+                        if (currentUser != $('#UserId').val()) {
+                            if (userHasVoted == 'False') {
+                                $("#Rating_UserHasVoted").val("True");
+                                $.ajax({
+                                    url: "@Url.Action("Rate", "Submission")",
+                                        type: "POST",
+                                        data: { score: score, photoId: photoId },
+                                        success: function (data) {
+                                            if (data.Success) {
+                                                $('#Rating_Score').val(data.Rating.Score);
+                                                $("input[name=score]").val(data.Rating.Score);
+                                                $('.voteCount').text(data.Rating.Count);
+                                                $(".ratingValidationMessage span").addClass("text-success");
+                                                $(".ratingValidationMessage span").text("Rating was Successful!");
+                                                $(".ratingValidationMessage").fadeIn();
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                } else {
+                                    $("input[name=score]").val($('#Rating_Score').val());
+                                    $(".ratingValidationMessage span").removeClass("text-success");
+                                    $(".ratingValidationMessage span").addClass("text-error");
+                                    $(".ratingValidationMessage span").text("You can only rate a photo once");
+                                    $(".ratingValidationMessage").fadeIn();
+                                }
                             } else {
                                 $("input[name=score]").val($('#Rating_Score').val());
-                                $(".ratingValidationMessage span").removeClass("text-success");
                                 $(".ratingValidationMessage span").addClass("text-error");
-                                $(".ratingValidationMessage span").text("You can only rate a photo once");
+                                $(".ratingValidationMessage span").text("You cant rate your own photo");
                                 $(".ratingValidationMessage").fadeIn();
                             }
-                        } else {
-                            $("input[name=score]").val($('#Rating_Score').val());
-                            $(".ratingValidationMessage span").addClass("text-error");
-                            $(".ratingValidationMessage span").text("You cant rate your own photo");
-                            $(".ratingValidationMessage").fadeIn();
                         }
                     }
-                    }
-                });
+            });
+        };
 
-                $("body").on('click', '.ui-dialog-titlebar-close', function () {
-                    $("#partial").dialog("close");
-                });
+        var updateLinks = function() {
+            var photoIdArray = $('#ListOfPhotoIds').val().split(",");
+            var currentPhotoId = $('#PhotoId').val();
+            for (var i = 0; i < photoIdArray.length; i++) {
+                if (currentPhotoId == photoIdArray[i]) {
+                    $('.nextPhoto').attr('href', "/Gallery/Photo?id=" + photoIdArray[i + 1]);
+                    $('.previousPhoto').attr('href', "/Gallery/Photo?id=" + photoIdArray[i - 1]);
+
+                    if (i == 0) {
+                        $('.previousPhoto').remove(); 
+                    }
+                    if (i == photoIdArray.length-2) {
+                        $('.nextPhoto').remove(); 
+                    }
+                }
             }
+        };
+
+        $('body').on('ready', '#parital',  function() {
+            alert("changed Bitch"); 
         });
 
         $(".openDialog").on("click", function (e) {
@@ -98,6 +123,52 @@
                 dialog.html(results);
                 dialog.dialog("open");
             });
+        });
+
+        $("body").on("mouseover", ".portraitframe", function () {
+            var portraitWidth = $(".portraitframe").width();
+
+            $(".nextPhoto").css({ width: portraitWidth - 100 });
+            $(".nextArrow").css({ left: portraitWidth - 136 });
+            $(".photoNavigation").fadeIn('fast');
+        });
+
+        $("body").on("mouseleave", ".portraitframe", function () {
+            $(".photoNavigation").fadeOut('fast');
+        });
+
+        $("body").on('click', ".nextPhoto", function (e) {
+            e.preventDefault();
+
+            $.get(this.href).done(function (results) {
+                dialog.html(results);
+                updateLinks();
+                enableRatingSystem();
+            });
+        });
+
+        $("body").on('click', ".previousPhoto", function (e) {
+            e.preventDefault();
+
+            $.get(this.href).done(function (results) {
+                dialog.html(results);
+                updateLinks();
+                enableRatingSystem();
+            });
+        });
+
+
+        $("body").on('click', '.editPhoto', function (e) {
+            e.preventDefault();
+
+            $.get(this.href).done(function (results) {
+                dialog.html(results);
+                enableRatingSystem();
+            });
+        });
+
+        $("body").on('click', '.ui-dialog-titlebar-close', function () {
+            $("#partial").dialog("close");
         });
 
         $("body").on('click', '#Update', function () {
@@ -120,7 +191,7 @@
                     success: function (data) {
                         if (data.Success) {
                             $("#partial").dialog('close');
-                            new FarmPhoto.Dialogs.Messaging().showSuccessMessage("Photo Updated"); 
+                            new FarmPhoto.Dialogs.Messaging().showSuccessMessage("Photo Updated");
                         }
                     }
                 });

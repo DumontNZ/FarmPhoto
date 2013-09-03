@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using System.Web.Mvc;
 using FarmPhoto.Core;
 using FarmPhoto.Domain;
@@ -40,6 +41,9 @@ namespace FarmPhoto.Website.Controllers
             var to = pageing * _config.PhotosPerPage;
 
             IList<Photo> photos = _photoManager.Get(from, to);
+
+           
+
             ViewBag.Page = pageing;
 
             return View(PhotoListToGalleryModel(photos));
@@ -146,6 +150,36 @@ namespace FarmPhoto.Website.Controllers
             return File(uploadedFilePath, "image/jpeg");
         }
 
+        public ActionResult Edit(int? id)
+        {
+            if (id.HasValue)
+            {
+                Photo photo = _photoManager.Get(id.Value, true);
+
+                var userId = Request.IsAuthenticated ? CurrentUser.Id : 0;
+
+                var rating = _ratingManager.Get(new Rating {PhotoId = id.Value, UserId = userId});
+                var photoModel = new PhotoModel
+                    {
+                        PhotoId = photo.PhotoId,
+                        UserId = photo.UserId,
+                        Description = photo.Description,
+                        Title = photo.Title,
+                        FileName = photo.FileName,
+                        Tags = _tagManager.Get(photo.PhotoId),
+                        Width = "" + photo.Width + "px",
+                        Height = "" + photo.Height + "px",
+                        Rating = rating
+                    };
+
+                photoModel.TagString = string.Join(", ", photoModel.Tags);
+
+                return PartialView("_Edit", photoModel);
+            }
+
+            return View("Error", new ErrorModel{ErrorMessage = "No photo Id was Provided"});
+        }
+
         [AllowAnonymous]
         public ActionResult Photo(int? id)
         {
@@ -171,15 +205,15 @@ namespace FarmPhoto.Website.Controllers
 
                 photoModel.TagString = string.Join(", ", photoModel.Tags);
 
-                if (Request.IsAjaxRequest())
-                {
+               // if (Request.IsAjaxRequest())
+              //  {
                     return PartialView("_Photo", photoModel);
-                }
+              //  }
 
-                return View(photoModel);
+                //return View(photoModel);
             }
 
-            return View("Error");
+            return View("Error", new ErrorModel { ErrorMessage = "No photo Id was Provided" });
         }
 
         [HttpPost]
@@ -196,8 +230,8 @@ namespace FarmPhoto.Website.Controllers
 
                 return PartialView("_Photo", photoModel);
             }
-
-            return View(photoModel);
+            return PartialView("_Photo", photoModel);
+           // return View(photoModel);
         }
 
         /// <summary>
@@ -237,6 +271,8 @@ namespace FarmPhoto.Website.Controllers
         private GalleryModel PhotoListToGalleryModel(IEnumerable<Photo> photos)
         {
             var galleryModel = new GalleryModel();
+            
+            var stringBuilder = new StringBuilder();
 
             foreach (var photo in photos)
             {
@@ -251,7 +287,11 @@ namespace FarmPhoto.Website.Controllers
                     SubmittedOn = photo.CreatedOnDateUtc,
                     Tags = _tagManager.Get(photo.PhotoId)
                 });
+
+                stringBuilder.Append(photo.PhotoId + ",");
             }
+
+            galleryModel.ListOfPhotoIds = stringBuilder.ToString(); 
 
             return galleryModel;
         }

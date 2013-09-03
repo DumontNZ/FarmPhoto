@@ -81,7 +81,7 @@
             multi_selection: false,
             unique_names: true,
             flash_swf_url : "../../Scripts/Plupload/plupload.flash.swf",
-            filters: [{ title: "Image files", extensions: "jpg,gif,png" }]
+            filters: [{ title: "Image files", extensions: "jpg,gif,png,bmp" }]
         });
 
         uploader.init();
@@ -138,7 +138,7 @@
 
         uploader.bind('UploadProgress', function (up, file) {
 
-            $('#fileUploadProgress').html('<b><span>' + file.percent * 0.9 + "%</span></b>");
+            $('#fileUploadProgress').html('<b><span>' + (file.percent * 0.9).toFixed(0) + "%</span></b>");
 
             $('#status').animate({ width: '' + file.percent * 0.9 + '%' }, 200);
 

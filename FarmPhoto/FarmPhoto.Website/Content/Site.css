@@ -2,7 +2,6 @@
     height: 100%;
 }
 
-
 body {
     background: #fff; /* Old browsers */
     background: -moz-linear-gradient(top, #0091f9 17%, #ebf1f6 100%); /* FF3.6+ */
@@ -185,6 +184,7 @@ ul#menu {
 
 .formRow {
 }
+
     .formRow p {
         width: 320px;
     }
@@ -473,4 +473,29 @@ label {
 
 .placeholder {
     color: #aaa !important;
+}
+
+.photoNavigation {
+    height: inherit;
+    width: 100px;
+    position: absolute;
+}
+
+.nextPhoto {
+    left: 114px; 
+}
+
+.previousPhoto {
+}
+
+.arrow {
+    top: 50%;
+    position: absolute;
+}
+
+.editPhoto {
+    color: #0088cc !important;
+    text-decoration: none;
+    margin-top: 5px;
+    display: block;
 }

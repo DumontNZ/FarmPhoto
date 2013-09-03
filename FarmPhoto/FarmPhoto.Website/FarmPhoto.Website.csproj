@@ -203,6 +203,8 @@
     <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\IeStyles.css" />
     <Content Include="Content\Images\KensBanner.png" />
+    <Content Include="Content\Images\leftArrow.png" />
+    <Content Include="Content\Images\RightArrow.png" />
     <Content Include="Content\MovingBanner.css" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -322,10 +324,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Gallery.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
-    <Content Include="Views\Gallery\Photo.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Gallery\UsersPhotos.cshtml" />
-    <Content Include="Views\Shared\_Photo.cshtml" />
+    <Content Include="Content\Images\KensBanner.pdn" />
     <None Include="Properties\PublishProfiles\farmphoto.co.nz - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\farmphoto.co.nz - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FileSystem.pubxml" />
@@ -340,6 +341,8 @@
     <Content Include="Views\Account\ForgottenPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Gallery\Search.cshtml" />
+    <Content Include="Views\Gallery\_Photo.cshtml" />
+    <Content Include="Views\Gallery\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Uploads\Thumbnails\" />

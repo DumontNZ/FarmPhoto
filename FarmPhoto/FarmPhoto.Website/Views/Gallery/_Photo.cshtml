@@ -1,0 +1,57 @@
+@using FarmPhoto.Domain
+@model FarmPhoto.Website.Models.PhotoModel
+<div class="portraitframe" style="width: @Model.Width; height: @Model.Height">
+    <a href="#" class="photoNavigation previousPhoto" style="display: none"><img src="../../Content/Images/leftArrow.png" class="arrow previousArrow"/></a>
+    <a href="#" class="photoNavigation nextPhoto" style="display: none" ><img src="../../Content/Images/RightArrow.png" class="arrow nextArrow"/></a>
+    <img src="@Url.Action("Image", "Gallery", new { fileName = Model.FileName, thumbnail = false })" alt="" />
+</div>
+
+<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" title="close">
+    <span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
+    <span class="ui-button-text">close</span>
+</button>
+
+@Html.HiddenFor(m => m.Rating.Score)
+@Html.HiddenFor(m => m.Rating.UserHasVoted)
+@if (Request.IsAuthenticated)
+{
+    <input type="hidden" id="CurrentUser" value="@CurrentUser.Id" />
+}
+else
+{
+    <input type="hidden" id="CurrentUser" value="0" />
+}
+@{
+    var userId = Request.IsAuthenticated ? CurrentUser.Id : 0;
+
+    <div class="photofields">
+        @Html.HiddenFor(m => m.PhotoId)
+        <div class="formRow">
+            <label>@Model.Title</label>
+        </div>
+        <div class="formRow">
+            <p>@Model.Description</p>
+        </div>
+        <div class="formRow">
+            <div class="tag">
+                @foreach (var description in Model.Tags)
+                {
+                    @Html.RouteLink(description, "Tags", new { tag = description, page = 1 }, new { @class = "btn btn-mini" })
+                }
+            </div>
+        </div>
+        <div class="voteArea">
+            <div class="rate"></div>
+            <div class="voteCountDiv">(<span class="voteCount">@Model.Rating.Count</span>&nbsp;votes)</div>
+        </div>
+        <div class="ratingValidationMessage" style="display: none"><span></span></div>
+        @if (userId == Model.UserId)
+        {
+            @Html.ActionLink("Edit", "Edit", "Gallery", new { id = @Model.PhotoId }, new { @class = "editPhoto " })
+            @Html.HiddenFor(m => m.PhotoId)
+            @Html.HiddenFor(m => m.UserId)
+        }
+    </div>
+}
+
+

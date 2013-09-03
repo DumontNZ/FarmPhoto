@@ -10,5 +10,7 @@ namespace FarmPhoto.Website.Models
         }
 
         public IList<PhotoModel> PhotoModels { get; set; }
+
+        public string ListOfPhotoIds { get; set; }
     }
 }

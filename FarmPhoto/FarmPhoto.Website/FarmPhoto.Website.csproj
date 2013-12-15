@@ -202,6 +202,7 @@
     <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\IeStyles.css" />
+    <Content Include="Content\Images\FarmPhotoLogo.png" />
     <Content Include="Content\Images\KensBanner.png" />
     <Content Include="Content\Images\leftArrow.png" />
     <Content Include="Content\Images\RightArrow.png" />
@@ -274,6 +275,8 @@
     <Content Include="Scripts\Bootstrap\bootstrap.js" />
     <Content Include="Scripts\Bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\farmphoto.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
@@ -311,7 +314,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_HomePageLayout.cshtml" />
@@ -323,10 +328,11 @@
     <Content Include="Views\Gallery\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Gallery.cshtml" />
-    <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Gallery\UsersPhotos.cshtml" />
     <Content Include="Content\Images\KensBanner.pdn" />
+    <Content Include="Content\Images\FarmPhotoLogo.pdn" />
     <None Include="Properties\PublishProfiles\farmphoto.co.nz - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\farmphoto.co.nz - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FileSystem.pubxml" />

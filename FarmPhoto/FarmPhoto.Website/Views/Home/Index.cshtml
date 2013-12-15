@@ -1,51 +1,71 @@
 ﻿@model FarmPhoto.Website.Models.GalleryModel
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Farm Photo";
 }
 
-@*<div id="photoBannerContainer">
-    <div class="photobanner">
-        <img class="first" src="~/Content/Images/Thumbnails/P1030794.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030795.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030796.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030797.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030798.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030799.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030800.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030794.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030795.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030796.JPG" />
-        <img src="~/Content/Images/Thumbnails/P1030797.JPG" />
-    </div>
-</div>*@
-
-<div id="MainContentContainer">
+<div id="ContentContainer">
     <div id="MostRecentPicture">
+        <div class="ContentContainerHeader">
+            <h2>Recently Added Photos</h2>
+        </div>
 
-        @{
-            var firstOrDefault = Model.PhotoModels.FirstOrDefault();
-        }
-        @if (firstOrDefault != null)
-        {
-            if (firstOrDefault.SubmittedBy != null)
-            {
-                <div class="ContentContainerHeader">
-                    <h2>Most Recently Added Photo</h2>
-                    <h3>@firstOrDefault.Title</h3>
-                    <h3>Submitted By @firstOrDefault.SubmittedBy</h3>
-                    
-                </div>
-            <div class="portraitframe">
-                <img src="@Url.Action("HomeImage", "Gallery")" alt="" />
+        <div id="myCarousel" class="carousel slide">
+            <ol class="carousel-indicators">
+                @{
+                    var photoNumber = 0; 
+                    foreach (var photo in Model.PhotoModels)
+                    {
+
+                        if (photo.PhotoId == Model.PhotoModels.FirstOrDefault().PhotoId)
+                        {
+                            <li data-target="#myCarousel" data-slide-to="@photoNumber" class="active"></li>
+                        }
+                        else
+                        {
+                            <li data-target="#myCarousel" data-slide-to="@photoNumber" class></li>
+
+                        }
+                        photoNumber++; 
+                    }
+                }
+            </ol>
+            <div class="carousel-inner">
+                @foreach (var photo in Model.PhotoModels)
+                {
+                    if (photo.PhotoId == Model.PhotoModels.FirstOrDefault().PhotoId)
+                    {
+                        <div class="item active">
+                            <img src="@Url.Action("Image", "Gallery", new { fileName = photo.FileName, thumbnail = false })" alt="" />
+                            <div class="carousel-caption">
+                                <h4>@photo.Title</h4>
+                                <p>
+                                    @photo.Description
+                                </p>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="item">
+                            <img src="@Url.Action("Image", "Gallery", new { fileName = photo.FileName, thumbnail = false })" alt="" />
+                            <div class="carousel-caption">
+                                <h4>@photo.Title</h4>
+                                <p>
+                                    @photo.Description
+                                </p>
+                            </div>
+                        </div>
+                    }
+                }
             </div>
-            }
-            else
-            {
-            <h2>Recently Added Photo</h2>
-            <h3>No Pictures have been added yet</h3>
-            }
-        }
-
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+        </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.carousel').carousel();
+    });
+</script>

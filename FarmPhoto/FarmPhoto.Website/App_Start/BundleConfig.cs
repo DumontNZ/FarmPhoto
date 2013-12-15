@@ -8,7 +8,7 @@ namespace FarmPhoto.Website.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-2.0.3.js",
                         "~/Scripts/farmphoto.js",
                         "~/Scripts/Bootstrap/bootstrap.js",
                         "~/Scripts/Raty/jquery.raty.js",

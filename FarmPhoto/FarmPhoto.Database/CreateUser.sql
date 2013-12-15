@@ -1,7 +1,7 @@
 USE [FarmPhoto]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 27/10/2013 8:08:02 p.m. ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 15/12/2013 9:55:00 p.m. ******/
 SET ANSI_NULLS ON
 GO
 
@@ -22,11 +22,18 @@ CREATE TABLE [dbo].[Users](
 	[DeletedOnDateUTC] [datetime] NULL,
 	[DisplayName] [varchar](255) NOT NULL,
 	[Country] [varchar](255) NULL,
-	[UserId] [int] identity(1,1) primary key
+	[TokenExpiry] [datetime] null,
+	[Token] [varchar] (255) null, 
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
 
 SET ANSI_PADDING OFF
 GO
+
 

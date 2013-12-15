@@ -22,23 +22,7 @@ namespace FarmPhoto.Website.Controllers
 
             var photos = _photoManager.Get(1, 5);
             
-            var mainPhoto = _photoManager.Get(0, false);
-
-            var user = _userManager.Get(mainPhoto.UserId);
-
             var galleryModel = new GalleryModel();
-
-            var mainPhotoModel = new PhotoModel
-            {
-                PhotoId = mainPhoto.PhotoId,
-                UserId = mainPhoto.UserId,
-                Description = mainPhoto.Description,
-                Title = mainPhoto.Title,
-                SubmittedBy = user.UserName,
-                SubmittedOn = mainPhoto.CreatedOnDateUtc
-            };
-
-            galleryModel.PhotoModels.Add(mainPhotoModel);
 
             foreach (var photo in photos)
             {
@@ -48,6 +32,7 @@ namespace FarmPhoto.Website.Controllers
                     UserId = photo.UserId,
                     Description = photo.Description,
                     Title = photo.Title,
+                    FileName = photo.FileName,
                     SubmittedOn = photo.CreatedOnDateUtc
                 };
 
@@ -58,7 +43,7 @@ namespace FarmPhoto.Website.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult AboutUs()
+        public ActionResult ContactUs()
         {
 
             return View();

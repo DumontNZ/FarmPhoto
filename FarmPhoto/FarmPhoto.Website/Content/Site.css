@@ -120,7 +120,7 @@ header {
 
 #MostRecentPicture {
     /*width: 800px;*/
-    height: 800px;
+    /*height: 800px;*/
 }
 
     #MostRecentPicture img {
@@ -482,7 +482,7 @@ label {
 }
 
 .nextPhoto {
-    left: 114px; 
+    left: 114px;
 }
 
 .previousPhoto {
@@ -498,4 +498,75 @@ label {
     text-decoration: none;
     margin-top: 5px;
     display: block;
+}
+
+.carousel-inner .item {
+    height: 531px;
+    max-height: 531px;
+}
+
+#footer {
+    height: 300px;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footerItem {
+    float: left;
+    margin-left: 10px;
+    margin-top: 4px;
+}
+
+    .footerItem a {
+        color: inherit;
+    }
+
+.footerImage {
+    float: left;
+    margin-left: 10px;
+    margin-top: 4px;
+}
+
+.linkSeperator {
+    float: left;
+    margin-left: 10px;
+    margin-top: 4px;
+}
+
+.footerCopyRightNotice {
+    float: left;
+    margin-left: 10px;
+}
+
+.personalPlug {
+    float: left;
+    margin-left: 10px;
+}
+
+.copyRightSection {
+    width: 1000px;
+}
+
+.footerLinks {
+    float: left;
+    width: 814px;
+}
+
+.initalBlurb {
+    margin-left: 49px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.contactUsTable {
+    margin-left: 49px;
+}
+
+.introText {
+    font-size: 13px;
+    font-weight: bold;
+    color: #999999;
+    margin-left: 49px;
+    margin-top: 178px;
 }

@@ -5,6 +5,8 @@
 }
 <script src="~/Scripts/Plupload/plupload.js"></script>
 <script src="~/Scripts/Plupload/plupload.full.js"></script>
+<script src="~/Scripts/Plupload/moxie.js"></script>
+<script src="~/Scripts/Plupload/moxie.min.js"></script>
 <script src="~/Scripts/Plupload/jquery.plupload.queue.js"></script>
 <script src="~/Scripts/Plupload/jquery.ui.plupload.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
@@ -20,8 +22,8 @@
             <h4>Add Photo</h4>
         </div>
         <div id="filelist">
-        <div id="runtime"></div>
-            
+            <div id="runtime"></div>
+
             <div id="fileuploading"></div>
 
             <div id="progress-bar" style="display: none">
@@ -29,7 +31,13 @@
             </div>
 
             <div id="fileUploadProgress"></div>
-            
+
+        </div>
+        <div id="outOfDateBrowser" style="display: none">
+            <div>You are using a very old browser and will be unable to upload a file until you do the following:</div>
+            <div>Update your browser to Internet Explorer 9 or above, or update to <a href="http://www.google.com/chrome‎">Chrome</a> or <a href="http://www.mozilla.org/en-US/firefox">Firefox</a></div>
+            <div>Or</div>
+            <div>Download Flash Player from the following location: <a href="http://get.adobe.com/flashplayer/">Get Adobe Flash</a></div>
         </div>
         <a id="pickfiles" href="javascript:;">Select file</a>
 
@@ -59,8 +67,7 @@
             </div>
         }
         <div id="helpText" style="display: none" class="help-block">
-            <span>
-            </span>
+            <span></span>
         </div>
     </div>
 </div>
@@ -74,25 +81,33 @@
         });
 
         var uploader = new plupload.Uploader({
-            runtimes: 'flash',
+            runtimes: 'html5, flash, silverlight, html4',
             browse_button: 'pickfiles',
             url: "@Url.Action("Upload", "Submission")",
             max_file_size: '10mb',
             multi_selection: false,
             unique_names: true,
-            flash_swf_url : "../../Scripts/Plupload/plupload.flash.swf",
+            flash_swf_url: "../../Scripts/Plupload/plupload.flash.swf",
+            silverlight_xap_url: "../../Scripts/Plupload/plupload.silverlight.xap",
             filters: [{ title: "Image files", extensions: "jpg,gif,png,bmp" }]
         });
 
         uploader.init();
 
+
+        if (uploader.runtime) {
+            $('#pickfiles').hide(); 
+            $('#outOfDateBrowser').show();
+        }
+        
+
         uploader.bind('FilesAdded', function (up, files) {
-            
+
             $('#Submit').addClass("disabled");
             $('#Submit').on('click', function () {
                 $(this).prop("disabled", true);
             });
-            
+
             startProgressBar();
             $('#pickfiles').text('Change file');
             $('#submissionForm').slideDown('slow');

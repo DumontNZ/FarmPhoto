@@ -297,6 +297,7 @@
     <Content Include="Scripts\Plupload\plupload.flash.swf" />
     <Content Include="Scripts\Plupload\plupload.full.js" />
     <Content Include="Scripts\Plupload\plupload.js" />
+    <Content Include="Scripts\Plupload\plupload.silverlight.xap" />
     <Content Include="Scripts\Raty\img\cancel-off.png" />
     <Content Include="Scripts\Raty\img\cancel-on.png" />
     <Content Include="Content\Images\star-half.png" />

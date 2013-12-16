@@ -570,3 +570,27 @@ label {
     margin-left: 49px;
     margin-top: 178px;
 }
+
+.profileImageArea {
+    margin-left: 49px;
+    margin-top: 20px;
+}
+
+.profileImage {
+    height: 300px;
+    width: 200px;
+    background: orange;
+}
+
+.profileStats {
+    margin-top: 20px;
+    margin-left: 272px;
+}
+
+.statRow {
+    margin-bottom: 5px;
+}
+
+.changePasswordArea {
+    margin-top: 100px;
+}

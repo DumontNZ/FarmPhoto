@@ -45,6 +45,9 @@ namespace FarmPhoto.Core
         bool CheckToken(string username, string token);
 
         bool CheckToken(User user, string token);
+
         void UpdatePasswordWithToken(User user, string password, string token);
+
+        ProfileInformation GetProfileInformation(string username);
     }
 }

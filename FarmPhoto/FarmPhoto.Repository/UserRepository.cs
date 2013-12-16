@@ -255,5 +255,25 @@ namespace FarmPhoto.Repository
                 command.ExecuteNonQuery();
             }
         }
+
+        public double AverageVote(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetAverageScore(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int NumberOfPhotosUploaded(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int NumberOfTimesVoted(string username)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

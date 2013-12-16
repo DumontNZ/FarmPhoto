@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SubmissionController.cs" />
     <Compile Include="DependencyModule\DependencyModule.cs" />
     <Compile Include="Extensions\MenuExtensions.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Models\EmailPasswordResetModel.cs" />
     <Compile Include="Models\PasswordResetModel.cs" />
     <Compile Include="Models\PhotoModel.cs" />
+    <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\SubmissionModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -350,6 +352,7 @@
     <Content Include="Views\Gallery\Search.cshtml" />
     <Content Include="Views\Gallery\_Photo.cshtml" />
     <Content Include="Views\Gallery\_Edit.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Uploads\Thumbnails\" />

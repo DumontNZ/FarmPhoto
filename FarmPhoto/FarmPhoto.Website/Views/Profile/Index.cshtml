@@ -1,5 +1,41 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@using FarmPhoto.Domain
+@model FarmPhoto.Website.Models.ProfileModel
+@{
+    ViewBag.Title = "Profile";
 }
 
-<h2>Index</h2>
+<div id="ContentContainer">
+    <div class="ContentContainerHeader">
+        @if (@Model.Username.Equals(CurrentUser.Username))
+        {
+            <h2>Your User Profile</h2>
+            <h3>From here you can update your profile picture, change your password and look at some stats</h3>
+        }
+        else
+        {
+            <h2>@Model.Username's User Profile</h2>
+            <h3>From here you can look at @Model.Username's profile and some of their stats</h3>
+        }
+
+    </div>
+
+    <div class="profileImageArea">
+        <div class="profileImage"></div>
+        <div><a href="#">Change Image</a></div>
+    </div>
+
+    <div class="profileStats">
+        <div class="statRow">You have uploaded @Model.NumberOfPhotosUploaded images</div>
+        <div class="statRow">They have received an average score of: @Model.AverageScore</div>
+        <div class="statRow">You have voted on @Model.NumberOfTimesVoted other peoples images</div>
+        <div class="statRow">Giving an average score of: @Model.AverageVote</div>
+    </div>
+    
+    @if (@Model.Username.Equals(CurrentUser.Username))
+    {
+        <div class="changePasswordArea">
+            <div><a>ChangePassword</a></div>
+        </div>
+    }
+    
+</div>

@@ -74,5 +74,9 @@ namespace FarmPhoto.Repository
 
         void CreateToken(User user);
         void UpdatePassword(User user);
+        double AverageVote(string username);
+        double GetAverageScore(string username);
+        int NumberOfPhotosUploaded(string username);
+        int NumberOfTimesVoted(string username);
     }
 }

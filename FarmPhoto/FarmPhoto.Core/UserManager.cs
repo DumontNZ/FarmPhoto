@@ -108,5 +108,18 @@ namespace FarmPhoto.Core
 
             _userRepository.UpdatePassword(user);
         }
+
+        public ProfileInformation GetProfileInformation(string username)
+        {
+            var profileInformation = new ProfileInformation
+                {
+                    AverageVote = _userRepository.AverageVote(username),
+                    AverageScore = _userRepository.GetAverageScore(username),
+                    NumberOfPhotosUploaded = _userRepository.NumberOfPhotosUploaded(username),
+                    NumberOfTimesVoted = _userRepository.NumberOfTimesVoted(username)
+                };
+
+            return profileInformation; 
+        }
     }
 }

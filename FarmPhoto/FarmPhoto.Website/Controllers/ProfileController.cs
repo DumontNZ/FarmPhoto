@@ -1,17 +1,33 @@
 ﻿using System.Web.Mvc;
+using FarmPhoto.Core;
+using FarmPhoto.Domain;
+using FarmPhoto.Website.Models;
 
 namespace FarmPhoto.Website.Controllers
 {
     public class ProfileController : Controller
     {
-        public ActionResult Index()
+        private readonly IUserManager _userManager;
+
+        public ProfileController(IUserManager userManager)
         {
-
-
-
-            return View();
+            _userManager = userManager;
         }
 
+        public ActionResult Index()
+        {
+            //ProfileInformation profileInformation = _userManager.GetProfileInformation(CurrentUser.Username);
 
+            var profileModel = new ProfileModel
+                {
+                    NumberOfPhotosUploaded = 4,
+                    NumberOfTimesVoted = 56,
+                    AverageScore = 34,
+                    AverageVote = 243,
+                    Username = "DumontNZ"
+                };
+
+            return View(profileModel);
+        }
     }
 }

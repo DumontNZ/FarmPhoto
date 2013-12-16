@@ -42,8 +42,6 @@ namespace FarmPhoto.Website.Controllers
 
             IList<Photo> photos = _photoManager.Get(from, to);
 
-           
-
             ViewBag.Page = pageing;
 
             return View(PhotoListToGalleryModel(photos));
